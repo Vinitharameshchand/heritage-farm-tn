@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 
 // Route files
 import authRoutes from './src/routes/auth.routes.js';
+import listingRoutes from './src/routes/listing.routes.js';
 
 // Load env vars
 dotenv.config();
@@ -33,6 +34,7 @@ const connectDB = async () => {
 
 // Mount routers
 app.use('/api/auth', authRoutes);
+app.use('/api/listings', listingRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
