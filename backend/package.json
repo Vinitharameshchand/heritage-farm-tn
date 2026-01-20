@@ -1,11 +1,11 @@
 {
   "name": "heritage-farm-backend",
   "version": "1.0.0",
-  "main": "src/server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "bun src/server.js",
-    "dev": "bun --watch src/server.js"
+    "start": "bun src/index.js",
+    "dev": "bun --watch src/index.js"
   },
   "dependencies": {
     "express": "^4.21.2",
