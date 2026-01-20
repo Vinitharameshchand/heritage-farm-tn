@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { MapPin, Sprout, Landmark, Mountain, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const { t, i18n } = useTranslation();
@@ -11,9 +12,9 @@ const Home = () => {
     };
 
     const sectors = [
-        { title: t('agri_rural'), icon: <Sprout className="w-8 h-8" />, color: 'bg-green-100 text-green-700' },
-        { title: t('heritage_culture'), icon: <Landmark className="w-8 h-8" />, color: 'bg-amber-100 text-amber-700' },
-        { title: t('eco_adventure'), icon: <Mountain className="w-8 h-8" />, color: 'bg-sky-100 text-sky-700' },
+        { title: t('agri_rural'), icon: <Sprout className="w-8 h-8" />, color: 'bg-green-100 text-green-700', slug: 'AgriRural' },
+        { title: t('heritage_culture'), icon: <Landmark className="w-8 h-8" />, color: 'bg-amber-100 text-amber-700', slug: 'HeritageCulture' },
+        { title: t('eco_adventure'), icon: <Mountain className="w-8 h-8" />, color: 'bg-sky-100 text-sky-700', slug: 'EcoAdventure' },
     ];
 
     return (
@@ -81,10 +82,13 @@ const Home = () => {
                         transition={{ delay: 0.3 }}
                         className="flex gap-4 pt-4"
                     >
-                        <button className="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 premium-shadow hover:bg-slate-800 transition-all active:scale-95">
+                        <Link
+                            to="/discover"
+                            className="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 premium-shadow hover:bg-slate-800 transition-all active:scale-95"
+                        >
                             {t('explore')}
                             <ArrowRight className="w-5 h-5" />
-                        </button>
+                        </Link>
                         <button className="bg-white px-8 py-4 rounded-2xl font-bold border border-slate-200 hover:bg-slate-50 transition-all active:scale-95">
                             {t('become_creator')}
                         </button>
@@ -104,14 +108,16 @@ const Home = () => {
                             viewport={{ once: true }}
                             className="bg-white p-8 rounded-3xl premium-shadow border border-slate-100 hover:-translate-y-2 transition-transform cursor-pointer group"
                         >
-                            <div className={`w-16 h-16 ${sector.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                                {sector.icon}
-                            </div>
-                            <h3 className="text-2xl font-outfit mb-4">{sector.title}</h3>
-                            <p className="text-slate-500 mb-6">Experience the authentic life through curated journeys and local hospitality.</p>
-                            <div className="flex items-center text-primary-600 font-bold gap-2">
-                                View Experiences <ArrowRight className="w-4 h-4" />
-                            </div>
+                            <Link to={`/discover?category=${sector.slug}`}>
+                                <div className={`w-16 h-16 ${sector.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+                                    {sector.icon}
+                                </div>
+                                <h3 className="text-2xl font-outfit mb-4">{sector.title}</h3>
+                                <p className="text-slate-500 mb-6">Experience the authentic life through curated journeys and local hospitality.</p>
+                                <div className="flex items-center text-primary-600 font-bold gap-2">
+                                    View Experiences <ArrowRight className="w-4 h-4" />
+                                </div>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>
