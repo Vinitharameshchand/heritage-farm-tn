@@ -1,12 +1,23 @@
 {
-  "name": "backend",
-  "module": "index.ts",
+  "name": "heritage-farm-backend",
+  "version": "1.0.0",
+  "main": "src/server.js",
   "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "start": "bun src/server.js",
+    "dev": "bun --watch src/server.js"
   },
-  "peerDependencies": {
-    "typescript": "^5"
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "dotenv": "^16.4.7",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.24.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
