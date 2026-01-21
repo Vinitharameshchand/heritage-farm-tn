@@ -19,6 +19,7 @@ import bookingRoutes from './src/routes/booking.routes.js';
 import paymentRoutes from './src/routes/payment.routes.js';
 import uploadRoutes from './src/routes/upload.routes.js';
 import aiRoutes from './src/routes/ai.routes.js';
+import logger from './src/utils/logger.js';
 
 // Load env vars
 dotenv.config();
@@ -83,7 +84,7 @@ const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'test') {
     connectDB().then(() => {
         app.listen(PORT, () => {
-            console.log(`⚡️ Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+            logger.info(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
         });
     });
 }
