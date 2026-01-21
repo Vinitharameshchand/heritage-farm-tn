@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Star, Clock, Calendar, Users, Shield, ArrowLeft } from 'lucide-react';
+import { MapPin, Star, Clock, Calendar, Users, Shield, ArrowLeft, Box, Sparkles } from 'lucide-react';
 import api from '../services/api';
 import BookingModal from '../components/BookingModal';
 
@@ -154,6 +154,15 @@ const ListingDetail = () => {
                             <button className="w-full h-16 bg-slate-800 text-white rounded-full font-bold hover:bg-slate-700 transition-all border border-white/5">
                                 Add to Journey Arc
                             </button>
+                            {listing.hasAR && (
+                                <Link
+                                    to={`/heritage-vision/${id}`}
+                                    className="w-full h-16 bg-emerald-500/10 text-emerald-500 rounded-full font-bold hover:bg-emerald-500/20 transition-all border border-emerald-500/20 flex items-center justify-center gap-3"
+                                >
+                                    <Sparkles className="w-5 h-5" />
+                                    Enter Heritage Vision (AR)
+                                </Link>
+                            )}
                         </div>
 
                         <div className="flex items-center justify-center gap-2 text-sm text-emerald-400/60 font-medium">
