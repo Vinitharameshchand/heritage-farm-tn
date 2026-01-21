@@ -9,7 +9,7 @@ import {
     Image as ImageIcon,
     Type,
     FileText,
-    इंडियनRupee,
+    IndianRupee,
     Shield,
     Upload,
     X,
