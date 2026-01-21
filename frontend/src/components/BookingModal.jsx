@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Users, CreditCard, CheckCircle, ShieldInfo } from 'lucide-react';
+import { X, Calendar, Users, CreditCard, CheckCircle, ShieldCheck } from 'lucide-react';
 import api from '../services/api';
 
 const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
