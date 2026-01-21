@@ -26,6 +26,11 @@ const userSchema = new mongoose.Schema({
         enum: ['tourist', 'creator', 'admin'],
         default: 'tourist'
     },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true
+    },
     language: {
         type: String,
         enum: ['en', 'ta'],
