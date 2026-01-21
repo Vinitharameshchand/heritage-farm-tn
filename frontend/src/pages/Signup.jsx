@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, UserPlus, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, UserPlus, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -32,89 +32,107 @@ const Signup = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-slate-50">
+        <div className="min-h-screen flex items-center justify-center px-6 py-24 bg-slate-950 relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full" />
+
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="max-w-xl w-full"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="max-w-2xl w-full relative z-10"
             >
-                <div className="text-center mb-8">
-                    <Link to="/" className="inline-flex items-center gap-2 mb-6">
-                        <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white font-bold text-xl">
+                <div className="text-center mb-12">
+                    <Link to="/" className="inline-flex items-center gap-3 mb-8 group">
+                        <div className="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
                             H
                         </div>
-                        <span className="text-2xl font-outfit font-extrabold tracking-tight gradient-text">
-                            Heritage Farm
+                        <span className="text-3xl font-outfit font-black tracking-tighter text-white">
+                            Heritage <span className="text-emerald-500 italic">Farm</span>
                         </span>
                     </Link>
-                    <h2 className="text-3xl font-outfit font-black mb-2">Create Account</h2>
-                    <p className="text-slate-500">Join our community of explorers and creators</p>
+                    <h2 className="text-5xl font-outfit font-black mb-4 text-white">Join the Collective</h2>
+                    <p className="text-slate-400 text-lg font-medium">Create your account to start exploring or hosting authentic experiences</p>
                 </div>
 
-                <div className="bg-white p-8 rounded-[32px] premium-shadow border border-slate-100">
+                <div className="glass-card p-10 md:p-12 rounded-[48px] border-white/5 shadow-2xl">
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 border border-red-100 text-red-600 rounded-2xl text-sm font-medium">
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="mb-8 p-5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-2xl text-sm font-bold flex items-center gap-3"
+                        >
+                            <AlertCircle className="w-5 h-5 flex-shrink-0" />
                             {error}
-                        </div>
+                        </motion.div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-10">
                         {/* Role Selection */}
-                        <div className="grid grid-cols-2 gap-4 mb-8">
-                            <button
-                                type="button"
-                                onClick={() => setFormData({ ...formData, role: 'tourist' })}
-                                className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${formData.role === 'tourist'
-                                        ? 'border-primary-600 bg-primary-50/50'
-                                        : 'border-slate-100 hover:border-slate-200 bg-white'
-                                    }`}
-                            >
-                                <div className={`p-2 rounded-xl ${formData.role === 'tourist' ? 'bg-primary-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-                                    <UserPlus className="w-5 h-5" />
-                                </div>
-                                <span className={`font-bold text-sm ${formData.role === 'tourist' ? 'text-primary-700' : 'text-slate-500'}`}>Explore Activities</span>
-                            </button>
+                        <div className="space-y-4">
+                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Identify Your Path</label>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, role: 'tourist' })}
+                                    className={`p-6 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 group ${formData.role === 'tourist'
+                                        ? 'border-emerald-500 bg-emerald-500/10'
+                                        : 'border-white/5 bg-white/5 hover:border-white/10'
+                                        }`}
+                                >
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${formData.role === 'tourist' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/5 text-slate-500 group-hover:text-slate-300'}`}>
+                                        <UserPlus className="w-6 h-6" />
+                                    </div>
+                                    <div className="text-center">
+                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'tourist' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>Tourist</div>
+                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">Discover Experiences</div>
+                                    </div>
+                                </button>
 
-                            <button
-                                type="button"
-                                onClick={() => setFormData({ ...formData, role: 'creator' })}
-                                className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 ${formData.role === 'creator'
-                                        ? 'border-heritage-600 bg-heritage-50/50'
-                                        : 'border-slate-100 hover:border-slate-200 bg-white'
-                                    }`}
-                            >
-                                <div className={`p-2 rounded-xl ${formData.role === 'creator' ? 'bg-heritage-600 text-white' : 'bg-slate-100 text-slate-400'}`}>
-                                    <ShieldCheck className="w-5 h-5" />
-                                </div>
-                                <span className={`font-bold text-sm ${formData.role === 'creator' ? 'text-heritage-700' : 'text-slate-500'}`}>Host Experiences</span>
-                            </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setFormData({ ...formData, role: 'creator' })}
+                                    className={`p-6 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 group ${formData.role === 'creator'
+                                        ? 'border-emerald-500 bg-emerald-500/10'
+                                        : 'border-white/5 bg-white/5 hover:border-white/10'
+                                        }`}
+                                >
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-all ${formData.role === 'creator' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-white/5 text-slate-500 group-hover:text-slate-300'}`}>
+                                        <ShieldCheck className="w-6 h-6" />
+                                    </div>
+                                    <div className="text-center">
+                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'creator' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>Creator</div>
+                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">Host & Earn</div>
+                                    </div>
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-slate-700 ml-1">Full Name</label>
-                                <div className="relative">
-                                    <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-3">
+                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Full Name</label>
+                                <div className="relative group">
+                                    <User className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                     <input
                                         type="text"
                                         required
                                         placeholder="John Doe"
-                                        className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:bg-white transition-all"
+                                        className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-slate-700 ml-1">Email Address</label>
-                                <div className="relative">
-                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                            <div className="space-y-3">
+                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Email Address</label>
+                                <div className="relative group">
+                                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                     <input
                                         type="email"
                                         required
-                                        placeholder="name@example.com"
-                                        className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:bg-white transition-all"
+                                        placeholder="your@email.com"
+                                        className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     />
@@ -122,43 +140,46 @@ const Signup = () => {
                             </div>
                         </div>
 
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 ml-1">Choose Password</label>
-                            <div className="relative">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <div className="space-y-3">
+                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Choose Secret Phrase</label>
+                            <div className="relative group">
+                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                 <input
                                     type="password"
                                     required
-                                    placeholder="At least 6 characters"
-                                    className="w-full pl-12 pr-4 py-4 bg-slate-50 rounded-2xl border border-slate-100 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:bg-white transition-all"
+                                    placeholder="••••••••"
+                                    className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                                     value={formData.password}
                                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                 />
                             </div>
                         </div>
 
-                        <p className="text-xs text-slate-400 px-1">
-                            By creating an account, you agree to our <a href="#" className="text-primary-600 font-bold hover:underline">Terms of Service</a> and <a href="#" className="text-primary-600 font-bold hover:underline">Privacy Policy</a>.
-                        </p>
-
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className={`w-full h-14 ${formData.role === 'creator' ? 'bg-heritage-600 hover:bg-heritage-700' : 'bg-slate-900 hover:bg-slate-800'} text-white rounded-2xl font-bold flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-70 disabled:active:scale-100`}
+                            className="w-full h-20 btn-primary text-xl flex items-center justify-center gap-3 disabled:opacity-50"
                         >
-                            {isLoading ? 'Creating Account...' : 'Get Started'}
-                            {!isLoading && <ArrowRight className="w-5 h-5" />}
+                            {isLoading ? 'Creating Identity...' : 'Initialize Account'}
+                            {!isLoading && <ArrowRight className="w-6 h-6" />}
                         </button>
                     </form>
 
-                    <div className="mt-8 text-center text-sm text-slate-600">
-                        Already have an account?{' '}
-                        <Link to="/login" className="text-primary-600 font-bold hover:underline">Sign In</Link>
+                    <div className="mt-12 text-center">
+                        <p className="text-slate-500 font-bold mb-4">Already part of the heritage?</p>
+                        <Link to="/login" className="inline-flex items-center gap-2 text-emerald-500 font-black uppercase tracking-[0.2em] text-sm hover:gap-4 transition-all">
+                            Access Dashboard <ArrowRight className="w-4 h-4" />
+                        </Link>
                     </div>
                 </div>
+
+                <p className="mt-12 text-center text-slate-600 text-[10px] font-black uppercase tracking-[0.3em] max-w-md mx-auto leading-loose">
+                    By initializing your account, you agree to our <span className="text-slate-400">Terms of Service</span> and <span className="text-slate-400">Governance Protocol</span>.
+                </p>
             </motion.div>
         </div>
     );
 };
 
 export default Signup;
+
