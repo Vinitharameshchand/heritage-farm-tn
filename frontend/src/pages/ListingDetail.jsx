@@ -27,9 +27,11 @@ const ListingDetail = () => {
 
     const handleBookingConfirm = async (bookingData) => {
         try {
-            await api.post('/bookings', bookingData);
+            const response = await api.post('/bookings', bookingData);
+            return response.data;
         } catch (error) {
             console.error('Booking failed:', error);
+            throw error;
         }
     };
 
