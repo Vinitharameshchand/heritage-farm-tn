@@ -10,6 +10,8 @@ import mongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
 import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
+import passport from 'passport';
+import './src/config/passport.js';
 import errorHandler from './src/middlewares/error.middleware.js';
 
 // Route files
@@ -31,6 +33,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+app.use(passport.initialize());
 
 // Sanitize data
 app.use(mongoSanitize());
