@@ -1,9 +1,15 @@
+import logger from '../utils/logger.js';
+
 const ErrorHandler = (err, req, res, next) => {
     let error = { ...err };
     error.message = err.message;
 
-    // Log to console for dev
-    console.error(err);
+    // Log to Winston
+    logger.error(`${err.name}: ${err.message}`, {
+        url: req.originalUrl,
+        method: req.method,
+        stack: err.stack
+    });
 
     // Mongoose bad ObjectId
     if (err.name === 'CastError') {
@@ -26,10 +32,23 @@ const ErrorHandler = (err, req, res, next) => {
         error.statusCode = 400;
     }
 
+    // JWT Errors
+    if (err.name === 'JsonWebTokenError') {
+        error = new Error('Invalid authentication token');
+        error.statusCode = 401;
+    }
+
+    if (err.name === 'TokenExpiredError') {
+        error = new Error('Authentication token expired');
+        error.statusCode = 401;
+    }
+
     res.status(error.statusCode || 500).json({
         success: false,
-        error: error.message || 'Server Error'
+        error: error.message || 'Server Error',
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
 };
 
 export default ErrorHandler;
+
