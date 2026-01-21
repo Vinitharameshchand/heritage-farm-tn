@@ -53,15 +53,15 @@ const Navbar = () => {
                     {user ? (
                         <div className="flex items-center gap-6">
                             {user.role === 'creator' && (
-                                <Link to="/dashboard" className="bg-heritage-50 text-heritage-700 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-heritage-100 transition-colors">
+                                <Link to="/creator/dashboard" className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all">
                                     <LayoutDashboard className="w-4 h-4" />
                                     Dashboard
                                 </Link>
                             )}
                             <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
                                 <div className="text-right">
-                                    <div className="text-sm font-bold text-slate-900">{user.name}</div>
-                                    <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{user.role}</div>
+                                    <div className="text-sm font-bold text-white">{user.name}</div>
+                                    <div className="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">{user.role}</div>
                                 </div>
                                 <button
                                     onClick={handleLogout}
