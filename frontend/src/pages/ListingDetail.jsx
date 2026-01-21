@@ -3,11 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Star, Clock, Calendar, Users, Shield, ArrowLeft } from 'lucide-react';
 import api from '../services/api';
+import BookingModal from '../components/BookingModal';
 
 const ListingDetail = () => {
     const { id } = useParams();
     const [listing, setListing] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isBookingOpen, setIsBookingOpen] = useState(false);
 
     useEffect(() => {
         const fetchListing = async () => {
@@ -23,94 +25,110 @@ const ListingDetail = () => {
         fetchListing();
     }, [id]);
 
-    if (loading) return <div className="min-h-screen flex items-center justify-center font-outfit text-2xl animate-pulse">Loading experience...</div>;
-    if (!listing) return <div className="min-h-screen flex items-center justify-center">Experience not found.</div>;
+    const handleBookingConfirm = async (bookingData) => {
+        try {
+            await api.post('/bookings', bookingData);
+        } catch (error) {
+            console.error('Booking failed:', error);
+        }
+    };
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center font-outfit text-2xl text-emerald-500 animate-pulse bg-slate-950">Loading experience...</div>;
+    if (!listing) return <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">Experience not found.</div>;
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-slate-950 text-white">
             {/* Hero Header */}
-            <div className="relative h-[60vh] overflow-hidden">
+            <div className="relative h-[70vh] overflow-hidden">
                 <img
                     src={listing.images?.[0] || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1600'}
                     alt={listing.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
 
                 <Link
                     to="/discover"
-                    className="absolute top-8 left-8 p-3 bg-white/20 backdrop-blur-md rounded-full text-white hover:bg-white/40 transition-all border border-white/20"
+                    className="absolute top-8 left-8 p-3 glass rounded-full text-white hover:bg-white/20 transition-all"
                 >
                     <ArrowLeft className="w-6 h-6" />
                 </Link>
 
-                <div className="absolute bottom-12 left-12 right-12 max-w-7xl mx-auto">
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className="px-3 py-1 bg-primary-600 text-white rounded-full text-xs font-bold uppercase tracking-widest">
-                            {listing.category}
-                        </span>
-                        <div className="flex items-center gap-1 text-white bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs">
-                            <MapPin className="w-3 h-3" />
-                            {listing.location?.city}
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-full max-w-7xl px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="flex flex-col items-start gap-4"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="px-4 py-1.5 bg-emerald-600 text-white rounded-full text-xs font-bold uppercase tracking-widest">
+                                {listing.category}
+                            </span>
+                            <div className="flex items-center gap-1.5 glass px-4 py-1.5 rounded-full text-xs">
+                                <MapPin className="w-4 h-4 text-emerald-400" />
+                                {listing.location?.city}
+                            </div>
                         </div>
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-outfit font-black text-white mb-4">{listing.title}</h1>
-                    <div className="flex items-center gap-6 text-white/90">
-                        <div className="flex items-center gap-2">
-                            <Star className="w-5 h-5 text-amber-400 fill-current" />
-                            <span className="font-bold">{listing.rating}</span>
-                            <span className="text-white/60">({listing.reviewCount} reviews)</span>
+                        <h1 className="text-5xl md:text-7xl font-outfit font-black mb-4 leading-tight">{listing.title}</h1>
+                        <div className="flex flex-wrap items-center gap-6">
+                            <div className="flex items-center gap-2">
+                                <Star className="w-6 h-6 text-amber-400 fill-current" />
+                                <span className="font-bold text-xl">{listing.rating}</span>
+                                <span className="text-white/60">({listing.reviewCount} reviews)</span>
+                            </div>
+                            <div className="hidden md:block h-8 w-px bg-white/10" />
+                            <div className="flex items-center gap-2">
+                                <Clock className="w-6 h-6 text-emerald-400" />
+                                <span className="text-xl">{Math.floor(listing.duration / 60)}h {listing.duration % 60}m</span>
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2 border-l border-white/20 pl-6">
-                            <Clock className="w-5 h-5" />
-                            <span>{Math.floor(listing.duration / 60)}h {listing.duration % 60}m</span>
-                        </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-12 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+            <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
                 {/* Left Column: Info */}
-                <div className="lg:col-span-2 space-y-12">
+                <div className="lg:col-span-2 space-y-16">
                     <section>
-                        <h2 className="text-3xl font-outfit mb-6">About the Experience</h2>
-                        <p className="text-slate-600 text-lg leading-relaxed whitespace-pre-line">
+                        <h2 className="text-4xl font-outfit font-bold mb-8 flex items-center gap-3">
+                            <span className="w-8 h-1 bg-emerald-500 rounded-full" />
+                            About the Experience
+                        </h2>
+                        <p className="text-slate-400 text-xl leading-relaxed whitespace-pre-line">
                             {listing.description}
                         </p>
                     </section>
 
-                    <section className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-                            <Users className="w-6 h-6 text-primary-600 mb-3" />
-                            <div className="text-sm text-slate-500 mb-1">Capacity</div>
-                            <div className="font-bold">{listing.capacity} people</div>
-                        </div>
-                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-                            <Shield className="w-6 h-6 text-primary-600 mb-3" />
-                            <div className="text-sm text-slate-500 mb-1">Safety</div>
-                            <div className="font-bold">Verified</div>
-                        </div>
-                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-                            <Calendar className="w-6 h-6 text-primary-600 mb-3" />
-                            <div className="text-sm text-slate-500 mb-1">Difficulty</div>
-                            <div className="font-bold capitalize">{listing.difficulty}</div>
-                        </div>
-                        <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
-                            <MapPin className="w-6 h-6 text-primary-600 mb-3" />
-                            <div className="text-sm text-slate-500 mb-1">Location</div>
-                            <div className="font-bold">{listing.location?.district}</div>
-                        </div>
+                    <section className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        {[
+                            { icon: Users, label: 'Capacity', value: `${listing.capacity} people` },
+                            { icon: Shield, label: 'Safety', value: 'Verified' },
+                            { icon: Calendar, label: 'Difficulty', value: listing.difficulty },
+                            { icon: MapPin, label: 'Location', value: listing.location?.district }
+                        ].map((item, idx) => (
+                            <div key={idx} className="glass-card p-8 rounded-[32px] group">
+                                <item.icon className="w-8 h-8 text-emerald-500 mb-4 group-hover:scale-110 transition-transform" />
+                                <div className="text-sm text-slate-500 mb-1">{item.label}</div>
+                                <div className="font-bold text-lg capitalize">{item.value}</div>
+                            </div>
+                        ))}
                     </section>
 
                     <section>
-                        <h2 className="text-3xl font-outfit mb-6">What's included</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h2 className="text-3xl font-outfit font-bold mb-8">What's included</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {(listing.inclusions?.length > 0 ? listing.inclusions : ['Local guide', 'Safety equipment', 'Refreshments']).map((inc, i) => (
-                                <div key={i} className="flex items-center gap-3 text-slate-600">
-                                    <div className="w-2 h-2 rounded-full bg-primary-600" />
-                                    {inc}
-                                </div>
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5"
+                                >
+                                    <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                                    <span className="text-slate-300 font-medium">{inc}</span>
+                                </motion.div>
                             ))}
                         </div>
                     </section>
@@ -118,29 +136,41 @@ const ListingDetail = () => {
 
                 {/* Right Column: Booking Card */}
                 <div className="lg:col-span-1">
-                    <div className="sticky top-32 bg-white rounded-[40px] p-8 premium-shadow border border-slate-100">
-                        <div className="flex items-baseline gap-2 mb-8">
-                            <span className="text-4xl font-black text-slate-900">₹{listing.price}</span>
-                            <span className="text-slate-400">/ person</span>
+                    <div className="sticky top-32 glass-card rounded-[48px] p-10 border-emerald-500/10">
+                        <div className="flex items-baseline gap-2 mb-10">
+                            <span className="text-5xl font-black text-emerald-500 font-outfit">₹{listing.price}</span>
+                            <span className="text-slate-400 text-lg">/ person</span>
                         </div>
 
-                        <div className="space-y-4 mb-8">
-                            <button className="w-full h-14 bg-slate-900 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 transition-all active:scale-95">
-                                Book Experience
+                        <div className="space-y-4 mb-10">
+                            <button
+                                onClick={() => setIsBookingOpen(true)}
+                                className="w-full h-16 btn-primary text-lg"
+                            >
+                                Book This Experience
                             </button>
-                            <button className="w-full h-14 border border-slate-200 text-slate-600 rounded-2xl font-bold hover:bg-slate-50 transition-all">
-                                Add to Itinerary
+                            <button className="w-full h-16 bg-slate-800 text-white rounded-full font-bold hover:bg-slate-700 transition-all border border-white/5">
+                                Add to Journey Arc
                             </button>
                         </div>
 
-                        <div className="text-center text-xs text-slate-400">
-                            Free cancellation up to 24 hours before
+                        <div className="flex items-center justify-center gap-2 text-sm text-emerald-400/60 font-medium">
+                            <Shield className="w-4 h-4" />
+                            Secure Booking Protection
                         </div>
                     </div>
                 </div>
             </div>
+
+            <BookingModal
+                isOpen={isBookingOpen}
+                onClose={() => setIsBookingOpen(false)}
+                listing={listing}
+                onConfirm={handleBookingConfirm}
+            />
         </div>
     );
 };
 
 export default ListingDetail;
+
