@@ -9,18 +9,26 @@ const Discover = () => {
     const [listings, setListings] = useState([]);
     const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState('All');
+    const [searchTerm, setSearchTerm] = useState('');
 
     const categories = ['All', 'AgriRural', 'HeritageCulture', 'EcoAdventure'];
 
     useEffect(() => {
-        fetchListings();
-    }, [activeCategory]);
+        const delayDebounceFn = setTimeout(() => {
+            fetchListings();
+        }, 500);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [activeCategory, searchTerm]);
 
     const fetchListings = async () => {
         try {
             setLoading(true);
-            const categoryParam = activeCategory !== 'All' ? `?category=${activeCategory}` : '';
-            const response = await api.get(`/listings${categoryParam}`);
+            const params = {};
+            if (activeCategory !== 'All') params.category = activeCategory;
+            if (searchTerm) params.search = searchTerm;
+
+            const response = await api.get('/listings', { params });
             setListings(response.data.data);
         } catch (error) {
             console.error('Error fetching listings:', error);
@@ -44,6 +52,8 @@ const Discover = () => {
                     <input
                         type="text"
                         placeholder="Search activities, locations..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-12 pr-4 py-4 bg-white rounded-2xl border border-slate-100 premium-shadow focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-all"
                     />
                 </div>
@@ -56,8 +66,8 @@ const Discover = () => {
                         key={cat}
                         onClick={() => setActiveCategory(cat)}
                         className={`px-6 py-2.5 rounded-full font-bold transition-all whitespace-nowrap ${activeCategory === cat
-                                ? 'bg-primary-600 text-white premium-shadow'
-                                : 'bg-white text-slate-600 border border-slate-100 hover:bg-slate-50'
+                            ? 'bg-primary-600 text-white premium-shadow'
+                            : 'bg-white text-slate-600 border border-slate-100 hover:bg-slate-50'
                             }`}
                     >
                         {cat === 'All' ? 'All Experiences' : t(cat.toLowerCase().replace('rural', '_rural').replace('culture', '_culture').replace('adventure', '_adventure'))}
