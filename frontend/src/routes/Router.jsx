@@ -5,6 +5,9 @@ import Discover from '../pages/Discover';
 import ListingDetail from '../pages/ListingDetail';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import CreatorDashboard from '../pages/CreatorDashboard';
+import CreateListing from '../pages/CreateListing';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const AppRouter = () => {
     return (
@@ -16,6 +19,23 @@ const AppRouter = () => {
                 <Route path="/listings/:id" element={<ListingDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+
+                {/* Creator Routes */}
+                <Route path="/creator/dashboard" element={
+                    <ProtectedRoute allowedRoles={['creator', 'admin']}>
+                        <CreatorDashboard />
+                    </ProtectedRoute>
+                } />
+                <Route path="/creator/create" element={
+                    <ProtectedRoute allowedRoles={['creator', 'admin']}>
+                        <CreateListing />
+                    </ProtectedRoute>
+                } />
+                <Route path="/creator/edit/:id" element={
+                    <ProtectedRoute allowedRoles={['creator', 'admin']}>
+                        <CreateListing />
+                    </ProtectedRoute>
+                } />
             </Routes>
         </BrowserRouter>
     );
