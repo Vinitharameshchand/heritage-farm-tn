@@ -8,6 +8,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
     const [numGuests, setNumGuests] = useState(1);
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [error, setError] = useState('');
 
     const calculateTotal = () => {
         if (!startDate || !endDate) return 0;
@@ -21,23 +22,26 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsProcessing(true);
+        setError('');
 
-        // Simulate API call
-        setTimeout(() => {
-            onConfirm({
+        try {
+            await onConfirm({
                 listingId: listing._id,
                 startDate,
                 endDate,
                 numGuests,
                 totalPrice: calculateTotal()
             });
-            setIsProcessing(false);
             setIsSuccess(true);
             setTimeout(() => {
                 onClose();
                 setIsSuccess(false);
-            }, 2000);
-        }, 1500);
+            }, 2500);
+        } catch (err) {
+            setError(err.response?.data?.message || 'Booking failed. Please try again.');
+        } finally {
+            setIsProcessing(false);
+        }
     };
 
     if (!isOpen) return null;
@@ -52,28 +56,36 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                     className="relative w-full max-w-md glass overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
                 >
                     {isSuccess ? (
-                        <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
+                        <div className="flex flex-col items-center justify-center py-16 px-8 text-center">
                             <motion.div
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                                className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6"
+                                className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mb-8"
                             >
-                                <CheckCircle className="w-10 h-10 text-emerald-500" />
+                                <CheckCircle className="w-12 h-12 text-emerald-500" />
                             </motion.div>
-                            <h3 className="text-2xl font-bold mb-2">Booking Confirmed!</h3>
-                            <p className="text-slate-400">Your experience at {listing.title} has been booked.</p>
+                            <h3 className="text-3xl font-outfit font-black mb-4">Secured!</h3>
+                            <p className="text-slate-400 text-lg font-medium leading-relaxed">
+                                Your journey at <span className="text-emerald-400">{listing.title}</span> has been successfully indexed.
+                            </p>
                         </div>
                     ) : (
                         <>
-                            <div className="flex justify-between items-center p-6 border-b border-white/5">
-                                <h3 className="text-xl font-bold">Book Experience</h3>
-                                <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-full transition-colors">
-                                    <X className="w-5 h-5" />
+                            <div className="flex justify-between items-center p-8 border-b border-white/5">
+                                <h3 className="text-2xl font-outfit font-black">Reserve Arc</h3>
+                                <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition-all text-slate-500 hover:text-white">
+                                    <X className="w-6 h-6" />
                                 </button>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                            <form onSubmit={handleSubmit} className="p-8 space-y-8">
+                                {error && (
+                                    <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                                        <X className="w-4 h-4" />
+                                        {error}
+                                    </div>
+                                )}
                                 <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
                                     <p className="text-sm text-emerald-400 font-medium">Listing</p>
                                     <p className="font-semibold">{listing.title}</p>
