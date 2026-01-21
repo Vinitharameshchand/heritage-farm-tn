@@ -51,13 +51,13 @@ const listingSchema = new mongoose.Schema({
     },
     difficulty: {
         type: String,
-        enum: ['easy', 'moderate', 'hard'],
-        default: 'easy'
+        enum: ['Easy', 'Moderate', 'Challenging'],
+        default: 'Easy'
     },
     images: [{
-        type: String,
-        default: 'no-photo.jpg'
+        type: String
     }],
+    safetyInfo: [String],
     inclusions: [String],
     tags: [String],
     status: {
