@@ -9,8 +9,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react'],
-          ui: ['@google/model-viewer'],
+          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'lucide-react']
         }
       }
     },
