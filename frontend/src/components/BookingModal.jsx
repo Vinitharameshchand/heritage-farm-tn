@@ -220,7 +220,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                                         )}
                                     </button>
                                     <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                                        <ShieldInfo className="w-3 h-3 text-emerald-500" />
+                                        <ShieldCheck className="w-3 h-3 text-emerald-500" />
                                         Secured by Razorpay
                                     </div>
                                 </div>
