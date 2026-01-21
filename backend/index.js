@@ -17,6 +17,7 @@ import authRoutes from './src/routes/auth.routes.js';
 import listingRoutes from './src/routes/listing.routes.js';
 import bookingRoutes from './src/routes/booking.routes.js';
 import paymentRoutes from './src/routes/payment.routes.js';
+import uploadRoutes from './src/routes/upload.routes.js';
 
 // Load env vars
 dotenv.config();
@@ -64,6 +65,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Error Handler Middleware
 app.use(errorHandler);
