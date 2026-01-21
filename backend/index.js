@@ -16,6 +16,7 @@ import errorHandler from './src/middlewares/error.middleware.js';
 import authRoutes from './src/routes/auth.routes.js';
 import listingRoutes from './src/routes/listing.routes.js';
 import bookingRoutes from './src/routes/booking.routes.js';
+import paymentRoutes from './src/routes/payment.routes.js';
 
 // Load env vars
 dotenv.config();
@@ -62,6 +63,7 @@ const connectDB = async () => {
 app.use('/api/auth', authRoutes);
 app.use('/api/listings', listingRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/payments', paymentRoutes);
 
 // Error Handler Middleware
 app.use(errorHandler);
