@@ -20,8 +20,20 @@ export const getListings = async (req, res) => {
         // Create operators ($gt, $gte, etc)
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
+        const parsedQuery = JSON.parse(queryStr);
+
+        // Advanced Search
+        if (req.query.search) {
+            parsedQuery.$or = [
+                { title: { $regex: req.query.search, $options: 'i' } },
+                { 'location.city': { $regex: req.query.search, $options: 'i' } },
+                { 'location.district': { $regex: req.query.search, $options: 'i' } },
+                { category: { $regex: req.query.search, $options: 'i' } }
+            ];
+        }
+
         // Finding resource
-        query = Listing.find(JSON.parse(queryStr)).populate('creator', 'name email');
+        query = Listing.find(parsedQuery).populate('creator', 'name email');
 
         // Select Fields
         if (req.query.select) {
