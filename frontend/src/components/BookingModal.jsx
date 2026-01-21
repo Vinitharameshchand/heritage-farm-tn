@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Calendar, Users, CreditCard, CheckCircle } from 'lucide-react';
+import { X, Calendar, Users, CreditCard, CheckCircle, ShieldInfo } from 'lucide-react';
+import api from '../services/api';
 
 const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
     const [startDate, setStartDate] = useState('');
@@ -19,26 +20,84 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
         return diffDays * listing.price * numGuests;
     };
 
+    const loadRazorpay = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsProcessing(true);
         setError('');
 
         try {
-            await onConfirm({
+            // 1. Load Razorpay Script
+            const res = await loadRazorpay();
+            if (!res) {
+                throw new Error('Razorpay SDK failed to load. Are you online?');
+            }
+
+            // 2. Create Initial Booking (Status: pending)
+            const bookingResponse = await onConfirm({
                 listingId: listing._id,
                 startDate,
                 endDate,
                 numGuests,
                 totalPrice: calculateTotal()
             });
-            setIsSuccess(true);
-            setTimeout(() => {
-                onClose();
-                setIsSuccess(false);
-            }, 2500);
+
+            const bookingId = bookingResponse.data._id;
+
+            // 3. Create Razorpay Order
+            const { data: orderData } = await api.post('/payments/order', { bookingId });
+            const order = orderData.order;
+
+            // 4. Initialize Razorpay Checkout
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_placeholder',
+                amount: order.amount,
+                currency: order.currency,
+                name: 'Heritage Farm',
+                description: `Booking for ${listing.title}`,
+                order_id: order.id,
+                handler: async function (response) {
+                    try {
+                        setIsProcessing(true);
+                        // 5. Verify Payment
+                        await api.post('/payments/verify', {
+                            ...response,
+                            bookingId
+                        });
+                        setIsSuccess(true);
+                        setTimeout(() => {
+                            onClose();
+                            setIsSuccess(false);
+                        }, 2500);
+                    } catch (err) {
+                        setError('Payment verification failed. Please contact support.');
+                    } finally {
+                        setIsProcessing(false);
+                    }
+                },
+                prefill: {
+                    name: '',
+                    email: '',
+                },
+                theme: {
+                    color: '#10b981',
+                },
+            };
+
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+
         } catch (err) {
-            setError(err.response?.data?.message || 'Booking failed. Please try again.');
+            setError(err.response?.data?.message || err.message || 'Payment initiation failed.');
         } finally {
             setIsProcessing(false);
         }
@@ -160,6 +219,10 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                                             </>
                                         )}
                                     </button>
+                                    <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+                                        <ShieldInfo className="w-3 h-3 text-emerald-500" />
+                                        Secured by Razorpay
+                                    </div>
                                 </div>
                             </form>
                         </>
