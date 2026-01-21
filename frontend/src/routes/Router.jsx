@@ -8,6 +8,7 @@ import Signup from '../pages/Signup';
 import CreatorDashboard from '../pages/CreatorDashboard';
 import CreateListing from '../pages/CreateListing';
 import ProtectedRoute from '../components/ProtectedRoute';
+import TripPlanner from '../pages/TripPlanner';
 
 const AppRouter = () => {
     return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/listings/:id" element={<ListingDetail />} />
+                <Route path="/planner" element={<TripPlanner />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
