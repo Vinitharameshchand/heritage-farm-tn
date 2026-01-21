@@ -9,6 +9,7 @@ import CreatorDashboard from '../pages/CreatorDashboard';
 import CreateListing from '../pages/CreateListing';
 import ProtectedRoute from '../components/ProtectedRoute';
 import TripPlanner from '../pages/TripPlanner';
+import HeritageVision from '../pages/HeritageVision';
 
 const AppRouter = () => {
     return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
                 <Route path="/discover" element={<Discover />} />
                 <Route path="/listings/:id" element={<ListingDetail />} />
                 <Route path="/planner" element={<TripPlanner />} />
+                <Route path="/heritage-vision/:id" element={<HeritageVision />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
 
