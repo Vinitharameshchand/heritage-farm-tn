@@ -70,6 +70,19 @@ export const getMe = async (req, res) => {
     }
 };
 
+// @desc    Google OAuth Callback
+// @route   GET /api/auth/google/callback
+// @access  Public
+export const googleAuthCallback = (req, res) => {
+    const user = req.user;
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    });
+
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    res.redirect(`${clientUrl}/login?token=${token}`);
+};
+
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
     // Create token
