@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, LogOut, LayoutDashboard, Compass } from 'lucide-react';
+import { Menu, X, Globe, LogOut, LayoutDashboard, Compass, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -35,7 +35,12 @@ const Navbar = () => {
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
-                    <Link to="/discover" className="text-slate-600 font-semibold hover:text-primary-600 transition-colors flex items-center gap-1.5">
+                    <Link to="/planner" className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all border border-emerald-500/20">
+                        <Sparkles className="w-4 h-4" />
+                        AI Planner
+                    </Link>
+
+                    <Link to="/discover" className="text-slate-400 font-semibold hover:text-emerald-500 transition-colors flex items-center gap-1.5">
                         <Compass className="w-4 h-4" />
                         Explore
                     </Link>
