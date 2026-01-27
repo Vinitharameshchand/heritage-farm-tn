@@ -18,7 +18,12 @@ export default function DiscoveryMap() {
       { name: "Madurai", lat: 9.9252, lng: 78.1198, region: "Southern" },
       { name: "Coimbatore", lat: 11.0168, lng: 76.9558, region: "Western" },
       { name: "Thanjavur", lat: 10.787, lng: 79.1378, region: "Central" },
-      { name: "The Nilgiris (Ooty)", lat: 11.4102, lng: 76.695, region: "Western" },
+      {
+        name: "The Nilgiris (Ooty)",
+        lat: 11.4102,
+        lng: 76.695,
+        region: "Western",
+      },
       { name: "Kanyakumari", lat: 8.0883, lng: 77.5385, region: "Southern" },
       { name: "Rameswaram", lat: 9.2876, lng: 79.3129, region: "Southern" },
       { name: "Tirunelveli", lat: 8.7139, lng: 77.7567, region: "Southern" },
@@ -164,7 +169,10 @@ export default function DiscoveryMap() {
             <div className="flex items-center gap-2">
               <Compass className="text-green-600" size={24} />
               <h2 className="text-xl font-semibold">
-                {t("discovery.your_location", "Explore Tamil Nadu - 38 Districts")}
+                {t(
+                  "discovery.your_location",
+                  "Explore Tamil Nadu - 38 Districts",
+                )}
               </h2>
             </div>
             <div className="text-sm text-gray-600">
@@ -174,20 +182,23 @@ export default function DiscoveryMap() {
 
           {/* Region Filter */}
           <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
-            {["all", "Northern", "Western", "Central", "Southern"].map((region) => (
-              <button
-                key={region}
-                onClick={() => setSelectedRegion(region)}
-                className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
-                  selectedRegion === region
-                    ? "bg-green-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {region === "all" ? "All Regions" : region}
-                {region !== "all" && ` (${districtsByRegion[region]?.length || 0})`}
-              </button>
-            ))}
+            {["all", "Northern", "Western", "Central", "Southern"].map(
+              (region) => (
+                <button
+                  key={region}
+                  onClick={() => setSelectedRegion(region)}
+                  className={`px-4 py-2 rounded-full whitespace-nowrap transition-all ${
+                    selectedRegion === region
+                      ? "bg-green-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {region === "all" ? "All Regions" : region}
+                  {region !== "all" &&
+                    ` (${districtsByRegion[region]?.length || 0})`}
+                </button>
+              ),
+            )}
           </div>
 
           {/* District Grid */}
@@ -205,7 +216,9 @@ export default function DiscoveryMap() {
                 <MapPin className="w-4 h-4 mx-auto mb-1 text-green-600" />
                 <p className="text-xs font-semibold text-center">{loc.name}</p>
                 {loc.region && (
-                  <p className="text-xs text-gray-500 text-center mt-1">{loc.region}</p>
+                  <p className="text-xs text-gray-500 text-center mt-1">
+                    {loc.region}
+                  </p>
                 )}
               </button>
             ))}

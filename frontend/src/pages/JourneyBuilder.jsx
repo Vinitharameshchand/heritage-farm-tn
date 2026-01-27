@@ -26,14 +26,89 @@ export default function JourneyBuilder() {
   const [loading, setLoading] = useState(false);
 
   const locations = [
-    { name: "Thanjavur", lat: 10.787, lng: 79.1378, desc: "UNESCO Heritage" },
-    { name: "Madurai", lat: 9.9252, lng: 78.1198, desc: "Temple City" },
-    { name: "Ooty", lat: 11.4102, lng: 76.695, desc: "Hill Station" },
+    {
+      name: "Chennai",
+      lat: 13.0827,
+      lng: 80.2707,
+      desc: "Capital & Marina Beach",
+      region: "Northern",
+    },
+    {
+      name: "Madurai",
+      lat: 9.9252,
+      lng: 78.1198,
+      desc: "Temple City",
+      region: "Southern",
+    },
+    {
+      name: "Thanjavur",
+      lat: 10.787,
+      lng: 79.1378,
+      desc: "UNESCO Heritage",
+      region: "Central",
+    },
+    {
+      name: "Coimbatore",
+      lat: 11.0168,
+      lng: 76.9558,
+      desc: "Manchester of South",
+      region: "Western",
+    },
+    {
+      name: "The Nilgiris",
+      lat: 11.4102,
+      lng: 76.695,
+      desc: "Queen of Hills",
+      region: "Western",
+    },
+    {
+      name: "Kanyakumari",
+      lat: 8.0883,
+      lng: 77.5385,
+      desc: "Land's End",
+      region: "Southern",
+    },
+    {
+      name: "Rameswaram",
+      lat: 9.2876,
+      lng: 79.3129,
+      desc: "Island Town",
+      region: "Southern",
+    },
     {
       name: "Kodaikanal",
       lat: 10.2381,
       lng: 77.4892,
       desc: "Princess of Hills",
+      region: "Southern",
+    },
+    {
+      name: "Salem",
+      lat: 11.6643,
+      lng: 78.146,
+      desc: "Steel City & Yercaud",
+      region: "Western",
+    },
+    {
+      name: "Tiruchirappalli",
+      lat: 10.7905,
+      lng: 78.7047,
+      desc: "Rock Fort & Srirangam",
+      region: "Central",
+    },
+    {
+      name: "Vellore",
+      lat: 12.9165,
+      lng: 79.1325,
+      desc: "Golden Temple",
+      region: "Northern",
+    },
+    {
+      name: "Tirunelveli",
+      lat: 8.7139,
+      lng: 77.7567,
+      desc: "Nellai & Courtallam",
+      region: "Southern",
     },
   ];
 
