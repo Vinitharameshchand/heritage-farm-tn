@@ -101,6 +101,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
             setTimeout(() => {
               onClose();
               setIsSuccess(false);
+              navigate("/my-bookings");
             }, 2500);
           } catch (err) {
             setError("Payment verification failed. Please contact support.");
@@ -152,10 +153,13 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                 <CheckCircle className="w-12 h-12 text-emerald-500" />
               </motion.div>
               <h3 className="text-3xl font-outfit font-black mb-4">Secured!</h3>
-              <p className="text-slate-400 text-lg font-medium leading-relaxed">
+              <p className="text-slate-400 text-lg font-medium leading-relaxed mb-4">
                 Your journey at{" "}
                 <span className="text-emerald-400">{listing.title}</span> has
-                been successfully indexed.
+                been successfully confirmed.
+              </p>
+              <p className="text-slate-500 text-sm">
+                Redirecting to your bookings...
               </p>
             </div>
           ) : (

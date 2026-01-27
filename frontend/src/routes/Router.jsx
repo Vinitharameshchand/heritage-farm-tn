@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import CreatorDashboard from "../pages/CreatorDashboard";
 import CreateListing from "../pages/CreateListing";
+import MyBookings from "../pages/MyBookings";
 import ProtectedRoute from "../components/ProtectedRoute";
 import TripPlanner from "../pages/TripPlanner";
 import HeritageVision from "../pages/HeritageVision";
@@ -29,6 +30,16 @@ const AppRouter = () => {
         <Route path="/analytics" element={<GovAnalytics />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
+        {/* Tourist Routes */}
+        <Route
+          path="/my-bookings"
+          element={
+            <ProtectedRoute>
+              <MyBookings />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Creator Routes */}
         <Route
