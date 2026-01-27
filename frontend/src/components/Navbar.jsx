@@ -10,6 +10,7 @@ import {
   Compass,
   Sparkles,
   Calendar,
+  Camera,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -44,6 +45,14 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
+          <Link
+            to="/ar-explorer"
+            className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-400 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:from-purple-500/20 hover:to-pink-500/20 transition-all border border-purple-500/20"
+          >
+            <Camera className="w-4 h-4" />
+            AR View
+          </Link>
+
           <Link
             to="/planner"
             className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
@@ -144,6 +153,14 @@ const Navbar = () => {
             className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-6">
+              <Link
+                to="/ar-explorer"
+                className="text-lg font-bold text-purple-600 flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Camera className="w-5 h-5" />
+                AR View
+              </Link>
               <Link
                 to="/discover"
                 className="text-lg font-bold text-slate-900"
