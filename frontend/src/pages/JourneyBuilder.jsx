@@ -7,14 +7,17 @@ import {
   MapPin,
   ChevronRight,
   Check,
+  Compass,
 } from "lucide-react";
 import api from "../services/api";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function JourneyBuilder() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [preferences, setPreferences] = useState({
     startLocation: null,
@@ -171,6 +174,14 @@ export default function JourneyBuilder() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
+        <button
+          onClick={() => navigate("/discovery-map")}
+          className="mb-4 flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
+        >
+          <Compass size={20} />
+          Back to Discovery Map
+        </button>
+
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
