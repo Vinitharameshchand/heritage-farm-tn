@@ -210,20 +210,7 @@ export default function DiscoveryMap() {
               </button>
             ))}
           </div>
-              <button
-                key={loc.name}
-                onClick={() => selectLocation(loc)}
-                className={`p-3 rounded-lg border-2 transition-all ${
-                  location?.lat === loc.lat
-                    ? "border-green-600 bg-green-50"
-                    : "border-gray-200 hover:border-green-300"
-                }`}
-              >
-                <MapPin className="w-5 h-5 mx-auto mb-1 text-green-600" />
-                <p className="text-sm font-semibold">{loc.name}</p>
-              </button>
-            ))}
-          </div>
+
           <div className="flex items-center gap-4">
             <label className="text-sm font-medium">
               {t("discovery.search_radius", "Search Radius:")}
