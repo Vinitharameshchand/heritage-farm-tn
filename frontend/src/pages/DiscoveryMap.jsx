@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { MapPin, Compass, Navigation, Filter, Star, Sparkles } from "lucide-react";
+import {
+  MapPin,
+  Compass,
+  Navigation,
+  Filter,
+  Star,
+  Sparkles,
+} from "lucide-react";
 import api from "../services/api";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -633,7 +640,10 @@ function DiscoveryCard({ listing }) {
               </h2>
               {getFilteredDiscoveries().length === 0 ? (
                 <div className="text-center py-12">
-                  <Navigation className="mx-auto mb-4 text-gray-400" size={48} />
+                  <Navigation
+                    className="mx-auto mb-4 text-gray-400"
+                    size={48}
+                  />
                   <p className="text-gray-600">
                     {t(
                       "discovery.no_results",
