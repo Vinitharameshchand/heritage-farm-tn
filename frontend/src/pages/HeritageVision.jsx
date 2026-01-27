@@ -37,9 +37,11 @@ const HeritageVision = () => {
         try {
             setLoading(true);
             const response = await api.get(`/listings/${id}`);
+            console.log('HeritageVision - Listing fetched:', response.data.data);
             setListing(response.data.data);
         } catch (error) {
             console.error('Error fetching listing for AR:', error);
+            console.error('Error details:', error.response?.data);
         } finally {
             setLoading(false);
         }
@@ -54,13 +56,44 @@ const HeritageVision = () => {
         );
     }
 
-    if (!listing?.hasAR) {
+    if (!listing) {
         return (
             <div className="min-h-screen bg-black flex flex-col items-center justify-center p-6 text-center">
                 <Box className="w-16 h-16 text-slate-800 mb-6" />
-                <h2 className="text-2xl font-black mb-2">No AR Data Available</h2>
-                <p className="text-slate-500 mb-8 max-w-xs">This experience hasn't been scanned into the Heritage Vision yet.</p>
-                <button onClick={() => navigate(-1)} className="btn-secondary px-8 py-3">Return to Listing</button>
+                <h2 className="text-2xl font-black text-white mb-2">Listing Not Found</h2>
+                <p className="text-slate-500 mb-8 max-w-xs">This experience doesn't exist or has been removed.</p>
+                <button onClick={() => navigate('/discover')} className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-semibold transition-all">
+                    Browse Experiences
+                </button>
+            </div>
+        );
+    }
+
+    if (!listing?.hasAR) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col items-center justify-center p-6 text-center">
+                <Box className="w-16 h-16 text-slate-600 mb-6" />
+                <h2 className="text-3xl font-black mb-4 text-white">No AR Data Available</h2>
+                <p className="text-slate-400 mb-2 max-w-md text-lg">
+                    <span className="text-emerald-400 font-bold">{listing.title}</span> hasn't been scanned into Heritage Vision yet.
+                </p>
+                <p className="text-slate-500 mb-8 max-w-sm text-sm">
+                    AR experiences allow you to view 3D models of heritage sites and artifacts. Check back soon!
+                </p>
+                <div className="flex gap-4">
+                    <button 
+                        onClick={() => navigate(`/listings/${id}`)} 
+                        className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-semibold transition-all"
+                    >
+                        View Listing
+                    </button>
+                    <button 
+                        onClick={() => navigate('/discover')} 
+                        className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full font-semibold transition-all"
+                    >
+                        Browse More
+                    </button>
+                </div>
             </div>
         );
     }
