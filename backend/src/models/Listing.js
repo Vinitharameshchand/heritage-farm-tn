@@ -1,94 +1,121 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const listingSchema = new mongoose.Schema({
+const listingSchema = new mongoose.Schema(
+  {
     creator: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     title: {
-        type: String,
-        required: [true, 'Please add a title'],
-        trim: true,
-        maxlength: [100, 'Title cannot be more than 100 characters']
+      type: String,
+      required: [true, "Please add a title"],
+      trim: true,
+      maxlength: [100, "Title cannot be more than 100 characters"],
     },
     description: {
-        type: String,
-        required: [true, 'Please add a description'],
-        maxlength: [2000, 'Description cannot be more than 2000 characters']
+      type: String,
+      required: [true, "Please add a description"],
+      maxlength: [2000, "Description cannot be more than 2000 characters"],
     },
     category: {
-        type: String,
-        required: [true, 'Please add a category'],
-        enum: ['AgriRural', 'HeritageCulture', 'EcoAdventure']
+      type: String,
+      required: [true, "Please add a category"],
+      enum: ["AgriRural", "HeritageCulture", "EcoAdventure"],
     },
     subcategory: String,
     location: {
-        type: {
-            type: String,
-            enum: ['Point'],
-            default: 'Point'
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number],
+        index: "2dsphere",
+      },
+      formattedAddress: String,
+      city: String,
+      district: String,
+      nearbyPlaces: [
+        {
+          name: String,
+          type: String,
+          distance: Number,
+          description: String,
         },
-        coordinates: {
-            type: [Number],
-            index: '2dsphere'
-        },
-        formattedAddress: String,
-        city: String,
-        district: String
+      ],
     },
     price: {
-        type: Number,
-        required: [true, 'Please add a price']
+      type: Number,
+      required: [true, "Please add a price"],
     },
     capacity: {
-        type: Number,
-        required: [true, 'Please add capacity']
+      type: Number,
+      required: [true, "Please add capacity"],
     },
     duration: {
-        type: Number, // in minutes/hours
-        required: [true, 'Please add duration']
+      type: Number, // in minutes/hours
+      required: [true, "Please add duration"],
     },
     difficulty: {
-        type: String,
-        enum: ['Easy', 'Moderate', 'Challenging'],
-        default: 'Easy'
+      type: String,
+      enum: ["Easy", "Moderate", "Challenging"],
+      default: "Easy",
     },
-    images: [{
-        type: String
-    }],
+    images: [
+      {
+        type: String,
+      },
+    ],
     safetyInfo: [String],
     inclusions: [String],
     tags: [String],
     status: {
-        type: String,
-        enum: ['pending', 'approved', 'rejected'],
-        default: 'pending'
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
     rating: {
-        type: Number,
-        min: [1, 'Rating must be at least 1'],
-        max: [5, 'Rating cannot be more than 5'],
-        default: 4.5
+      type: Number,
+      min: [1, "Rating must be at least 1"],
+      max: [5, "Rating cannot be more than 5"],
+      default: 4.5,
     },
     reviewCount: {
-        type: Number,
-        default: 0
+      type: Number,
+      default: 0,
     },
     arModelUrl: {
-        type: String,
-        default: ''
+      type: String,
+      default: "",
     },
     hasAR: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
+    },
+    seasonalInfo: {
+      bestMonths: [String],
+      peakSeason: String,
+      availability: {
+        type: String,
+        enum: ["year-round", "seasonal"],
+        default: "year-round",
+      },
+    },
+    bundleCompatible: {
+      type: [String],
+      enum: ["AgriRural", "HeritageCulture", "EcoAdventure"],
+      default: [],
     },
     createdAt: {
-        type: Date,
-        default: Date.now
-    }
-}, {
-    timestamps: true
-});
+      type: Date,
+      default: Date.now,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
-export default mongoose.model('Listing', listingSchema);
+export default mongoose.model("Listing", listingSchema);
