@@ -229,59 +229,6 @@ export default function DiscoveryMap() {
   );
 
   return (
-  const categoryColors = {
-    AgriRural: "bg-green-100 text-green-800",
-    HeritageCulture: "bg-purple-100 text-purple-800",
-    EcoAdventure: "bg-blue-100 text-blue-800",
-  };
-
-  return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow">
-      <div className="h-48 bg-gradient-to-br from-green-400 to-emerald-600 relative">
-        <span
-          className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${categoryColors[listing.category]}`}
-        >
-          {listing.category}
-        </span>
-      </div>
-      <div className="p-4">
-        <h3 className="font-bold text-lg mb-2 line-clamp-2">{listing.title}</h3>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-          {listing.description}
-        </p>
-
-        {listing.location?.nearbyPlaces &&
-          listing.location.nearbyPlaces.length > 0 && (
-            <div className="mb-3 p-2 bg-amber-50 rounded border border-amber-200">
-              <p className="text-xs font-semibold text-amber-900 mb-1">
-                Nearby:
-              </p>
-              <p className="text-xs text-amber-800">
-                {listing.location.nearbyPlaces[0].name} (
-                {listing.location.nearbyPlaces[0].distance}km)
-              </p>
-            </div>
-          )}
-
-        <div className="flex items-center justify-between">
-          <span className="text-green-600 font-bold text-lg">
-            ₹{listing.price}
-          </span>
-          <div className="flex items-center gap-1 text-sm">
-            <Star size={14} fill="currentColor" className="text-yellow-500" />
-            <span className="font-semibold">{listing.rating.toFixed(1)}</span>
-            <span className="text-gray-500">({listing.reviewCount})</span>
-          </div>
-        </div>
-
-        <button className="w-full mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors font-semibold">
-          View Details
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
