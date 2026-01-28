@@ -94,7 +94,16 @@ const resources = {
             "my_account": "My Account",
             "sign_out": "Sign Out",
             "join_heritage_farm": "Join Heritage Farm",
-            "sign_in": "Sign In"
+            "sign_in": "Sign In",
+            
+            // Discover page
+            "discover_experiences": "Discover Experiences",
+            "discover_description": "Explore authentic Tamil Nadu through our curated local experiences.",
+            "search_placeholder": "Search activities, locations...",
+            "all_experiences": "All Experiences",
+            "filters": "Filters",
+            "no_experiences_found": "No experiences found",
+            "try_adjusting_filters": "Try adjusting your filters or searching for something else."
         }
     },
     ta: {
@@ -189,7 +198,16 @@ const resources = {
             "my_account": "எனது கணக்கு",
             "sign_out": "வெளியேறு",
             "join_heritage_farm": "ஹெரிடேஜ் பார்மில் சேரவும்",
-            "sign_in": "உள்நுழை"
+            "sign_in": "உள்நுழை",
+            
+            // Discover page
+            "discover_experiences": "அனுபவங்களைக் கண்டறியுங்கள்",
+            "discover_description": "எங்கள் தேர்ந்தெடுக்கப்பட்ட உள்ளூர் அனுபவங்கள் மூலம் உண்மையான தமிழ்நாட்டை ஆராயுங்கள்.",
+            "search_placeholder": "செயல்பாடுகள், இடங்களைத் தேடுங்கள்...",
+            "all_experiences": "அனைத்து அனுபவங்கள்",
+            "filters": "வடிகட்டிகள்",
+            "no_experiences_found": "அனுபவங்கள் எதுவும் கிடைக்கவில்லை",
+            "try_adjusting_filters": "உங்கள் வடிகட்டிகளை சரிசெய்யவும் அல்லது வேறு ஏதாவது தேடவும்."
         }
     }
 };
