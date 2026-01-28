@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
-  Camera,
+  Map as MapIcon,
   X,
   MapPin,
   Clock,
@@ -16,54 +16,100 @@ import {
   Zap,
   ChevronRight,
   Heart,
+  Maximize2,
+  Minimize2,
 } from "lucide-react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import api from "../services/api";
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+});
+
+const customIcon = new L.Icon({
+  iconUrl:
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='%23a855f7'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
+
+const tamilNaduLocations = [
+  { name: "Chennai", lat: 13.0827, lng: 80.2707 },
+  { name: "Madurai", lat: 9.9252, lng: 78.1198 },
+  { name: "Coimbatore", lat: 11.0168, lng: 76.9558 },
+  { name: "Trichy", lat: 10.7905, lng: 78.7047 },
+  { name: "Salem", lat: 11.6643, lng: 78.146 },
+  { name: "Tirunelveli", lat: 8.7139, lng: 77.7567 },
+  { name: "Thanjavur", lat: 10.787, lng: 79.1378 },
+  { name: "Kanyakumari", lat: 8.0883, lng: 77.5385 },
+  { name: "Ooty", lat: 11.4102, lng: 76.695 },
+  { name: "Rameswaram", lat: 9.2876, lng: 79.3129 },
+  { name: "Kanchipuram", lat: 12.8342, lng: 79.7036 },
+  { name: "Pondicherry", lat: 11.9416, lng: 79.8083 },
+];
+
+const MapBoundsController = ({ bounds }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (bounds) {
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+  }, [map, bounds]);
+  return null;
+};
 
 const ARExplorer = () => {
   const navigate = useNavigate();
-  const [isARActive, setIsARActive] = useState(false);
+  const [isMapActive, setIsMapActive] = useState(false);
   const [nearbyListings, setNearbyListings] = useState([]);
   const [selectedListing, setSelectedListing] = useState(null);
   const [guideVoiceEnabled, setGuideVoiceEnabled] = useState(true);
   const [guideSpeaking, setGuideSpeaking] = useState(false);
   const [guideMessage, setGuideMessage] = useState("");
-  const videoRef = useRef(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const mapRef = useRef(null);
+
+  const tamilNaduBounds = [
+    [7.8, 76.2],
+    [13.5, 80.3],
+  ];
 
   useEffect(() => {
-    if (isARActive) {
-      startCamera();
+    if (isMapActive) {
       fetchNearbyListings();
       welcomeMessage();
     }
-    return () => {
-      stopCamera();
-    };
-  }, [isARActive]);
-
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" },
-      });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-    } catch (error) {
-      console.error("Camera access denied:", error);
-    }
-  };
-
-  const stopCamera = () => {
-    if (videoRef.current?.srcObject) {
-      const tracks = videoRef.current.srcObject.getTracks();
-      tracks.forEach((track) => track.stop());
-    }
-  };
+  }, [isMapActive]);
 
   const fetchNearbyListings = async () => {
     try {
-      const response = await api.get("/listings?status=approved&limit=6");
-      setNearbyListings(response.data.data || []);
+      const response = await api.get("/listings?status=approved&limit=20");
+      const listingsWithCoords = (response.data.data || []).map(
+        (listing, index) => {
+          const location =
+            tamilNaduLocations[index % tamilNaduLocations.length];
+          const latOffset = (Math.random() - 0.5) * 0.2;
+          const lngOffset = (Math.random() - 0.5) * 0.2;
+          return {
+            ...listing,
+            coordinates: {
+              lat: location.lat + latOffset,
+              lng: location.lng + lngOffset,
+            },
+            locationName: location.name,
+          };
+        },
+      );
+      setNearbyListings(listingsWithCoords);
     } catch (error) {
       console.error("Error fetching nearby listings:", error);
     }
@@ -72,9 +118,9 @@ const ARExplorer = () => {
   const welcomeMessage = () => {
     const messages = [
       "Vanakkam! Welcome to Tamil Nadu's heritage. I'll guide you to amazing experiences nearby.",
-      "வணக்கம்! I'm your AR guide. Let me show you the treasures around you.",
-      "Welcome! Point your camera around to discover verified local experiences.",
-      "Vanakkam! Tamil Nadu heritage-kku welcome. Nearby experiences-a kandu pudiunga!",
+      "வணக்கம்! I'm your guide. Let me show you the treasures around you.",
+      "Welcome! Explore the map to discover verified local experiences.",
+      "Vanakkam! Tamil Nadu heritage-kku welcome. Map-la experiences-a kandu pudiunga!",
     ];
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
     speakGuide(randomMessage);
@@ -102,26 +148,14 @@ const ARExplorer = () => {
     setSelectedListing(listing);
     const messages = [
       `Great choice! ${listing.title} has ${listing.rating} stars from ${listing.reviewCount} travelers.`,
-      `Super! Idhu ${listing.distance || "2.3"} km distance-la irukku. Book pannalama?`,
+      `Super! Idhu ${listing.locationName || "Tamil Nadu"}-la irukku. Book pannalama?`,
       `${listing.title} is highly rated. This creator is verified and experienced.`,
       `Nalla selection! ${listing.title} verified creator-oda experience. Safe-a irukum.`,
     ];
     speakGuide(messages[Math.floor(Math.random() * messages.length)]);
   };
 
-  const getARPosition = (index) => {
-    const positions = [
-      { top: "25%", left: "15%" },
-      { top: "35%", right: "20%" },
-      { top: "45%", left: "25%" },
-      { top: "55%", right: "15%" },
-      { top: "30%", left: "50%" },
-      { top: "60%", left: "45%" },
-    ];
-    return positions[index % positions.length];
-  };
-
-  if (!isARActive) {
+  if (!isMapActive) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 pt-24 pb-16 px-4">
         <div className="max-w-4xl mx-auto">
@@ -131,16 +165,16 @@ const ARExplorer = () => {
             className="text-center mb-12"
           >
             <div className="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl flex items-center justify-center mx-auto mb-6">
-              <Camera className="w-12 h-12 text-white" />
+              <MapIcon className="w-12 h-12 text-white" />
             </div>
             <h1 className="text-5xl font-outfit font-black mb-4 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">
-              AR Explorer
+              Map Explorer
             </h1>
             <p className="text-slate-400 text-lg mb-2">
-              Meet your AI guide & discover Tamil Nadu in Augmented Reality
+              Meet your AI guide & discover Tamil Nadu on Interactive Map
             </p>
             <p className="text-purple-400 text-sm font-semibold">
-              🤖 AI-Powered • 📍 Location-Based • 🎯 Interactive
+              🤖 AI-Powered • 📍 Location-Based • 🗺️ Interactive Map
             </p>
           </motion.div>
 
@@ -168,9 +202,9 @@ const ARExplorer = () => {
             <div className="grid md:grid-cols-3 gap-4">
               <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
                 <MapPin className="w-6 h-6 text-emerald-400 mb-2" />
-                <h4 className="font-bold text-white mb-1">Nearby Spots</h4>
+                <h4 className="font-bold text-white mb-1">Tamil Nadu Map</h4>
                 <p className="text-slate-400 text-sm">
-                  See AR markers for heritage sites around you
+                  See markers for heritage sites across Tamil Nadu
                 </p>
               </div>
               <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
@@ -184,7 +218,7 @@ const ARExplorer = () => {
                 <Zap className="w-6 h-6 text-amber-400 mb-2" />
                 <h4 className="font-bold text-white mb-1">Instant Book</h4>
                 <p className="text-slate-400 text-sm">
-                  Tap AR markers to view & book experiences
+                  Click map markers to view & book experiences
                 </p>
               </div>
             </div>
@@ -197,11 +231,11 @@ const ARExplorer = () => {
             className="space-y-4"
           >
             <button
-              onClick={() => setIsARActive(true)}
+              onClick={() => setIsMapActive(true)}
               className="w-full py-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-3 transition-all transform hover:scale-105"
             >
-              <Camera className="w-6 h-6" />
-              Start AR Experience
+              <MapIcon className="w-6 h-6" />
+              Explore Tamil Nadu Map
             </button>
             <button
               onClick={() => navigate("/discover")}
@@ -215,15 +249,15 @@ const ARExplorer = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="mt-8 p-6 bg-amber-500/10 border border-amber-500/20 rounded-2xl"
+            className="mt-8 p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl"
           >
             <div className="flex items-start gap-3">
-              <Info className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-amber-200">
-                <p className="font-semibold mb-1">Camera permission required</p>
-                <p className="text-amber-300/80">
-                  Allow camera access to view AR overlays of nearby heritage
-                  experiences.
+              <Info className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="text-sm text-emerald-200">
+                <p className="font-semibold mb-1">Interactive Tamil Nadu Map</p>
+                <p className="text-emerald-300/80">
+                  Explore heritage experiences across Tamil Nadu with real
+                  locations marked on an open-source map.
                 </p>
               </div>
             </div>
@@ -234,26 +268,58 @@ const ARExplorer = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black">
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        muted
-        className="absolute inset-0 w-full h-full object-cover"
-      />
+    <div className="fixed inset-0 z-[100] bg-slate-950">
+      <div className="absolute inset-0">
+        <MapContainer
+          ref={mapRef}
+          center={[10.8505, 78.6101]}
+          zoom={7}
+          style={{ height: "100%", width: "100%" }}
+          zoomControl={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <MapBoundsController bounds={tamilNaduBounds} />
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+          {nearbyListings.map(
+            (listing) =>
+              listing.coordinates && (
+                <Marker
+                  key={listing._id}
+                  position={[listing.coordinates.lat, listing.coordinates.lng]}
+                  icon={customIcon}
+                  eventHandlers={{
+                    click: () => handleListingTap(listing),
+                  }}
+                >
+                  <Popup>
+                    <div className="p-2 min-w-[200px]">
+                      <h4 className="font-bold text-sm mb-1">
+                        {listing.title}
+                      </h4>
+                      <div className="flex items-center gap-2 text-xs text-slate-600 mb-1">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        <span>{listing.rating}</span>
+                        <span>•</span>
+                        <span>{listing.locationName}</span>
+                      </div>
+                      <div className="text-purple-600 font-bold">
+                        ₹{listing.price}
+                      </div>
+                    </div>
+                  </Popup>
+                </Marker>
+              ),
+          )}
+        </MapContainer>
       </div>
 
-      <div className="absolute top-6 left-6 right-6 z-10 flex justify-between items-start">
+      <div className="absolute top-6 left-6 right-6 z-[1000] flex justify-between items-start">
         <button
-          onClick={() => {
-            setIsARActive(false);
-            stopCamera();
-          }}
-          className="p-3 bg-black/50 backdrop-blur-xl rounded-full text-white hover:bg-black/70 transition-all pointer-events-auto"
+          onClick={() => setIsMapActive(false)}
+          className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
         >
           <X className="w-6 h-6" />
         </button>
@@ -261,7 +327,7 @@ const ARExplorer = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setGuideVoiceEnabled(!guideVoiceEnabled)}
-            className="p-3 bg-black/50 backdrop-blur-xl rounded-full text-white hover:bg-black/70 transition-all pointer-events-auto"
+            className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
           >
             {guideVoiceEnabled ? (
               <Volume2 className="w-6 h-6 text-purple-400" />
@@ -269,56 +335,20 @@ const ARExplorer = () => {
               <VolumeX className="w-6 h-6 text-slate-400" />
             )}
           </button>
-          <button className="p-3 bg-black/50 backdrop-blur-xl rounded-full text-white hover:bg-black/70 transition-all pointer-events-auto">
-            <Navigation className="w-6 h-6 text-emerald-400" />
+          <button
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
+          >
+            {isFullscreen ? (
+              <Minimize2 className="w-6 h-6 text-emerald-400" />
+            ) : (
+              <Maximize2 className="w-6 h-6 text-emerald-400" />
+            )}
           </button>
         </div>
       </div>
 
-      <AnimatePresence>
-        {nearbyListings.map((listing, index) => (
-          <motion.div
-            key={listing._id}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ delay: index * 0.15 }}
-            style={getARPosition(index)}
-            className="absolute pointer-events-auto"
-          >
-            <button
-              onClick={() => handleListingTap(listing)}
-              className="relative group"
-            >
-              <div className="absolute inset-0 bg-purple-500/30 blur-2xl rounded-full animate-pulse" />
-              <div className="relative bg-gradient-to-br from-purple-600/90 to-pink-600/90 backdrop-blur-xl rounded-2xl p-4 border-2 border-white/30 min-w-[200px] shadow-2xl transform transition-all hover:scale-110">
-                <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-sm leading-tight mb-1">
-                      {listing.title}
-                    </h4>
-                    <div className="flex items-center gap-2 text-xs text-white/80 mb-1">
-                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                      <span>{listing.rating}</span>
-                      <span>•</span>
-                      <span>{listing.distance || "2.3"} km</span>
-                    </div>
-                    <div className="text-white/90 font-bold text-sm">
-                      ₹{listing.price}
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-pink-600/90" />
-              </div>
-            </button>
-          </motion.div>
-        ))}
-      </AnimatePresence>
-
-      <div className="absolute bottom-0 left-0 right-0 z-20">
+      <div className="absolute bottom-0 left-0 right-0 z-[1000] pointer-events-none">
         <div className="absolute bottom-32 left-6 right-6">
           <AnimatePresence>
             {guideSpeaking && guideMessage && (
@@ -326,7 +356,7 @@ const ARExplorer = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
-                className="bg-black/80 backdrop-blur-xl rounded-2xl p-4 border border-purple-500/30"
+                className="bg-black/90 backdrop-blur-xl rounded-2xl p-4 border border-purple-500/30 shadow-2xl pointer-events-auto"
               >
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
@@ -350,7 +380,7 @@ const ARExplorer = () => {
               initial={{ y: 400 }}
               animate={{ y: 0 }}
               exit={{ y: 400 }}
-              className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-2xl rounded-t-3xl border-t border-white/10 p-6 pointer-events-auto"
+              className="bg-gradient-to-br from-slate-900/98 to-slate-800/98 backdrop-blur-2xl rounded-t-3xl border-t border-white/10 p-6 pointer-events-auto shadow-2xl"
             >
               <div className="w-12 h-1 bg-slate-600 rounded-full mx-auto mb-4" />
 
@@ -373,8 +403,8 @@ const ARExplorer = () => {
                     </div>
                     <span>•</span>
                     <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{selectedListing.duration || 240}min</span>
+                      <MapPin className="w-4 h-4" />
+                      <span>{selectedListing.locationName}</span>
                     </div>
                     <span>•</span>
                     <div className="flex items-center gap-1">
@@ -424,12 +454,18 @@ const ARExplorer = () => {
             animate={{ opacity: 1 }}
             className="flex items-center justify-center gap-4 pb-8 pointer-events-auto"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
-              <Sparkles className="w-8 h-8 text-white" />
-            </div>
-            <div>
-              <p className="text-white font-bold">AI Guide Active</p>
-              <p className="text-purple-300 text-sm">Tap markers to explore</p>
+            <div className="px-6 py-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-purple-500/30 shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
+                  <Sparkles className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-bold">AI Guide Active</p>
+                  <p className="text-purple-300 text-sm">
+                    Click markers on map • {nearbyListings.length} spots found
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
