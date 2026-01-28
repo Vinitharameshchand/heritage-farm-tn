@@ -11,8 +11,10 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -34,7 +36,7 @@ const Login = () => {
       await setAuthToken(token);
       navigate("/discover");
     } catch (err) {
-      setError("OAuth verification failed");
+      setError(t('oauth_failed'));
     }
   };
 
@@ -50,7 +52,7 @@ const Login = () => {
       await login(formData.email, formData.password);
       navigate("/discover");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid login credentials");
+      setError(err.response?.data?.message || t('invalid_login'));
     } finally {
       setIsLoading(false);
     }
@@ -77,10 +79,10 @@ const Login = () => {
             </span>
           </Link>
           <h2 className="text-5xl font-outfit font-black mb-4 text-white">
-            Welcome Back
+            {t('welcome_back')}
           </h2>
           <p className="text-slate-400 text-lg font-medium">
-            Continue your authentic journey across Tamil Nadu
+            {t('login_description')}
           </p>
         </div>
 
@@ -99,14 +101,14 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-3">
               <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">
-                Email Address
+                {t('email_address')}
               </label>
               <div className="relative group">
                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                 <input
                   type="email"
                   required
-                  placeholder="your@email.com"
+                  placeholder={t('email_placeholder')}
                   className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                   value={formData.email}
                   onChange={(e) =>
@@ -119,13 +121,13 @@ const Login = () => {
             <div className="space-y-3">
               <div className="flex justify-between items-center ml-2">
                 <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">
-                  Password
+                  {t('password')}
                 </label>
                 <a
                   href="#"
                   className="text-xs font-black uppercase tracking-[0.2em] text-emerald-500 hover:text-emerald-400 transition-colors"
                 >
-                  Forgot?
+                  {t('forgot')}
                 </a>
               </div>
               <div className="relative group">
@@ -164,7 +166,7 @@ const Login = () => {
                 htmlFor="remember"
                 className="text-sm font-bold text-slate-400 cursor-pointer"
               >
-                Remember me for 30 days
+                {t('remember_me')}
               </label>
             </div>
 
@@ -173,7 +175,7 @@ const Login = () => {
               disabled={isLoading}
               className="w-full h-20 btn-primary text-xl flex items-center justify-center gap-3 disabled:opacity-50"
             >
-              {isLoading ? "Decrypting Access..." : "Sign In to Dashboard"}
+              {isLoading ? t('decrypting_access') : t('sign_in_dashboard')}
               {!isLoading && <ArrowRight className="w-6 h-6" />}
             </button>
 
@@ -183,7 +185,7 @@ const Login = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-[#0f172a] px-2 text-slate-500 font-bold tracking-widest">
-                  Or Secure Link
+                  {t('or_secure_link')}
                 </span>
               </div>
             </div>
@@ -211,19 +213,19 @@ const Login = () => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              Explore with Google
+              {t('explore_google')}
             </button>
           </form>
 
           <div className="mt-12 text-center">
             <p className="text-slate-500 font-bold mb-4">
-              Uncharted territory?
+              {t('uncharted_territory')}
             </p>
             <Link
               to="/signup"
               className="inline-flex items-center gap-2 text-emerald-500 font-black uppercase tracking-[0.2em] text-sm hover:gap-4 transition-all"
             >
-              Create New Identity <ArrowRight className="w-4 h-4" />
+              {t('create_new_identity')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -231,7 +233,7 @@ const Login = () => {
         <div className="mt-12 flex justify-center items-center gap-3 text-slate-600">
           <ShieldCheck className="w-5 h-5 text-emerald-500/40" />
           <span className="text-xs font-black uppercase tracking-[0.2em]">
-            End-to-End Encrypted Session
+            {t('encrypted_session')}
           </span>
         </div>
       </motion.div>

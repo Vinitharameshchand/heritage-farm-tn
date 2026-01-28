@@ -5,7 +5,7 @@ import Listing from '../models/Listing.js';
 // @access  Public
 export const generateTrip = async (req, res) => {
     try {
-        const { interests, duration, budget, location } = req.body;
+        const { interests, duration, budget, location, language } = req.body;
 
         // 1. Fetch relevant listings based on interests and location
         const query = {
@@ -46,12 +46,32 @@ export const generateTrip = async (req, res) => {
             currentDay++;
         }
 
+        // Generate localized title and summary
+        const isTamil = language === 'ta';
+        const locationName = location || (isTamil ? 'தமிழ்நாடு' : 'Tamil Nadu');
+        const categoryTranslations = {
+            'AgriRural': isTamil ? 'பண்ணை மற்றும் கிராமம்' : 'Farm & Village',
+            'HeritageCulture': isTamil ? 'கலை மற்றும் பாரம்பரியம்' : 'Art & Heritage',
+            'EcoAdventure': isTamil ? 'காடு மற்றும் இயற்கை' : 'Wild & Nature'
+        };
+        
+        const translatedInterests = interests?.map(cat => categoryTranslations[cat] || cat).join(', ') || 
+            (isTamil ? 'உண்மையான அனுபவங்கள்' : 'authentic experiences');
+
+        const title = isTamil
+            ? `${days}-நாள் பாரம்பரிய வளைவு ${locationName}இல்`
+            : `${days}-Day Heritage Arc in ${locationName}`;
+
+        const summary = isTamil
+            ? `${days}-நாள் பயணம் ${translatedInterests} மீது கவனம் செலுத்துகிறது.`
+            : `A curated ${days}-day journey focusing on ${translatedInterests}.`;
+
         res.status(200).json({
             success: true,
             data: {
-                title: `${days}-Day Heritage Arc in ${location || 'Tamil Nadu'}`,
+                title,
                 itinerary,
-                summary: `A curated ${days}-day journey focusing on ${interests?.join(', ') || 'authentic experiences'}.`
+                summary
             }
         });
     } catch (error) {

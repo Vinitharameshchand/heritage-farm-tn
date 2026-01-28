@@ -9,6 +9,10 @@
 ![Status](https://img.shields.io/badge/status-In%20Development-orange)
 ![License](https://img.shields.io/badge/license-Private-red)
 
+**Production URLs**  
+[Frontend (Vercel)](https://heritage-farm-tn.vercel.app/)  
+[Backend (Render)](https://heritage-farm-tn.onrender.com)
+
 </div>
 
 ---
