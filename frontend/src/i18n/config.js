@@ -103,7 +103,28 @@ const resources = {
             "all_experiences": "All Experiences",
             "filters": "Filters",
             "no_experiences_found": "No experiences found",
-            "try_adjusting_filters": "Try adjusting your filters or searching for something else."
+            "try_adjusting_filters": "Try adjusting your filters or searching for something else.",
+            
+            // Listing Detail page
+            "loading_experience": "Loading experience...",
+            "experience_not_found": "Experience not found.",
+            "reviews": "reviews",
+            "about_experience": "About the Experience",
+            "capacity": "Capacity",
+            "people": "people",
+            "safety": "Safety",
+            "verified": "Verified",
+            "difficulty": "Difficulty",
+            "location": "Location",
+            "whats_included": "What's included",
+            "local_guide": "Local guide",
+            "safety_equipment": "Safety equipment",
+            "refreshments": "Refreshments",
+            "per_person": "/ person",
+            "book_experience": "Book This Experience",
+            "add_to_journey": "Add to Journey Arc",
+            "enter_heritage_vision": "Enter Heritage Vision (AR)",
+            "secure_booking": "Secure Booking Protection"
         }
     },
     ta: {
@@ -207,7 +228,28 @@ const resources = {
             "all_experiences": "அனைத்து அனுபவங்கள்",
             "filters": "வடிகட்டிகள்",
             "no_experiences_found": "அனுபவங்கள் எதுவும் கிடைக்கவில்லை",
-            "try_adjusting_filters": "உங்கள் வடிகட்டிகளை சரிசெய்யவும் அல்லது வேறு ஏதாவது தேடவும்."
+            "try_adjusting_filters": "உங்கள் வடிகட்டிகளை சரிசெய்யவும் அல்லது வேறு ஏதாவது தேடவும்.",
+            
+            // Listing Detail page
+            "loading_experience": "அனுபவம் ஏற்றுகிறது...",
+            "experience_not_found": "அனுபவம் கிடைக்கவில்லை.",
+            "reviews": "மதிப்புரைகள்",
+            "about_experience": "அனுபவத்தைப் பற்றி",
+            "capacity": "திறன்",
+            "people": "நபர்கள்",
+            "safety": "பாதுகாப்பு",
+            "verified": "சரிபார்க்கப்பட்டது",
+            "difficulty": "சிரமம்",
+            "location": "இடம்",
+            "whats_included": "என்ன சேர்க்கப்பட்டுள்ளது",
+            "local_guide": "உள்ளூர் வழிகாட்டி",
+            "safety_equipment": "பாதுகாப்பு உபகரணங்கள்",
+            "refreshments": "சிற்றுண்டி",
+            "per_person": "/ நபர்",
+            "book_experience": "இந்த அனுபவத்தை முன்பதிவு செய்யவும்",
+            "add_to_journey": "பயண வளைவில் சேர்க்கவும்",
+            "enter_heritage_vision": "பாரம்பரிய பார்வையில் நுழையவும் (AR)",
+            "secure_booking": "பாதுகாப்பான முன்பதிவு பாதுகாப்பு"
         }
     }
 };

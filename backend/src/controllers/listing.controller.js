@@ -1,4 +1,5 @@
 import Listing from '../models/Listing.js';
+import { translateObject, translateCategory } from '../services/translation.service.js';
 
 // @desc    Get all listings
 // @route   GET /api/listings
@@ -59,7 +60,29 @@ export const getListings = async (req, res) => {
         query = query.skip(startIndex).limit(limit);
 
         // Executing query
-        const listings = await query;
+        let listings = await query;
+
+        // Dynamic translation if language parameter provided
+        const targetLang = req.query.lang || req.query.language;
+        if (targetLang && targetLang === 'ta') {
+            listings = await Promise.all(listings.map(async (listing) => {
+                const listingObj = listing.toObject();
+                const translated = await translateObject(
+                    listingObj,
+                    ['title', 'description'],
+                    targetLang
+                );
+                // Translate category display
+                translated.categoryDisplay = translateCategory(listingObj.category, targetLang);
+                return translated;
+            }));
+        } else {
+            listings = listings.map(listing => {
+                const listingObj = listing.toObject();
+                listingObj.categoryDisplay = translateCategory(listingObj.category, 'en');
+                return listingObj;
+            });
+        }
 
         // Pagination result
         const pagination = {};
@@ -100,7 +123,28 @@ export const getListing = async (req, res) => {
             return res.status(404).json({ message: 'Listing not found' });
         }
 
-        res.status(200).json({ success: true, data: listing });
+        let listingData = listing.toObject();
+        
+        // Dynamic translation if language parameter provided
+        const targetLang = req.query.lang || req.query.language;
+        if (targetLang && targetLang === 'ta') {
+            listingData = await translateObject(
+                listingData,
+                ['title', 'description'],
+                targetLang
+            );
+            // Translate inclusions if present
+            if (listingData.inclusions && listingData.inclusions.length > 0) {
+                listingData.inclusions = await Promise.all(
+                    listingData.inclusions.map(inc => translateObject({ text: inc }, ['text'], targetLang).then(t => t.text))
+                );
+            }
+            listingData.categoryDisplay = translateCategory(listingData.category, targetLang);
+        } else {
+            listingData.categoryDisplay = translateCategory(listingData.category, 'en');
+        }
+
+        res.status(200).json({ success: true, data: listingData });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -20,7 +20,7 @@ const ListingCard = ({ listing }) => {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 font-outfit"
                     />
                     <div className="absolute top-4 left-4 px-4 py-1.5 bg-emerald-600/90 backdrop-blur-md rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em]">
-                        {listing.category}
+                        {listing.categoryDisplay || listing.category}
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>

@@ -31,7 +31,7 @@ const seedData = async () => {
                 price: 1200,
                 capacity: 10,
                 duration: 180,
-                difficulty: 'easy',
+                difficulty: 'Easy',
                 location: { city: 'Erode', district: 'Erode', coordinates: [77.7172, 11.3410] },
                 images: ['https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=800'],
                 status: 'approved'
@@ -44,7 +44,7 @@ const seedData = async () => {
                 price: 800,
                 capacity: 15,
                 duration: 120,
-                difficulty: 'moderate',
+                difficulty: 'Moderate',
                 location: { city: 'Thanjavur', district: 'Thanjavur', coordinates: [79.1378, 10.7870] },
                 images: ['https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80&w=800'],
                 status: 'approved'
@@ -57,7 +57,7 @@ const seedData = async () => {
                 price: 2500,
                 capacity: 8,
                 duration: 360,
-                difficulty: 'hard',
+                difficulty: 'Challenging',
                 location: { city: 'Coonoor', district: 'Nilgiris', coordinates: [76.7806, 11.3530] },
                 images: ['https://images.unsplash.com/photo-1597843796322-90f7d5663781?auto=format&fit=crop&q=80&w=800'],
                 status: 'approved'

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n/config';
 import { Search, Filter, SlidersHorizontal, ChevronDown, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ListingCard from '../components/ListingCard';
@@ -26,7 +27,7 @@ const Discover = () => {
         }, 500);
 
         return () => clearTimeout(delayDebounceFn);
-    }, [activeCategory, searchTerm]);
+    }, [activeCategory, searchTerm, i18n.language]); // Add i18n.language dependency
 
     const fetchListings = async () => {
         try {
@@ -34,6 +35,7 @@ const Discover = () => {
             const params = {};
             if (activeCategory !== 'All') params.category = activeCategory;
             if (searchTerm) params.search = searchTerm;
+            params.lang = i18n.language; // Add language parameter
 
             const response = await api.get('/listings', { params });
             setListings(response.data.data);
