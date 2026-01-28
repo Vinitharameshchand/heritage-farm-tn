@@ -49,7 +49,7 @@ const Navbar = () => {
             className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
           >
             <Sparkles className="w-4 h-4" />
-            AI Planner
+            {t('ai_planner')}
           </Link>
 
           <Link
@@ -57,7 +57,7 @@ const Navbar = () => {
             className="text-slate-400 font-semibold hover:text-emerald-500 transition-colors flex items-center gap-1.5"
           >
             <Compass className="w-4 h-4" />
-            Explore
+            {t('explore_nav')}
           </Link>
 
           <div className="h-6 w-[1px] bg-slate-200"></div>
@@ -78,7 +78,7 @@ const Navbar = () => {
                   className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all"
                 >
                   <Calendar className="w-4 h-4" />
-                  My Bookings
+                  {t('my_bookings')}
                 </Link>
               )}
               {user.role === "creator" && (
@@ -87,7 +87,7 @@ const Navbar = () => {
                   className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all"
                 >
                   <LayoutDashboard className="w-4 h-4" />
-                  Dashboard
+                  {t('dashboard')}
                 </Link>
               )}
               <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
@@ -119,7 +119,7 @@ const Navbar = () => {
                 to="/signup"
                 className="bg-primary-600 text-white px-6 py-2.5 rounded-2xl font-bold premium-shadow hover:bg-primary-700 transition-all active:scale-95 text-sm"
               >
-                Get Started
+                {t('get_started')}
               </Link>
             </div>
           )}
@@ -149,14 +149,14 @@ const Navbar = () => {
                 className="text-lg font-bold text-slate-900"
                 onClick={() => setIsOpen(false)}
               >
-                Explore
+                {t('explore_nav')}
               </Link>
               <button
                 onClick={toggleLanguage}
                 className="flex items-center gap-2 text-lg font-bold text-slate-600"
               >
                 <Globe className="w-5 h-5" />
-                Language: {i18n.language === "en" ? "English" : "தமிழ்"}
+                {t('language')}: {i18n.language === "en" ? t('english') : t('tamil')}
               </button>
               {user ? (
                 <>
@@ -167,7 +167,7 @@ const Navbar = () => {
                       onClick={() => setIsOpen(false)}
                     >
                       <Calendar className="w-5 h-5" />
-                      My Bookings
+                      {t('my_bookings')}
                     </Link>
                   )}
                   {user.role === "creator" && (
@@ -177,12 +177,12 @@ const Navbar = () => {
                       onClick={() => setIsOpen(false)}
                     >
                       <LayoutDashboard className="w-5 h-5" />
-                      Dashboard
+                      {t('dashboard')}
                     </Link>
                   )}
                   <div className="pt-4 border-t border-slate-100">
                     <div className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">
-                      My Account
+                      {t('my_account')}
                     </div>
                     <div className="text-xl font-bold text-slate-900 mb-4">
                       {user.name}
@@ -191,7 +191,7 @@ const Navbar = () => {
                       onClick={handleLogout}
                       className="text-red-500 font-bold flex items-center gap-2"
                     >
-                      <LogOut className="w-5 h-5" /> Sign Out
+                      <LogOut className="w-5 h-5" /> {t('sign_out')}
                     </button>
                   </div>
                 </>
@@ -202,14 +202,14 @@ const Navbar = () => {
                     className="w-full py-4 bg-primary-600 text-white text-center rounded-2xl font-bold"
                     onClick={() => setIsOpen(false)}
                   >
-                    Join Heritage Farm
+                    {t('join_heritage_farm')}
                   </Link>
                   <Link
                     to="/login"
                     className="w-full py-4 border border-slate-200 text-center rounded-2xl font-bold"
                     onClick={() => setIsOpen(false)}
                   >
-                    Sign In
+                    {t('sign_in')}
                   </Link>
                 </div>
               )}
