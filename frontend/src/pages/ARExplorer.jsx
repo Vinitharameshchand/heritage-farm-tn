@@ -69,7 +69,7 @@ const MapBoundsController = ({ bounds }) => {
 
 const ARExplorer = () => {
   const navigate = useNavigate();
-  const [isMapActive, setIsMapActive] = useState(false);
+  const [isMapActive, setIsMapActive] = useState(true);
   const [nearbyListings, setNearbyListings] = useState([]);
   const [selectedListing, setSelectedListing] = useState(null);
   const [guideVoiceEnabled, setGuideVoiceEnabled] = useState(true);
