@@ -318,7 +318,7 @@ const ARExplorer = () => {
 
       <div className="absolute top-6 left-6 right-6 z-[1000] flex justify-between items-start">
         <button
-          onClick={() => setIsMapActive(false)}
+          onClick={() => navigate("/")}
           className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
         >
           <X className="w-6 h-6" />
