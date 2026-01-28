@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import CreatorDashboard from "../pages/CreatorDashboard";
 import CreateListing from "../pages/CreateListing";
 import MyBookings from "../pages/MyBookings";
+import ARExplorer from "../pages/ARExplorer";
 import ProtectedRoute from "../components/ProtectedRoute";
 import TripPlanner from "../pages/TripPlanner";
 import HeritageVision from "../pages/HeritageVision";
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path="/discover" element={<Discover />} />
         <Route path="/discovery-map" element={<DiscoveryMap />} />
         <Route path="/journey-builder" element={<JourneyBuilder />} />
+        <Route path="/ar-explorer" element={<ARExplorer />} />
         <Route path="/listings/:id" element={<ListingDetail />} />
         <Route path="/planner" element={<TripPlanner />} />
         <Route path="/heritage-vision/:id" element={<HeritageVision />} />
