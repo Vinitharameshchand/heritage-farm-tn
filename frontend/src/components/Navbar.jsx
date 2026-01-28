@@ -19,6 +19,7 @@ const Navbar = () => {
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const toggleLanguage = () => {
@@ -29,6 +30,16 @@ const Navbar = () => {
     logout();
     navigate("/");
   };
+
+  React.useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (isLangDropdownOpen && !e.target.closest("[data-lang-dropdown]")) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isLangDropdownOpen]);
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#46041F] border-b border-amber-500/20 px-6 py-3 shadow-xl backdrop-blur-xl">
@@ -78,22 +89,61 @@ const Navbar = () => {
             Map View
           </Link>
 
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-1 text-slate-300 hover:text-amber-400 transition-colors px-3 py-2 rounded-lg hover:bg-white/5"
-          >
-            <Globe className="w-4 h-4" />
-            <span className="text-sm font-semibold uppercase">
-              {i18n.language}
-            </span>
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
+          <div className="relative" data-lang-dropdown>
+            <button
+              onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+              className="flex items-center gap-2 text-slate-300 hover:text-amber-400 transition-colors px-3 py-2 rounded-lg hover:bg-white/5"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="text-sm font-semibold uppercase">
+                {i18n.language}
+              </span>
+              <svg
+                className={`w-3 h-3 transition-transform ${isLangDropdownOpen ? "rotate-180" : ""}`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
+            {isLangDropdownOpen && (
+              <div className="absolute top-full right-0 mt-2 bg-slate-800 border border-amber-500/30 rounded-lg shadow-xl z-50 min-w-max">
+                <button
+                  onClick={() => {
+                    i18n.changeLanguage("en");
+                    setIsLangDropdownOpen(false);
+                  }}
+                  className={`w-full px-4 py-3 text-left text-sm font-semibold flex items-center gap-2 ${
+                    i18n.language === "en"
+                      ? "bg-amber-500/20 text-amber-400"
+                      : "text-slate-300 hover:text-amber-400"
+                  }`}
+                >
+                  <span className="text-lg">🇬🇧</span>
+                  {t("english")}
+                </button>
+                <button
+                  onClick={() => {
+                    i18n.changeLanguage("ta");
+                    setIsLangDropdownOpen(false);
+                  }}
+                  className={`w-full px-4 py-3 text-left text-sm font-semibold flex items-center gap-2 border-t border-slate-700 ${
+                    i18n.language === "ta"
+                      ? "bg-amber-500/20 text-amber-400"
+                      : "text-slate-300 hover:text-amber-400"
+                  }`}
+                >
+                  <span className="text-lg">🇮🇳</span>
+                  {t("tamil")}
+                </button>
+              </div>
+            )}
+          </div>
 
           {user ? (
             <div className="flex items-center gap-4">
@@ -186,14 +236,61 @@ const Navbar = () => {
                 <Camera className="w-5 h-5" />
                 Map View
               </Link>
-              <button
-                onClick={toggleLanguage}
-                className="flex items-center gap-2 text-lg font-bold text-slate-300 hover:text-amber-400"
-              >
-                <Globe className="w-5 h-5" />
-                {t("language")}:{" "}
-                {i18n.language === "en" ? t("english") : t("tamil")}
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+                  className="flex items-center gap-2 text-lg font-bold text-slate-300 hover:text-amber-400 w-full"
+                >
+                  <Globe className="w-5 h-5" />
+                  <span>
+                    {i18n.language === "en" ? t("english") : t("tamil")}
+                  </span>
+                  <svg
+                    className={`w-4 h-4 transition-transform ${isLangDropdownOpen ? "rotate-180" : ""}`}
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                {isLangDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-2 bg-slate-800 border border-amber-500/30 rounded-lg shadow-xl z-50 min-w-max">
+                    <button
+                      onClick={() => {
+                        i18n.changeLanguage("en");
+                        setIsLangDropdownOpen(false);
+                      }}
+                      className={`w-full px-4 py-3 text-left text-sm font-semibold flex items-center gap-2 ${
+                        i18n.language === "en"
+                          ? "bg-amber-500/20 text-amber-400"
+                          : "text-slate-300 hover:text-amber-400"
+                      }`}
+                    >
+                      <span className="text-lg">🇬🇧</span>
+                      {t("english")}
+                    </button>
+                    <button
+                      onClick={() => {
+                        i18n.changeLanguage("ta");
+                        setIsLangDropdownOpen(false);
+                      }}
+                      className={`w-full px-4 py-3 text-left text-sm font-semibold flex items-center gap-2 border-t border-slate-700 ${
+                        i18n.language === "ta"
+                          ? "bg-amber-500/20 text-amber-400"
+                          : "text-slate-300 hover:text-amber-400"
+                      }`}
+                    >
+                      <span className="text-lg">🇮🇳</span>
+                      {t("tamil")}
+                    </button>
+                  </div>
+                )}
+              </div>
               {user ? (
                 <>
                   {user.role === "tourist" && (
