@@ -44,10 +44,10 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#46041F] border-b border-amber-500/20 px-6 py-3 shadow-xl backdrop-blur-xl">
       <div className="absolute inset-y-0 top-2 left-0 w-40 ">
-        <img src="/left.svg" alt="decorative left" className="h-full" />
+        <img src="/left.svg" alt="decorative left" className="h-20" />
       </div>
-      <div className="absolute inset-y-0 top-2 -right-32 w-40">
-        <img src="/right.svg" alt="decorative left" className="h-full" />
+      <div className="absolute inset-y-0 top-2 -right-[116px] w-40">
+        <img src="/right.svg" alt="decorative left" className="h-20" />
       </div>
 
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
