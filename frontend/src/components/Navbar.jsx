@@ -31,86 +31,102 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 glass px-6 py-4">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:rotate-6 transition-transform">
-            H
-          </div>
-          <span className="text-2xl font-outfit font-extrabold tracking-tight gradient-text">
+    <nav className="fixed top-0 w-full z-50 bg-[#46041F] border-b border-amber-500/20 px-6 py-3 shadow-xl backdrop-blur-xl">
+      <div className="absolute inset-y-0 top-2 left-0 w-40 ">
+        <img src="/left.svg" alt="decorative left" className="h-full" />
+      </div>
+      <div className="absolute inset-y-0 top-2 -right-32 w-40">
+        <img src="/right.svg" alt="decorative left" className="h-full" />
+      </div>
+
+      <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
+        <Link to="/" className="flex items-center -gap-10 group">
+          <span className="text-2xl jaro font-bold tracking-tight text-white">
             Heritage Farm
           </span>
+          <div className="  transition-transform group-hover:rotate-[20deg]">
+            <img
+              src="/temple.svg"
+              alt="decorative left"
+              className="h-14 w-auto"
+            />
+          </div>
         </Link>
 
-        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           <Link
-            to="/ar-explorer"
-            className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 text-purple-400 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:from-purple-500/20 hover:to-pink-500/20 transition-all border border-purple-500/20"
-          >
-            <Camera className="w-4 h-4" />
-            AR View
-          </Link>
-
-          <Link
             to="/planner"
-            className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all border border-emerald-500/20"
+            className="text-slate-300 font-semibold hover:text-amber-400 transition-colors flex items-center gap-2"
           >
             <Sparkles className="w-4 h-4" />
-            {t('ai_planner')}
+            {t("ai_planner")}
           </Link>
 
           <Link
             to="/discover"
-            className="text-slate-400 font-semibold hover:text-emerald-500 transition-colors flex items-center gap-1.5"
+            className="text-slate-300 font-semibold hover:text-amber-400 transition-colors flex items-center gap-2"
           >
             <Compass className="w-4 h-4" />
-            {t('explore_nav')}
+            {t("explore_nav")}
           </Link>
 
-          <div className="h-6 w-[1px] bg-slate-200"></div>
+          <Link
+            to="/ar-explorer"
+            className="text-slate-300 font-semibold hover:text-amber-400 transition-colors flex items-center gap-2"
+          >
+            <Camera className="w-4 h-4" />
+            Map View
+          </Link>
 
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-2 text-slate-500 hover:text-primary-600 transition-colors"
+            className="flex items-center gap-1 text-slate-300 hover:text-amber-400 transition-colors px-3 py-2 rounded-lg hover:bg-white/5"
           >
             <Globe className="w-4 h-4" />
-            <span className="text-sm font-bold uppercase">{i18n.language}</span>
+            <span className="text-sm font-semibold uppercase">
+              {i18n.language}
+            </span>
+            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
 
           {user ? (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               {user.role === "tourist" && (
                 <Link
                   to="/my-bookings"
-                  className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all"
+                  className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
                 >
                   <Calendar className="w-4 h-4" />
-                  {t('my_bookings')}
+                  {t("my_bookings")}
                 </Link>
               )}
               {user.role === "creator" && (
                 <Link
                   to="/creator/dashboard"
-                  className="bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-emerald-500/20 transition-all"
+                  className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
                 >
                   <LayoutDashboard className="w-4 h-4" />
-                  {t('dashboard')}
+                  {t("dashboard")}
                 </Link>
               )}
-              <div className="flex items-center gap-3 pl-4 border-l border-slate-100">
+              <div className="flex items-center gap-3 pl-4 border-l border-slate-700">
                 <div className="text-right">
                   <div className="text-sm font-bold text-white">
                     {user.name}
                   </div>
-                  <div className="text-[10px] text-emerald-500 font-bold uppercase tracking-wider">
+                  <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
                     {user.role}
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-2.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                  className="p-2.5 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all"
                 >
                   <LogOut className="w-5 h-5" />
                 </button>
@@ -119,25 +135,18 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-4">
               <Link
-                to="/login"
-                className="text-slate-600 font-bold hover:text-primary-600 transition-colors px-4 py-2"
-              >
-                {t("login")}
-              </Link>
-              <Link
                 to="/signup"
-                className="bg-primary-600 text-white px-6 py-2.5 rounded-2xl font-bold premium-shadow hover:bg-primary-700 transition-all active:scale-95 text-sm"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 text-slate-900 px-8 py-3 rounded-full font-bold shadow-xl hover:shadow-amber-500/50 hover:scale-105 transition-all active:scale-95 text-sm"
               >
-                {t('get_started')}
+                {t("get_started")}
               </Link>
             </div>
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-slate-600"
+          className="md:hidden p-2 text-slate-300 hover:text-amber-400 transition-colors"
         >
           {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
         </button>
@@ -150,83 +159,94 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
+            className="md:hidden bg-slate-900 border-t border-amber-500/20 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-6">
               <Link
-                to="/ar-explorer"
-                className="text-lg font-bold text-purple-600 flex items-center gap-2"
+                to="/planner"
+                className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
                 onClick={() => setIsOpen(false)}
               >
-                <Camera className="w-5 h-5" />
-                AR View
+                <Sparkles className="w-5 h-5" />
+                {t("ai_planner")}
               </Link>
               <Link
                 to="/discover"
-                className="text-lg font-bold text-slate-900"
+                className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
                 onClick={() => setIsOpen(false)}
               >
-                {t('explore_nav')}
+                <Compass className="w-5 h-5" />
+                {t("explore_nav")}
+              </Link>
+              <Link
+                to="/ar-explorer"
+                className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <Camera className="w-5 h-5" />
+                Map View
               </Link>
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 text-lg font-bold text-slate-600"
+                className="flex items-center gap-2 text-lg font-bold text-slate-300 hover:text-amber-400"
               >
                 <Globe className="w-5 h-5" />
-                {t('language')}: {i18n.language === "en" ? t('english') : t('tamil')}
+                {t("language")}:{" "}
+                {i18n.language === "en" ? t("english") : t("tamil")}
               </button>
               {user ? (
                 <>
                   {user.role === "tourist" && (
                     <Link
                       to="/my-bookings"
-                      className="text-lg font-bold text-emerald-600 flex items-center gap-2"
+                      className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
                       onClick={() => setIsOpen(false)}
                     >
                       <Calendar className="w-5 h-5" />
-                      {t('my_bookings')}
+                      {t("my_bookings")}
                     </Link>
                   )}
                   {user.role === "creator" && (
                     <Link
                       to="/creator/dashboard"
-                      className="text-lg font-bold text-emerald-600 flex items-center gap-2"
+                      className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
                       onClick={() => setIsOpen(false)}
                     >
                       <LayoutDashboard className="w-5 h-5" />
-                      {t('dashboard')}
+                      {t("dashboard")}
                     </Link>
                   )}
-                  <div className="pt-4 border-t border-slate-100">
-                    <div className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">
-                      {t('my_account')}
+                  <div className="pt-4 border-t border-slate-700">
+                    <div className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">
+                      {t("my_account")}
                     </div>
-                    <div className="text-xl font-bold text-slate-900 mb-4">
+                    <div className="text-xl font-bold text-white mb-4">
                       {user.name}
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="text-red-500 font-bold flex items-center gap-2"
+                      className="text-red-400 font-bold flex items-center gap-2 hover:text-red-300"
                     >
-                      <LogOut className="w-5 h-5" /> {t('sign_out')}
+                      <LogOut className="w-5 h-5" /> {t("sign_out")}
                     </button>
                   </div>
                 </>
               ) : (
-                <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
+                <div className="flex flex-col gap-3 pt-4 border-t border-slate-700">
                   <Link
                     to="/signup"
-                    className="w-full py-4 bg-primary-600 text-white text-center rounded-2xl font-bold"
+                    className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-900 text-center rounded-full font-bold shadow-xl"
                     onClick={() => setIsOpen(false)}
                   >
-                    {t('join_heritage_farm')}
+                    {t("join_heritage_farm")}
                   </Link>
+
                   <Link
                     to="/login"
                     className="w-full py-4 border border-slate-200 text-center rounded-2xl font-bold"
                     onClick={() => setIsOpen(false)}
                   >
-                    {t('sign_in')}
+                    {t("sign_in")}
                   </Link>
                 </div>
               )}

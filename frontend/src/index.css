@@ -1,6 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap");
 
 @import "tailwindcss";
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+}
+
+.jaro {
+  font-family: "Jaro", sans-serif;
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+
+.dm-sans-light {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+}
+
+.dm-sans-regular {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+}
+
+.dm-sans-medium {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 500;
+}
+
+.dm-sans-bold {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+}
+
+.inika-regular {
+  font-family: "Inika", serif;
+  font-weight: 400;
+}
+
+.inika-bold {
+  font-family: "Inika", serif;
+  font-weight: 700;
+}
+
+.instrument-sans-regular {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+
+.instrument-sans-bold {
+  font-family: "Instrument Sans", sans-serif;
+  font-weight: 700;
+  font-optical-sizing: auto;
+}
 
 @theme {
   --color-primary-50: #ecfdf5;
@@ -58,7 +136,11 @@
 }
 
 @utility glass-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -80,7 +162,11 @@
   position: absolute;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0) 70%);
+  background: radial-gradient(
+    circle,
+    rgba(16, 185, 129, 0.15) 0%,
+    rgba(16, 185, 129, 0) 70%
+  );
   filter: blur(60px);
   pointer-events: none;
   z-index: -1;
