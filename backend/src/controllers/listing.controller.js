@@ -1,5 +1,5 @@
 import Listing from '../models/Listing.js';
-import { translateObject, translateCategory } from '../services/translation.service.js';
+import { translateObject, translateCategory, translateDifficulty, translateDistrict } from '../services/translation.service.js';
 
 // @desc    Get all listings
 // @route   GET /api/listings
@@ -74,6 +74,15 @@ export const getListings = async (req, res) => {
                 );
                 // Translate category display
                 translated.categoryDisplay = translateCategory(listingObj.category, targetLang);
+                // Translate difficulty
+                translated.difficulty = translateDifficulty(listingObj.difficulty, targetLang);
+                // Translate district
+                if (translated.location?.district) {
+                    translated.location.district = translateDistrict(listingObj.location.district, targetLang);
+                }
+                if (translated.location?.city) {
+                    translated.location.city = translateDistrict(listingObj.location.city, targetLang);
+                }
                 return translated;
             }));
         } else {
@@ -140,8 +149,23 @@ export const getListing = async (req, res) => {
                 );
             }
             listingData.categoryDisplay = translateCategory(listingData.category, targetLang);
+            listingData.difficulty = translateDifficulty(listingData.difficulty, targetLang);
+            // Translate district and city
+            if (listingData.location?.district) {
+                listingData.location.district = translateDistrict(listingData.location.district, targetLang);
+            }
+            if (listingData.location?.city) {
+                listingData.location.city = translateDistrict(listingData.location.city, targetLang);
+            }
         } else {
             listingData.categoryDisplay = translateCategory(listingData.category, 'en');
+            listingData.difficulty = translateDifficulty(listingData.difficulty, 'en');
+            if (listingData.location?.district) {
+                listingData.location.district = translateDistrict(listingData.location.district, 'en');
+            }
+            if (listingData.location?.city) {
+                listingData.location.city = translateDistrict(listingData.location.city, 'en');
+            }
         }
 
         res.status(200).json({ success: true, data: listingData });

@@ -114,8 +114,8 @@ const ListingDetail = () => {
                         ].map((item, idx) => (
                             <div key={idx} className="glass-card p-8 rounded-[32px] group">
                                 <item.icon className="w-8 h-8 text-emerald-500 mb-4 group-hover:scale-110 transition-transform" />
-                                <div className="text-sm text-slate-500 mb-1">{item.label}</div>
-                                <div className="font-bold text-lg capitalize">{item.value}</div>
+                                <div className="text-sm text-slate-500 mb-1 truncate">{item.label}</div>
+                                <div className="font-bold text-lg break-words hyphens-auto" lang="ta">{item.value}</div>
                             </div>
                         ))}
                     </section>
@@ -131,8 +131,8 @@ const ListingDetail = () => {
                                     transition={{ delay: i * 0.1 }}
                                     className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5"
                                 >
-                                    <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                                    <span className="text-slate-300 font-medium">{inc}</span>
+                                    <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] flex-shrink-0" />
+                                    <span className="text-slate-300 font-medium break-words" lang="ta">{inc}</span>
                                 </motion.div>
                             ))}
                         </div>
@@ -150,11 +150,11 @@ const ListingDetail = () => {
                         <div className="space-y-4 mb-10">
                             <button
                                 onClick={() => setIsBookingOpen(true)}
-                                className="w-full h-16 btn-primary text-lg"
+                                className="w-full h-16 btn-primary text-lg flex items-center justify-center"
                             >
                                 {t('book_experience')}
                             </button>
-                            <button className="w-full h-16 bg-slate-800 text-white rounded-full font-bold hover:bg-slate-700 transition-all border border-white/5">
+                            <button className="w-full h-16 bg-slate-800 text-white rounded-full font-bold hover:bg-slate-700 transition-all border border-white/5 flex items-center justify-center">
                                 {t('add_to_journey')}
                             </button>
                             {listing.hasAR && (
