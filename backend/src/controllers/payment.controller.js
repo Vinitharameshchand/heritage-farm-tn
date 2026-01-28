@@ -3,11 +3,17 @@ import crypto from "crypto";
 import Booking from "../models/Booking.js";
 import Listing from "../models/Listing.js";
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// Lazy initialization of Razorpay
+let razorpay = null;
+const getRazorpay = () => {
+  if (!razorpay) {
+    razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+  }
+  return razorpay;
+};
 
 // @desc    Create Razorpay Order
 // @route   POST /api/payments/order
@@ -30,7 +36,7 @@ export const createOrder = async (req, res) => {
       payment_capture: 1,
     };
 
-    const order = await razorpay.orders.create(options);
+    const order = await getRazorpay().orders.create(options);
 
     // Save order ID to booking
     booking.razorpayOrderId = order.id;
@@ -104,7 +110,7 @@ export const createSubscriptionPlan = async (req, res) => {
   try {
     const { period, interval, amount } = req.body;
 
-    const plan = await razorpay.plans.create({
+    const plan = await getRazorpay().plans.create({
       period: period || "monthly",
       interval: interval || 1,
       item: {
@@ -131,7 +137,7 @@ export const createSubscription = async (req, res) => {
   try {
     const { planId, totalCount, customerNotify, startAt } = req.body;
 
-    const subscription = await razorpay.subscriptions.create({
+    const subscription = await getRazorpay().subscriptions.create({
       plan_id: planId,
       total_count: totalCount || 12,
       customer_notify: customerNotify !== undefined ? customerNotify : 1,

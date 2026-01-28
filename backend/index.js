@@ -1,6 +1,9 @@
+// Load env vars first
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
 import { dirname, join } from "path";
@@ -23,9 +26,6 @@ import uploadRoutes from "./src/routes/upload.routes.js";
 import aiRoutes from "./src/routes/ai.routes.js";
 import discoveryRoutes from "./src/routes/discovery.routes.js";
 import logger from "./src/utils/logger.js";
-
-// Load env vars
-dotenv.config();
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
