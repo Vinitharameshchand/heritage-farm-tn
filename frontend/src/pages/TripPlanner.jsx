@@ -149,16 +149,63 @@ const TripPlanner = () => {
                                     <label className="text-xs font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
                                         <MapPin className="w-4 h-4" /> {t('destination')}
                                     </label>
-                                    <select
-                                        value={formData.location}
-                                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                        className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 outline-none focus:border-emerald-500/50 appearance-none cursor-pointer"
-                                    >
-                                        <option value="All">{t('all_tamil_nadu')}</option>
-                                        <option value="Madurai">{t('madurai_region')}</option>
-                                        <option value="Nilgiris">{t('nilgiris_peaks')}</option>
-                                        <option value="Thanjavur">{t('cauvery_delta')}</option>
-                                    </select>
+                                    <div className="relative group">
+                                        <select
+                                            value={formData.location}
+                                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                            className="w-full bg-gradient-to-r from-slate-900/80 to-slate-800/80 backdrop-blur-2xl text-white font-semibold text-base border-2 border-emerald-500/30 rounded-[20px] pl-5 pr-12 py-4 outline-none hover:border-emerald-500/50 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none cursor-pointer shadow-2xl shadow-emerald-500/10"
+                                            size="1"
+                                        >
+                                            <option value="All" className="bg-slate-900 text-white py-3 font-semibold">{t('all_tamil_nadu')}</option>
+                                            <optgroup label="━━━ Northern Districts ━━━" className="bg-white text-black font-black py-2">
+                                                <option value="Chennai" className="bg-slate-900/95 text-slate-100 py-2 hover:bg-emerald-500">Chennai</option>
+                                                <option value="Tiruvallur" className="bg-slate-900/95 text-slate-100 py-2">Tiruvallur</option>
+                                                <option value="Kanchipuram" className="bg-slate-900/95 text-slate-100 py-2">Kanchipuram</option>
+                                                <option value="Chengalpattu" className="bg-slate-900/95 text-slate-100 py-2">Chengalpattu</option>
+                                                <option value="Vellore" className="bg-slate-900/95 text-slate-100 py-2">Vellore</option>
+                                                <option value="Ranipet" className="bg-slate-900/95 text-slate-100 py-2">Ranipet</option>
+                                                <option value="Tirupattur" className="bg-slate-900/95 text-slate-100 py-2">Tirupattur</option>
+                                                <option value="Tiruvannamalai" className="bg-slate-900/95 text-slate-100 py-2">Tiruvannamalai</option>
+                                                <option value="Krishnagiri" className="bg-slate-900/95 text-slate-100 py-2">Krishnagiri</option>
+                                                <option value="Dharmapuri" className="bg-slate-900/95 text-slate-100 py-2">Dharmapuri</option>
+                                                <option value="Viluppuram" className="bg-slate-900/95 text-slate-100 py-2">Viluppuram</option>
+                                                <option value="Kallakurichi" className="bg-slate-900/95 text-slate-100 py-2">Kallakurichi</option>
+                                            </optgroup>
+                                            <optgroup label="━━━ Western Districts ━━━" className="bg-white text-black font-black py-2">
+                                                <option value="Coimbatore" className="bg-slate-900/95 text-slate-100 py-2">Coimbatore</option>
+                                                <option value="Tiruppur" className="bg-slate-900/95 text-slate-100 py-2">Tiruppur</option>
+                                                <option value="Erode" className="bg-slate-900/95 text-slate-100 py-2">Erode</option>
+                                                <option value="Salem" className="bg-slate-900/95 text-slate-100 py-2">Salem</option>
+                                                <option value="Namakkal" className="bg-slate-900/95 text-slate-100 py-2">Namakkal</option>
+                                                <option value="Karur" className="bg-slate-900/95 text-slate-100 py-2">Karur</option>
+                                                <option value="Nilgiris" className="bg-slate-900/95 text-slate-100 py-2">The Nilgiris</option>
+                                            </optgroup>
+                                            <optgroup label="━━━ Central Districts ━━━" className="bg-white text-black font-black py-2">
+                                                <option value="Tiruchirappalli" className="bg-slate-900/95 text-slate-100 py-2">Tiruchirappalli</option>
+                                                <option value="Thanjavur" className="bg-slate-900/95 text-slate-100 py-2">Thanjavur</option>
+                                                <option value="Tiruvarur" className="bg-slate-900/95 text-slate-100 py-2">Tiruvarur</option>
+                                                <option value="Nagapattinam" className="bg-slate-900/95 text-slate-100 py-2">Nagapattinam</option>
+                                                <option value="Mayiladuthurai" className="bg-slate-900/95 text-slate-100 py-2">Mayiladuthurai</option>
+                                                <option value="Ariyalur" className="bg-slate-900/95 text-slate-100 py-2">Ariyalur</option>
+                                                <option value="Perambalur" className="bg-slate-900/95 text-slate-100 py-2">Perambalur</option>
+                                                <option value="Pudukkottai" className="bg-slate-900/95 text-slate-100 py-2">Pudukkottai</option>
+                                                <option value="Cuddalore" className="bg-slate-900/95 text-slate-100 py-2">Cuddalore</option>
+                                            </optgroup>
+                                            <optgroup label="━━━ Southern Districts ━━━" className="bg-white text-black font-black py-2">
+                                                <option value="Madurai" className="bg-slate-900/95 text-slate-100 py-2">Madurai</option>
+                                                <option value="Theni" className="bg-slate-900/95 text-slate-100 py-2">Theni</option>
+                                                <option value="Dindigul" className="bg-slate-900/95 text-slate-100 py-2">Dindigul</option>
+                                                <option value="Ramanathapuram" className="bg-slate-900/95 text-slate-100 py-2">Ramanathapuram</option>
+                                                <option value="Sivaganga" className="bg-slate-900/95 text-slate-100 py-2">Sivaganga</option>
+                                                <option value="Virudhunagar" className="bg-slate-900/95 text-slate-100 py-2">Virudhunagar</option>
+                                                <option value="Tenkasi" className="bg-slate-900/95 text-slate-100 py-2">Tenkasi</option>
+                                                <option value="Tirunelveli" className="bg-slate-900/95 text-slate-100 py-2">Tirunelveli</option>
+                                                <option value="Thoothukudi" className="bg-slate-900/95 text-slate-100 py-2">Thoothukudi</option>
+                                                <option value="Kanyakumari" className="bg-slate-900/95 text-slate-100 py-2">Kanyakumari</option>
+                                            </optgroup>
+                                        </select>
+                                        <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500 rotate-90 pointer-events-none" />
+                                    </div>
                                 </div>
                             </div>
 
@@ -193,7 +240,7 @@ const TripPlanner = () => {
                             <button
                                 onClick={handleGenerate}
                                 disabled={loading}
-                                className="btn-primary w-full max-w-sm py-5 flex items-center justify-center gap-3 shadow-emerald-500/30 shadow-2xl"
+                                className="btn-primary w-full max-w-sm mx-auto py-5 flex items-center justify-center gap-3 shadow-emerald-500/30 shadow-2xl"
                             >
                                 {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : t('launch_travel_arc')}
                             </button>
