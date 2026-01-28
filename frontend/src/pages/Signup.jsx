@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, UserPlus, ShieldCheck, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const Signup = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -25,7 +27,7 @@ const Signup = () => {
             await register(formData);
             navigate('/discover');
         } catch (err) {
-            setError(err.response?.data?.message || 'Error creating account');
+            setError(err.response?.data?.message || t('error_creating_account'));
         } finally {
             setIsLoading(false);
         }
@@ -51,8 +53,8 @@ const Signup = () => {
                             Heritage <span className="text-emerald-500 italic">Farm</span>
                         </span>
                     </Link>
-                    <h2 className="text-5xl font-outfit font-black mb-4 text-white">Join the Collective</h2>
-                    <p className="text-slate-400 text-lg font-medium">Create your account to start exploring or hosting authentic experiences</p>
+                    <h2 className="text-5xl font-outfit font-black mb-4 text-white">{t('join_collective')}</h2>
+                    <p className="text-slate-400 text-lg font-medium">{t('signup_description')}</p>
                 </div>
 
                 <div className="glass-card p-10 md:p-12 rounded-[48px] border-white/5 shadow-2xl">
@@ -70,7 +72,7 @@ const Signup = () => {
                     <form onSubmit={handleSubmit} className="space-y-10">
                         {/* Role Selection */}
                         <div className="space-y-4">
-                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Identify Your Path</label>
+                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">{t('identify_path')}</label>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <button
                                     type="button"
@@ -84,8 +86,8 @@ const Signup = () => {
                                         <UserPlus className="w-6 h-6" />
                                     </div>
                                     <div className="text-center">
-                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'tourist' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>Tourist</div>
-                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">Discover Experiences</div>
+                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'tourist' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>{t('tourist')}</div>
+                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">{t('discover_experiences')}</div>
                                     </div>
                                 </button>
 
@@ -101,8 +103,8 @@ const Signup = () => {
                                         <ShieldCheck className="w-6 h-6" />
                                     </div>
                                     <div className="text-center">
-                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'creator' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>Creator</div>
-                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">Host & Earn</div>
+                                        <div className={`font-black text-sm uppercase tracking-wider ${formData.role === 'creator' ? 'text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`}>{t('creator')}</div>
+                                        <div className="text-[10px] text-slate-600 font-bold uppercase mt-1">{t('host_earn')}</div>
                                     </div>
                                 </button>
                             </div>
@@ -110,13 +112,13 @@ const Signup = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-3">
-                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Full Name</label>
+                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">{t('full_name')}</label>
                                 <div className="relative group">
                                     <User className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                     <input
                                         type="text"
                                         required
-                                        placeholder="John Doe"
+                                        placeholder={t('full_name_placeholder')}
                                         className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                                         value={formData.name}
                                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -125,13 +127,13 @@ const Signup = () => {
                             </div>
 
                             <div className="space-y-3">
-                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Email Address</label>
+                                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">{t('email_address')}</label>
                                 <div className="relative group">
                                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                     <input
                                         type="email"
                                         required
-                                        placeholder="your@email.com"
+                                        placeholder={t('email_placeholder')}
                                         className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -141,7 +143,7 @@ const Signup = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">Choose Secret Phrase</label>
+                            <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">{t('choose_secret_phrase')}</label>
                             <div className="relative group">
                                 <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
                                 <input
@@ -160,21 +162,21 @@ const Signup = () => {
                             disabled={isLoading}
                             className="w-full h-20 btn-primary text-xl flex items-center justify-center gap-3 disabled:opacity-50"
                         >
-                            {isLoading ? 'Creating Identity...' : 'Initialize Account'}
+                            {isLoading ? t('creating_identity') : t('initialize_account')}
                             {!isLoading && <ArrowRight className="w-6 h-6" />}
                         </button>
                     </form>
 
                     <div className="mt-12 text-center">
-                        <p className="text-slate-500 font-bold mb-4">Already part of the heritage?</p>
+                        <p className="text-slate-500 font-bold mb-4">{t('already_member')}</p>
                         <Link to="/login" className="inline-flex items-center gap-2 text-emerald-500 font-black uppercase tracking-[0.2em] text-sm hover:gap-4 transition-all">
-                            Access Dashboard <ArrowRight className="w-4 h-4" />
+                            {t('access_dashboard')} <ArrowRight className="w-4 h-4" />
                         </Link>
                     </div>
                 </div>
 
                 <p className="mt-12 text-center text-slate-600 text-[10px] font-black uppercase tracking-[0.3em] max-w-md mx-auto leading-loose">
-                    By initializing your account, you agree to our <span className="text-slate-400">Terms of Service</span> and <span className="text-slate-400">Governance Protocol</span>.
+                    {t('terms_agreement')} <span className="text-slate-400">{t('terms_of_service')}</span> {t('and')} <span className="text-slate-400">{t('governance_protocol')}</span>.
                 </p>
             </motion.div>
         </div>
