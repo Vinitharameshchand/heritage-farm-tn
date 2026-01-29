@@ -38,6 +38,9 @@ const resources = {
       and: "and",
       governance_protocol: "Governance Protocol",
       error_creating_account: "Error creating account",
+      select_gender: "Select Gender",
+      male: "Male",
+      female: "Female",
 
       // Login page
       welcome_back: "Welcome Back",
@@ -187,6 +190,9 @@ const resources = {
       and: "மற்றும்",
       governance_protocol: "ஆளுகை நெறிமுறை",
       error_creating_account: "கணக்கை உருவாக்குவதில் பிழை",
+      select_gender: "பாலினத்தை தேர்வு செய்யவும்",
+      male: "ஆண்",
+      female: "பெண்",
 
       // Login page
       welcome_back: "மீண்டும் வரவேற்கிறோம்",

@@ -27,6 +27,11 @@ const userSchema = new mongoose.Schema(
       enum: ["tourist", "creator", "admin"],
       default: "tourist",
     },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      sparse: true,
+    },
     creatorProfile: {
       creatorId: {
         type: String,

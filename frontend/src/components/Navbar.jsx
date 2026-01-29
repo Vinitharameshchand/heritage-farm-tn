@@ -151,13 +151,6 @@ const Navbar = () => {
               {user.role === "tourist" && (
                 <>
                   <Link
-                    to="/profile"
-                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
-                  >
-                    <Shield className="w-4 h-4" />
-                    {t("safety_card")}
-                  </Link>
-                  <Link
                     to="/my-bookings"
                     className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
                   >
@@ -177,12 +170,18 @@ const Navbar = () => {
               )}
               <div className="flex items-center gap-3 pl-4 border-l border-slate-700">
                 <div className="text-right">
-                  <div className="text-sm font-bold text-white">
-                    {user.name}
-                  </div>
-                  <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
-                    {user.role}
-                  </div>
+                  <Link
+                    to="/profile"
+                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex flex-col gap-0 hover:bg-white/5 transition-all"
+                  >
+                    <div className="text-sm font-bold text-white">
+                      {user.name}
+                    </div>
+
+                    <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
+                      {user.role}
+                    </div>
+                  </Link>
                 </div>
                 <button
                   onClick={handleLogout}

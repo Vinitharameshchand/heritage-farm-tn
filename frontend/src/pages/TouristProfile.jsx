@@ -39,6 +39,7 @@ const TouristProfile = () => {
     name: user?.name || "Heritage Explorer",
     email: user?.email || "",
     phone: user?.phone || "",
+    gender: user?.gender || "",
     bloodGroup: "O+",
     emergencyContact1: { name: "", phone: "", relation: "" },
     emergencyContact2: { name: "", phone: "", relation: "" },

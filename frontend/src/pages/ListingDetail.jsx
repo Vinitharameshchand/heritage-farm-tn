@@ -225,9 +225,11 @@ const ListingDetail = () => {
                   />
                 </div>
               </div>
-              <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
+              <div className="bg-white/5 p-6 rounded-3xl border border-white/10 overflow-hidden">
                 <WeatherWidget
                   location={listing.location?.city || "Tamil Nadu"}
+                  lat={listing.location?.coordinates?.lat}
+                  lon={listing.location?.coordinates?.lon}
                   compact={false}
                 />
               </div>

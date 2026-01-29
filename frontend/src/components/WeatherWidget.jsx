@@ -13,63 +13,141 @@ import {
   MapPin,
   Clock,
   RefreshCw,
+  CloudSnow,
+  CloudDrizzle,
+  Cloudy,
+  Calendar,
 } from "lucide-react";
 
-const WeatherWidget = ({ location, compact = false }) => {
+const OPENWEATHER_API_KEY = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+
+const WeatherWidget = ({ location, compact = false, lat, lon }) => {
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(true);
   const [alerts, setAlerts] = useState([]);
   const [showAlertModal, setShowAlertModal] = useState(false);
+  const [error, setError] = useState(null);
 
-  const weatherIcons = {
-    clear: Sun,
-    clouds: Cloud,
-    rain: CloudRain,
-    thunderstorm: CloudLightning,
-    wind: Wind,
+  const getWeatherIcon = (condition) => {
+    const iconMap = {
+      Clear: Sun,
+      Clouds: Cloud,
+      Rain: CloudRain,
+      Drizzle: CloudDrizzle,
+      Thunderstorm: CloudLightning,
+      Snow: CloudSnow,
+      Mist: Cloudy,
+      Fog: Cloudy,
+      Haze: Cloudy,
+    };
+    return iconMap[condition] || Cloud;
   };
 
   useEffect(() => {
     fetchWeather();
-  }, [location]);
+  }, [location, lat, lon]);
 
   const fetchWeather = async () => {
     setLoading(true);
+    setError(null);
 
-    setTimeout(() => {
+    try {
+      let latitude = lat;
+      let longitude = lon;
+
+      if (!latitude || !longitude) {
+        const cityName =
+          typeof location === "string" ? location : location?.city || "Chennai";
+        const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cityName)},IN&limit=1&appid=${OPENWEATHER_API_KEY}`;
+        const geoResponse = await fetch(geoUrl);
+        const geoData = await geoResponse.json();
+
+        if (geoData && geoData.length > 0) {
+          latitude = geoData[0].lat;
+          longitude = geoData[0].lon;
+        } else {
+          latitude = 13.0827;
+          longitude = 80.2707;
+        }
+      }
+
+      const oneCallUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly&units=metric&appid=${OPENWEATHER_API_KEY}`;
+      const response = await fetch(oneCallUrl);
+
+      if (!response.ok) {
+        throw new Error("Weather API request failed");
+      }
+
+      const data = await response.json();
+
+      setWeather({
+        temp: Math.round(data.current.temp),
+        feels_like: Math.round(data.current.feels_like),
+        humidity: data.current.humidity,
+        wind_speed: Math.round(data.current.wind_speed * 3.6),
+        condition: data.current.weather[0].main,
+        description: data.current.weather[0].description,
+        icon: data.current.weather[0].icon,
+        uvi: data.current.uvi,
+        city:
+          typeof location === "string" ? location : location?.city || "Chennai",
+      });
+
+      const dailyForecast = data.daily.slice(0, 7).map((day) => ({
+        date: new Date(day.dt * 1000),
+        tempMax: Math.round(day.temp.max),
+        tempMin: Math.round(day.temp.min),
+        condition: day.weather[0].main,
+        description: day.weather[0].description,
+        icon: day.weather[0].icon,
+        humidity: day.humidity,
+        pop: Math.round(day.pop * 100),
+      }));
+      setForecast(dailyForecast);
+
+      if (data.alerts && data.alerts.length > 0) {
+        setAlerts(
+          data.alerts.map((alert) => ({
+            type: "warning",
+            title: alert.event,
+            description: alert.description,
+            severity: alert.tags?.includes("Extreme") ? "severe" : "moderate",
+            validUntil: new Date(alert.end * 1000).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+          })),
+        );
+      } else {
+        setAlerts([]);
+      }
+    } catch (err) {
+      console.error("Weather fetch error:", err);
+      setError("Unable to fetch weather data");
       setWeather({
         temp: 28,
         feels_like: 31,
         humidity: 75,
         wind_speed: 12,
-        condition: "clouds",
+        condition: "Clouds",
         description: "Partly Cloudy",
-        city: location?.city || "Chennai",
-        district: location?.district || "Chennai",
+        city:
+          typeof location === "string" ? location : location?.city || "Chennai",
       });
-
-      if (Math.random() > 0.7) {
-        setAlerts([
-          {
-            type: "warning",
-            title: "Heavy Rain Expected",
-            description:
-              "Heavy rainfall expected in the afternoon. Consider rescheduling outdoor activities.",
-            severity: "moderate",
-            validUntil: "6:00 PM",
-          },
-        ]);
-      } else {
-        setAlerts([]);
-      }
-
+      setForecast([]);
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
-  const WeatherIcon = weather
-    ? weatherIcons[weather.condition] || Cloud
-    : Cloud;
+  const getDayName = (date, index) => {
+    if (index === 0) return "Today";
+    if (index === 1) return "Tomorrow";
+    return date.toLocaleDateString("en-US", { weekday: "short" });
+  };
+
+  const WeatherIcon = weather ? getWeatherIcon(weather.condition) : Cloud;
 
   if (loading) {
     return (
@@ -156,6 +234,55 @@ const WeatherWidget = ({ location, compact = false }) => {
             <p className="font-bold text-white">{weather.wind_speed} km/h</p>
           </div>
         </div>
+
+        {/* 7-Day Forecast */}
+        {forecast.length > 0 && (
+          <div className="mt-6 pt-4 border-t border-white/10">
+            <div className="flex items-center gap-2 mb-4">
+              <Calendar className="w-4 h-4 text-[#FFD595]" />
+              <span className="text-sm font-bold text-white">
+                7-Day Forecast
+              </span>
+            </div>
+            <div className="space-y-2">
+              {forecast.map((day, idx) => {
+                const DayIcon = getWeatherIcon(day.condition);
+                return (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors"
+                  >
+                    <div className="flex items-center gap-3 min-w-[80px]">
+                      <span className="text-sm font-bold text-white w-16">
+                        {getDayName(day.date, idx)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <DayIcon className="w-5 h-5 text-[#FFD595]" />
+                      <span className="text-xs text-white/50 w-20 text-center capitalize">
+                        {day.description}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {day.pop > 0 && (
+                        <span className="text-xs text-blue-400 flex items-center gap-1">
+                          <Droplets className="w-3 h-3" />
+                          {day.pop}%
+                        </span>
+                      )}
+                      <span className="text-sm font-bold text-white">
+                        {day.tempMax}°
+                      </span>
+                      <span className="text-sm text-white/50">
+                        {day.tempMin}°
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Alerts */}
         {alerts.length > 0 && (

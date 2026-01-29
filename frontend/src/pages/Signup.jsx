@@ -20,6 +20,7 @@ const Signup = () => {
     email: "",
     password: "",
     role: "tourist",
+    gender: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -145,6 +146,51 @@ const Signup = () => {
                 </button>
               </div>
             </div>
+
+            {/* Gender Selection - Only for Tourists */}
+            {formData.role === "tourist" && (
+              <div className="space-y-4">
+                <label className="text-xs font-black uppercase tracking-[0.2em] text-white/60 ml-2">
+                  {t("select_gender")}
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, gender: "male" })}
+                    className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-center gap-3 ${
+                      formData.gender === "male"
+                        ? "border-blue-400 bg-blue-400/10"
+                        : "border-white/20 bg-white/5 hover:border-white/30"
+                    }`}
+                  >
+                    <span className="text-2xl">👨</span>
+                    <span
+                      className={`font-bold ${formData.gender === "male" ? "text-blue-400" : "text-white/60"}`}
+                    >
+                      {t("male")}
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({ ...formData, gender: "female" })
+                    }
+                    className={`p-4 rounded-2xl border-2 transition-all flex items-center justify-center gap-3 ${
+                      formData.gender === "female"
+                        ? "border-pink-400 bg-pink-400/10"
+                        : "border-white/20 bg-white/5 hover:border-white/30"
+                    }`}
+                  >
+                    <span className="text-2xl">👩</span>
+                    <span
+                      className={`font-bold ${formData.gender === "female" ? "text-pink-400" : "text-white/60"}`}
+                    >
+                      {t("female")}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-3">
