@@ -8,6 +8,8 @@ import {
   CheckCircle,
   ShieldCheck,
   AlertCircle,
+  Minus,
+  Plus,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -114,7 +116,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
           email: "",
         },
         theme: {
-          color: "#10b981",
+          color: "#46041F",
         },
       };
 
@@ -135,52 +137,57 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-md glass overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
-        >
+      <div className="fixed inset-0 z-50 bg-[#46041F]/90 backdrop-blur-md overflow-y-auto">
+        <div className="min-h-screen flex items-center justify-center p-4 py-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative w-full max-w-md bg-[#46041F] rounded-[2.5rem] border border-[#FFD595]/20 shadow-2xl shadow-black/50"
+          >
           {isSuccess ? (
             <div className="flex flex-col items-center justify-center py-16 px-8 text-center">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mb-8"
+                className="w-24 h-24 bg-[#FFD595]/20 rounded-full flex items-center justify-center mb-8"
               >
-                <CheckCircle className="w-12 h-12 text-emerald-500" />
+                <CheckCircle className="w-12 h-12 text-[#FFD595]" />
               </motion.div>
-              <h3 className="text-3xl font-outfit font-black mb-4">Secured!</h3>
-              <p className="text-slate-400 text-lg font-medium leading-relaxed mb-4">
+              <h3 className="text-4xl jaro font-black mb-4 text-[#FFD595] italic">Secured!</h3>
+              <p className="text-white/70 text-lg font-medium leading-relaxed mb-4">
                 Your journey at{" "}
-                <span className="text-emerald-400">{listing.title}</span> has
+                <span className="text-[#FFD595] font-bold">{listing.title}</span> has
                 been successfully confirmed.
               </p>
-              <p className="text-slate-500 text-sm">
+              <p className="text-white/40 text-sm font-bold uppercase tracking-widest">
                 Redirecting to your bookings...
               </p>
             </div>
           ) : (
             <>
-              <div className="flex justify-between items-center p-8 border-b border-white/5">
-                <h3 className="text-2xl font-outfit font-black">Reserve Arc</h3>
+              {/* Header */}
+              <div className="flex justify-between items-center p-8 border-b border-[#FFD595]/10">
+                <h3 className="text-3xl jaro font-black text-[#FFD595] italic tracking-tight">Reserve Arc</h3>
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-white/10 rounded-full transition-all text-slate-500 hover:text-white"
+                  className="p-3 hover:bg-white/10 rounded-full transition-all text-white/50 hover:text-[#FFD595]"
                 >
                   <X className="w-6 h-6" />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-8 space-y-8">
+              <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                {/* Authentication Warning */}
                 {!user && (
-                  <div className="p-5 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-2xl text-sm font-medium flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <div className="p-5 bg-[#FFD595]/10 border border-[#FFD595]/30 rounded-2xl flex items-start gap-4">
+                    <div className="w-10 h-10 bg-[#FFD595]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <AlertCircle className="w-5 h-5 text-[#FFD595]" />
+                    </div>
                     <div>
-                      <p className="font-bold mb-1">Authentication Required</p>
-                      <p className="text-xs opacity-90">
+                      <p className="font-black text-[#FFD595] uppercase text-xs tracking-widest mb-1">Authentication Required</p>
+                      <p className="text-white/60 text-sm">
                         You need to login before booking.{" "}
                         <button
                           type="button"
@@ -188,7 +195,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                             onClose();
                             navigate("/login");
                           }}
-                          className="underline font-bold hover:text-amber-300"
+                          className="underline font-bold text-[#FFD595] hover:text-white transition-colors"
                         >
                           Click here to login
                         </button>
@@ -197,72 +204,84 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                   </div>
                 )}
 
+                {/* Error Message */}
                 {error && (
-                  <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-                    <X className="w-4 h-4" />
-                    {error}
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-2xl flex items-center gap-3">
+                    <X className="w-5 h-5 text-red-400" />
+                    <p className="text-red-400 text-sm font-bold">{error}</p>
                   </div>
                 )}
-                <div className="p-4 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
-                  <p className="text-sm text-emerald-400 font-medium">
+
+                {/* Listing Info Card */}
+                <div className="p-5 bg-[#FFD595]/10 rounded-2xl border border-[#FFD595]/20">
+                  <p className="text-[10px] text-[#FFD595]/60 font-black uppercase tracking-widest mb-2">
                     Listing
                   </p>
-                  <p className="font-semibold">{listing.title}</p>
-                  <p className="text-sm text-slate-400">
-                    ₹{listing.price} / person / day
+                  <p className="font-bold text-white text-lg mb-1">{listing.title}</p>
+                  <p className="text-[#FFD595] font-black text-xl">
+                    ₹{listing.price} <span className="text-sm font-medium text-white/50">/ person / day</span>
                   </p>
                 </div>
 
+                {/* Date Inputs */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm text-slate-400 flex items-center gap-2">
-                      <Calendar className="w-4 h-4" /> Start Date
+                    <label className="text-[10px] text-[#FFD595]/60 font-black uppercase tracking-widest flex items-center gap-2">
+                      <Calendar className="w-3 h-3" /> Start Date
                     </label>
                     <input
                       type="date"
                       required
                       value={startDate}
                       onChange={(e) => setStartDate(e.target.value)}
-                      className="w-full bg-slate-800 border border-white/5 rounded-xl px-3 py-2 outline-none focus:border-emerald-500/50 transition-colors"
+                      className="w-full bg-white/5 border border-[#FFD595]/20 rounded-xl px-4 py-3 outline-none focus:border-[#FFD595]/50 transition-colors text-white placeholder-white/30"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm text-slate-400 flex items-center gap-2">
-                      <Calendar className="w-4 h-4" /> End Date
+                    <label className="text-[10px] text-[#FFD595]/60 font-black uppercase tracking-widest flex items-center gap-2">
+                      <Calendar className="w-3 h-3" /> End Date
                     </label>
                     <input
                       type="date"
                       required
                       value={endDate}
                       onChange={(e) => setEndDate(e.target.value)}
-                      className="w-full bg-slate-800 border border-white/5 rounded-xl px-3 py-2 outline-none focus:border-emerald-500/50 transition-colors"
+                      className="w-full bg-white/5 border border-[#FFD595]/20 rounded-xl px-4 py-3 outline-none focus:border-[#FFD595]/50 transition-colors text-white placeholder-white/30"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm text-slate-400 flex items-center gap-2">
-                    <Users className="w-4 h-4" /> Number of Guests
+                {/* Guest Counter */}
+                <div className="space-y-3">
+                  <label className="text-[10px] text-[#FFD595]/60 font-black uppercase tracking-widest flex items-center gap-2">
+                    <Users className="w-3 h-3" /> Number of Guests
                   </label>
-                  <div className="flex items-center gap-4">
-                    <input
-                      type="range"
-                      min="1"
-                      max="10"
-                      value={numGuests}
-                      onChange={(e) => setNumGuests(parseInt(e.target.value))}
-                      className="flex-1 accent-emerald-500"
-                    />
-                    <span className="w-8 text-center font-bold">
+                  <div className="flex items-center justify-between bg-white/5 border border-[#FFD595]/20 rounded-xl p-2">
+                    <button
+                      type="button"
+                      onClick={() => setNumGuests(Math.max(1, numGuests - 1))}
+                      className="w-12 h-12 rounded-xl bg-[#FFD595]/10 hover:bg-[#FFD595]/20 text-[#FFD595] flex items-center justify-center transition-all"
+                    >
+                      <Minus className="w-5 h-5" />
+                    </button>
+                    <span className="text-3xl font-black text-white jaro">
                       {numGuests}
                     </span>
+                    <button
+                      type="button"
+                      onClick={() => setNumGuests(Math.min(10, numGuests + 1))}
+                      className="w-12 h-12 rounded-xl bg-[#FFD595]/10 hover:bg-[#FFD595]/20 text-[#FFD595] flex items-center justify-center transition-all"
+                    >
+                      <Plus className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
+                {/* Total & Submit */}
+                <div className="pt-6 border-t border-[#FFD595]/10">
                   <div className="flex justify-between items-center mb-6">
-                    <span className="text-slate-400">Total Price</span>
-                    <span className="text-2xl font-bold text-emerald-500">
+                    <span className="text-white/50 font-bold uppercase text-xs tracking-widest">Total Price</span>
+                    <span className="text-4xl font-black text-[#FFD595] jaro">
                       ₹{calculateTotal()}
                     </span>
                   </div>
@@ -270,7 +289,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                   <button
                     type="submit"
                     disabled={isProcessing}
-                    className="w-full btn-primary flex items-center justify-center gap-2 py-4"
+                    className="w-full py-5 bg-[#FFD595] text-[#46041F] rounded-full font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all shadow-xl flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isProcessing ? (
                       <motion.div
@@ -280,7 +299,7 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                           repeat: Infinity,
                           ease: "linear",
                         }}
-                        className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                        className="w-5 h-5 border-2 border-[#46041F]/30 border-t-[#46041F] rounded-full"
                       />
                     ) : (
                       <>
@@ -289,15 +308,18 @@ const BookingModal = ({ isOpen, onClose, listing, onConfirm }) => {
                       </>
                     )}
                   </button>
-                  <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                    <ShieldCheck className="w-3 h-3 text-emerald-500" />
+
+                  {/* Razorpay Badge */}
+                  <div className="mt-5 flex items-center justify-center gap-2 text-[10px] text-white/40 font-bold uppercase tracking-widest">
+                    <ShieldCheck className="w-4 h-4 text-[#FFD595]" />
                     Secured by Razorpay
                   </div>
                 </div>
               </form>
             </>
           )}
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </AnimatePresence>
   );
