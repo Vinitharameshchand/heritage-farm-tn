@@ -92,10 +92,10 @@ const MyBookings = () => {
   return (
     <div className="min-h-screen bg-[#46041F]  pb-16 px-4 relative overflow-hidden">
       {/* Decorative SVGs */}
-      <div className="absolute inset-y-0 -top-80 left-0 w-40 ">
+      <div className="absolute inset-y-0 top-2 left-0 w-40 ">
         <img src="/left.svg" alt="decorative left" className="h-full" />
       </div>
-      <div className="absolute inset-y-0 -top-80 right-0 w-40">
+      <div className="absolute inset-y-0 top-2 right-0 w-40">
         <img src="/right.svg" alt="decorative left" className="h-full" />
       </div>
       <div className="max-w-7xl mx-auto relative pt-20 z-10">

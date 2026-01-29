@@ -51,7 +51,7 @@ const Navbar = () => {
       </div>
 
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
-        <Link to="/" className="flex items-center -gap-10 group">
+        <Link to="/" className="flex items-center gap-0 group">
           <span className="text-2xl jaro font-bold tracking-tight text-white">
             Heritage Farm
           </span>

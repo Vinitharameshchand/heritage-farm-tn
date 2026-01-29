@@ -50,23 +50,31 @@ const ListingDetail = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center font-outfit text-2xl text-emerald-500 animate-pulse bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center font-bold text-2xl text-[#FFD595] animate-pulse bg-[#46041F]">
         {t("loading_experience")}
       </div>
     );
   if (!listing)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#46041F] text-white">
         {t("experience_not_found")}
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
-      <div className="relative h-[70vh] overflow-hidden">
+    <div className="min-h-screen bg-[#46041F] text-white relative overflow-hidden">
+      {/* Decorative SVGs */}
+      <div className="absolute inset-y-0 top-2 left-0 w-40 ">
+        <img src="/left.svg" alt="decorative left" className="h-full" />
+      </div>
+      <div className="absolute inset-y-0 top-2 right-0 w-40">
+        <img src="/right.svg" alt="decorative left" className="h-full" />
+      </div>
+
+      <div className="relative h-[50vh] overflow-hidden z-10">
         <Link
           to="/discover"
-          className="absolute top-24 left-40 p-3 glass rounded-full text-white hover:bg-white/20 transition-all"
+          className="absolute top-24 left-12 p-3 bg-white/10 backdrop-blur-xl border border-[#FFD595]/20 rounded-full text-white hover:bg-white/20 transition-all"
         >
           <ArrowLeft className="w-6 h-6" />
         </Link>
@@ -78,20 +86,20 @@ const ListingDetail = () => {
             className="flex flex-col items-start gap-4"
           >
             <div className="flex items-center gap-3">
-              <span className="px-4 py-1.5 bg-emerald-600 text-white rounded-full text-xs font-bold uppercase tracking-widest">
+              <span className="px-4 py-1.5 bg-[#FFD595] text-[#46041F] rounded-full text-xs font-bold uppercase tracking-widest">
                 {listing.categoryDisplay || listing.category}
               </span>
-              <div className="flex items-center gap-1.5 glass px-4 py-1.5 rounded-full text-xs">
-                <MapPin className="w-4 h-4 text-emerald-400" />
+              <div className="flex items-center gap-1.5 bg-white/10 backdrop-blur-xl border border-[#FFD595]/20 px-4 py-1.5 rounded-full text-xs">
+                <MapPin className="w-4 h-4 text-[#FFD595]" />
                 {listing.location?.city}
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-outfit font-black mb-4 leading-tight">
+            <h1 className="text-5xl md:text-7xl jaro font-bold mb-4 leading-tight">
               {listing.title}
             </h1>
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2">
-                <Star className="w-6 h-6 text-amber-400 fill-current" />
+                <Star className="w-6 h-6 text-[#FFD595] fill-current" />
                 <span className="font-bold text-xl">{listing.rating}</span>
                 <span className="text-white/60">
                   ({listing.reviewCount} {t("reviews")})
@@ -99,7 +107,7 @@ const ListingDetail = () => {
               </div>
               <div className="hidden md:block h-8 w-px bg-white/10" />
               <div className="flex items-center gap-2">
-                <Clock className="w-6 h-6 text-emerald-400" />
+                <Clock className="w-6 h-6 text-[#FFD595]" />
                 <span className="text-xl">
                   {Math.floor(listing.duration / 60)}h {listing.duration % 60}m
                 </span>
@@ -110,12 +118,12 @@ const ListingDetail = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <div className="max-w-6xl mx-auto px-6 pb-10 grid grid-cols-1 lg:grid-cols-3 gap-16">
         {/* Left Column: Info */}
         <div className="lg:col-span-2 space-y-16">
           <section>
             <h2 className="text-4xl font-outfit font-bold mb-8 flex items-center gap-3">
-              <span className="w-8 h-1 bg-emerald-500 rounded-full" />
+              <span className="w-8 h-1 bg-[#FFD595] rounded-full" />
               {t("about_experience")}
             </h2>
             <p className="text-slate-400 text-xl leading-relaxed whitespace-pre-line">
@@ -143,7 +151,7 @@ const ListingDetail = () => {
               },
             ].map((item, idx) => (
               <div key={idx} className="glass-card p-8 rounded-[32px] group">
-                <item.icon className="w-8 h-8 text-emerald-500 mb-4 group-hover:scale-110 transition-transform" />
+                <item.icon className="w-8 h-8 text-[#FFD595] mb-4 group-hover:scale-110 transition-transform" />
                 <div className="text-sm text-slate-500 mb-1 truncate">
                   {item.label}
                 </div>
@@ -173,7 +181,7 @@ const ListingDetail = () => {
                   transition={{ delay: i * 0.1 }}
                   className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5"
                 >
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] flex-shrink-0" />
+                  <div className="w-3 h-3 rounded-full bg-[#FFD595] shadow-[0_0_10px_rgba(255,213,149,0.5)] flex-shrink-0" />
                   <span
                     className="text-slate-300 font-medium break-words"
                     lang="ta"
@@ -188,9 +196,9 @@ const ListingDetail = () => {
 
         {/* Right Column: Booking Card */}
         <div className="lg:col-span-1">
-          <div className="sticky top-32 glass-card rounded-[48px] p-10 border-emerald-500/10">
+          <div className="sticky top-32 glass-card rounded-[48px] p-10 border-[#FFD595]/10">
             <div className="flex items-baseline gap-2 mb-10">
-              <span className="text-5xl font-black text-emerald-500 font-outfit">
+              <span className="text-5xl font-black text-[#FFD595] jaro">
                 ₹{listing.price}
               </span>
               <span className="text-slate-400 text-lg">{t("per_person")}</span>
@@ -209,7 +217,7 @@ const ListingDetail = () => {
               {listing.hasAR && (
                 <Link
                   to={`/heritage-vision/${id}`}
-                  className="w-full h-16 bg-emerald-500/10 text-emerald-500 rounded-full font-bold hover:bg-emerald-500/20 transition-all border border-emerald-500/20 flex items-center justify-center gap-3"
+                  className="w-full h-16 bg-[#FFD595]/10 text-[#FFD595] rounded-full font-bold hover:bg-[#FFD595]/20 transition-all border border-[#FFD595]/20 flex items-center justify-center gap-3"
                 >
                   <Sparkles className="w-5 h-5" />
                   {t("enter_heritage_vision")}
@@ -217,7 +225,7 @@ const ListingDetail = () => {
               )}
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-sm text-emerald-400/60 font-medium">
+            <div className="flex items-center justify-center gap-2 text-sm text-[#FFD595]/60 font-medium">
               <Shield className="w-4 h-4" />
               {t("secure_booking")}
             </div>

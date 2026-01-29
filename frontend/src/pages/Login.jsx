@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const Login = () => {
       await setAuthToken(token);
       navigate("/discover");
     } catch (err) {
-      setError(t('oauth_failed'));
+      setError(t("oauth_failed"));
     }
   };
 
@@ -52,17 +52,21 @@ const Login = () => {
       await login(formData.email, formData.password);
       navigate("/discover");
     } catch (err) {
-      setError(err.response?.data?.message || t('invalid_login'));
+      setError(err.response?.data?.message || t("invalid_login"));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 py-24 bg-slate-950 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-6 py-24 bg-[#46041F] relative overflow-hidden">
       {/* Background Decoration */}
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full" />
+      <div className="absolute inset-y-0 top-2 left-0 w-40 ">
+        <img src="/left.svg" alt="decorative left" className="h-full" />
+      </div>
+      <div className="absolute inset-y-0 top-2 right-0 w-40">
+        <img src="/right.svg" alt="decorative left" className="h-full" />
+      </div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -70,28 +74,32 @@ const Login = () => {
         className="max-w-lg w-full relative z-10"
       >
         <div className="text-center mb-12">
-          <Link to="/" className="inline-flex items-center gap-3 mb-8 group">
-            <div className="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
-              H
-            </div>
-            <span className="text-3xl font-outfit font-black tracking-tighter text-white">
-              Heritage <span className="text-emerald-500 italic">Farm</span>
+          <Link to="/" className="inline-flex items-center gap-0 mb-8 group">
+            <span className="text-3xl jaro font-bold tracking-tighter text-white">
+              Heritage <span className="text-[#FFD595] italic">Farm</span>
             </span>
+            <div className="transition-transform group-hover:rotate-[20deg]">
+              <img
+                src="/temple.svg"
+                alt="decorative left"
+                className="h-14 w-auto"
+              />
+            </div>
           </Link>
-          <h2 className="text-5xl font-outfit font-black mb-4 text-white">
-            {t('welcome_back')}
+          <h2 className="text-5xl jaro font-bold mb-4 text-white">
+            {t("welcome_back")}
           </h2>
-          <p className="text-slate-400 text-lg font-medium">
-            {t('login_description')}
+          <p className="text-white/70 text-lg font-medium">
+            {t("login_description")}
           </p>
         </div>
 
-        <div className="glass-card p-10 rounded-[48px] border-white/5 shadow-2xl">
+        <div className="bg-white/10 backdrop-blur-xl border border-[#FFD595]/20 p-10 rounded-[48px] shadow-2xl">
           {error && (
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="mb-8 p-5 bg-red-500/10 border border-red-500/20 text-red-400 rounded-2xl text-sm font-bold flex items-center gap-3"
+              className="mb-8 p-5 bg-red-500/20 border border-red-500/40 text-red-300 rounded-2xl text-sm font-bold flex items-center gap-3"
             >
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
@@ -100,16 +108,16 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-3">
-              <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 ml-2">
-                {t('email_address')}
+              <label className="text-xs font-black uppercase tracking-[0.2em] text-white/60 ml-2">
+                {t("email_address")}
               </label>
               <div className="relative group">
-                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
+                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60 group-focus-within:text-[#FFD595] transition-colors" />
                 <input
                   type="email"
                   required
-                  placeholder={t('email_placeholder')}
-                  className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
+                  placeholder={t("email_placeholder")}
+                  className="w-full pl-14 pr-5 py-5 bg-white/5 rounded-3xl border border-[#FFD595]/20 focus:outline-none focus:border-[#FFD595] focus:bg-white/10 text-white font-medium transition-all"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -120,23 +128,23 @@ const Login = () => {
 
             <div className="space-y-3">
               <div className="flex justify-between items-center ml-2">
-                <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">
-                  {t('password')}
+                <label className="text-xs font-black uppercase tracking-[0.2em] text-white/60">
+                  {t("password")}
                 </label>
                 <a
                   href="#"
-                  className="text-xs font-black uppercase tracking-[0.2em] text-emerald-500 hover:text-emerald-400 transition-colors"
+                  className="text-xs font-black uppercase tracking-[0.2em] text-[#FFD595] hover:text-[#FFD595]/80 transition-colors"
                 >
-                  {t('forgot')}
+                  {t("forgot")}
                 </a>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 group-focus-within:text-emerald-500 transition-colors" />
+                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60 group-focus-within:text-[#FFD595] transition-colors" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder="••••••••"
-                  className="w-full pl-14 pr-14 py-5 bg-white/5 rounded-3xl border border-white/5 focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 text-white font-medium transition-all"
+                  className="w-full pl-14 pr-14 py-5 bg-white/5 rounded-3xl border border-[#FFD595]/20 focus:outline-none focus:border-[#FFD595] focus:bg-white/10 text-white font-medium transition-all"
                   value={formData.password}
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -145,7 +153,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -166,16 +174,16 @@ const Login = () => {
                 htmlFor="remember"
                 className="text-sm font-bold text-slate-400 cursor-pointer"
               >
-                {t('remember_me')}
+                {t("remember_me")}
               </label>
             </div>
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full h-20 btn-primary text-xl flex items-center justify-center gap-3 disabled:opacity-50"
+              className="w-full h-20 bg-[#FFD595] hover:bg-[#FFD595]/80 text-[#46041F] rounded-[32px] font-black text-xl flex items-center justify-center gap-3 shadow-2xl transition-all disabled:opacity-50"
             >
-              {isLoading ? t('decrypting_access') : t('sign_in_dashboard')}
+              {isLoading ? t("decrypting_access") : t("sign_in_dashboard")}
               {!isLoading && <ArrowRight className="w-6 h-6" />}
             </button>
 
@@ -185,7 +193,7 @@ const Login = () => {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-[#0f172a] px-2 text-slate-500 font-bold tracking-widest">
-                  {t('or_secure_link')}
+                  {t("or_secure_link")}
                 </span>
               </div>
             </div>
@@ -213,27 +221,27 @@ const Login = () => {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              {t('explore_google')}
+              {t("explore_google")}
             </button>
           </form>
 
           <div className="mt-12 text-center">
-            <p className="text-slate-500 font-bold mb-4">
-              {t('uncharted_territory')}
+            <p className="text-white/60 font-bold mb-4">
+              {t("uncharted_territory")}
             </p>
             <Link
               to="/signup"
-              className="inline-flex items-center gap-2 text-emerald-500 font-black uppercase tracking-[0.2em] text-sm hover:gap-4 transition-all"
+              className="inline-flex items-center gap-2 text-[#FFD595] font-black uppercase tracking-[0.2em] text-sm hover:gap-4 transition-all"
             >
-              {t('create_new_identity')} <ArrowRight className="w-4 h-4" />
+              {t("create_new_identity")} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
 
-        <div className="mt-12 flex justify-center items-center gap-3 text-slate-600">
-          <ShieldCheck className="w-5 h-5 text-emerald-500/40" />
+        <div className="mt-12 flex justify-center items-center gap-3 text-white/40">
+          <ShieldCheck className="w-5 h-5 text-[#FFD595]/60" />
           <span className="text-xs font-black uppercase tracking-[0.2em]">
-            {t('encrypted_session')}
+            {t("encrypted_session")}
           </span>
         </div>
       </motion.div>

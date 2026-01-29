@@ -88,7 +88,7 @@ const TripPlanner = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header Section */}
-        <header className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        <header className="flex flex-col pt-12 md:flex-row justify-between items-end mb-12 gap-4">
           <div className="space-y-2">
             <h1 className="text-6xl font-black tracking-tighter jaro italic">
               Travel Arc
