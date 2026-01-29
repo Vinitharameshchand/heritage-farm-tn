@@ -44,103 +44,187 @@ const customIcon = new L.Icon({
 });
 
 const tamilNaduLocations = [
-  { 
-    name: "Chennai", 
-    lat: 13.0827, 
+  {
+    name: "Chennai",
+    lat: 13.0827,
     lng: 80.2707,
-    description: "Chennai, the capital of Tamil Nadu, is known as the Gateway to South India. Famous for Marina Beach, the longest urban beach in India, Kapaleeshwarar Temple, and its rich Carnatic music heritage.",
-    highlights: ["Marina Beach", "Kapaleeshwarar Temple", "Fort St. George", "Santhome Cathedral"],
-    voiceDescription: "Welcome to Chennai, the vibrant capital city! Known for its stunning Marina Beach and ancient temples, Chennai is the cultural heart of Tamil Nadu. Don't miss the Kapaleeshwarar Temple and delicious filter coffee!"
+    description:
+      "Chennai, the capital of Tamil Nadu, is known as the Gateway to South India. Famous for Marina Beach, the longest urban beach in India, Kapaleeshwarar Temple, and its rich Carnatic music heritage.",
+    highlights: [
+      "Marina Beach",
+      "Kapaleeshwarar Temple",
+      "Fort St. George",
+      "Santhome Cathedral",
+    ],
+    voiceDescription:
+      "Welcome to Chennai, the vibrant capital city! Known for its stunning Marina Beach and ancient temples, Chennai is the cultural heart of Tamil Nadu. Don't miss the Kapaleeshwarar Temple and delicious filter coffee!",
   },
-  { 
-    name: "Madurai", 
-    lat: 9.9252, 
+  {
+    name: "Madurai",
+    lat: 9.9252,
     lng: 78.1198,
-    description: "Madurai, one of India's oldest cities, is famous for the magnificent Meenakshi Amman Temple. Known as the Temple City, it has a 2500-year history and is renowned for jasmine flowers.",
-    highlights: ["Meenakshi Temple", "Thirumalai Nayakkar Palace", "Gandhi Museum", "Alagar Hills"],
-    voiceDescription: "Vanakkam to Madurai, the ancient temple city! The breathtaking Meenakshi Amman Temple with its thousand-pillared hall will leave you speechless. This city has been thriving for over 2500 years!"
+    description:
+      "Madurai, one of India's oldest cities, is famous for the magnificent Meenakshi Amman Temple. Known as the Temple City, it has a 2500-year history and is renowned for jasmine flowers.",
+    highlights: [
+      "Meenakshi Temple",
+      "Thirumalai Nayakkar Palace",
+      "Gandhi Museum",
+      "Alagar Hills",
+    ],
+    voiceDescription:
+      "Vanakkam to Madurai, the ancient temple city! The breathtaking Meenakshi Amman Temple with its thousand-pillared hall will leave you speechless. This city has been thriving for over 2500 years!",
   },
-  { 
-    name: "Coimbatore", 
-    lat: 11.0168, 
+  {
+    name: "Coimbatore",
+    lat: 11.0168,
     lng: 76.9558,
-    description: "Coimbatore, the Manchester of South India, is a major textile and industrial hub surrounded by the Western Ghats. Known for pleasant weather and proximity to hill stations.",
-    highlights: ["Marudhamalai Temple", "Perur Pateeswarar Temple", "VOC Park", "Black Thunder Water Park"],
-    voiceDescription: "Welcome to Coimbatore! Known as the Manchester of South India, this city offers perfect weather and easy access to beautiful hill stations like Ooty and Valparai."
+    description:
+      "Coimbatore, the Manchester of South India, is a major textile and industrial hub surrounded by the Western Ghats. Known for pleasant weather and proximity to hill stations.",
+    highlights: [
+      "Marudhamalai Temple",
+      "Perur Pateeswarar Temple",
+      "VOC Park",
+      "Black Thunder Water Park",
+    ],
+    voiceDescription:
+      "Welcome to Coimbatore! Known as the Manchester of South India, this city offers perfect weather and easy access to beautiful hill stations like Ooty and Valparai.",
   },
-  { 
-    name: "Trichy", 
-    lat: 10.7905, 
+  {
+    name: "Trichy",
+    lat: 10.7905,
     lng: 78.7047,
-    description: "Tiruchirappalli or Trichy is home to the iconic Rock Fort Temple perched 83 meters high. The city sits on the banks of River Cauvery and is known for its historical monuments.",
-    highlights: ["Rock Fort Temple", "Sri Ranganathaswamy Temple", "Jambukeswarar Temple", "Kallanai Dam"],
-    voiceDescription: "Namaskaram from Trichy! The magnificent Rock Fort Temple sits majestically on an 83-meter high rock. This ancient city by the Cauvery river is a treasure trove of history!"
+    description:
+      "Tiruchirappalli or Trichy is home to the iconic Rock Fort Temple perched 83 meters high. The city sits on the banks of River Cauvery and is known for its historical monuments.",
+    highlights: [
+      "Rock Fort Temple",
+      "Sri Ranganathaswamy Temple",
+      "Jambukeswarar Temple",
+      "Kallanai Dam",
+    ],
+    voiceDescription:
+      "Namaskaram from Trichy! The magnificent Rock Fort Temple sits majestically on an 83-meter high rock. This ancient city by the Cauvery river is a treasure trove of history!",
   },
-  { 
-    name: "Salem", 
-    lat: 11.6643, 
+  {
+    name: "Salem",
+    lat: 11.6643,
     lng: 78.146,
-    description: "Salem, the Mango City, is famous for its steel products and textiles. Surrounded by hills, it's known for Yercaud hill station and is a major producer of mangoes.",
-    highlights: ["Yercaud Hills", "Mettur Dam", "Kiliyur Falls", "Sugavaneswarar Temple"],
-    voiceDescription: "Welcome to Salem, the Steel City! Famous for juicy mangoes and the beautiful Yercaud hill station. The scenic Mettur Dam and cool climate make it special!"
+    description:
+      "Salem, the Mango City, is famous for its steel products and textiles. Surrounded by hills, it's known for Yercaud hill station and is a major producer of mangoes.",
+    highlights: [
+      "Yercaud Hills",
+      "Mettur Dam",
+      "Kiliyur Falls",
+      "Sugavaneswarar Temple",
+    ],
+    voiceDescription:
+      "Welcome to Salem, the Steel City! Famous for juicy mangoes and the beautiful Yercaud hill station. The scenic Mettur Dam and cool climate make it special!",
   },
-  { 
-    name: "Tirunelveli", 
-    lat: 8.7139, 
+  {
+    name: "Tirunelveli",
+    lat: 8.7139,
     lng: 77.7567,
-    description: "Tirunelveli, also called Nellai, is famous for its halwa sweet and ancient temples. Located on the banks of River Tamiraparani, it's one of the oldest cities in Tamil Nadu.",
-    highlights: ["Nellaiappar Temple", "Courtallam Falls", "Manimuthar Dam", "Agasthiyar Falls"],
-    voiceDescription: "Vanakkam to Tirunelveli! Don't leave without trying the world-famous Tirunelveli halwa! This ancient city on the Tamiraparani river is home to stunning temples and waterfalls."
+    description:
+      "Tirunelveli, also called Nellai, is famous for its halwa sweet and ancient temples. Located on the banks of River Tamiraparani, it's one of the oldest cities in Tamil Nadu.",
+    highlights: [
+      "Nellaiappar Temple",
+      "Courtallam Falls",
+      "Manimuthar Dam",
+      "Agasthiyar Falls",
+    ],
+    voiceDescription:
+      "Vanakkam to Tirunelveli! Don't leave without trying the world-famous Tirunelveli halwa! This ancient city on the Tamiraparani river is home to stunning temples and waterfalls.",
   },
-  { 
-    name: "Thanjavur", 
-    lat: 10.787, 
+  {
+    name: "Thanjavur",
+    lat: 10.787,
     lng: 79.1378,
-    description: "Thanjavur, the Rice Bowl of Tamil Nadu, is home to the UNESCO World Heritage Site Brihadeeswarar Temple. It's renowned for classical arts, paintings, and bronze sculptures.",
-    highlights: ["Brihadeeswarar Temple", "Thanjavur Palace", "Saraswathi Mahal Library", "Art Gallery"],
-    voiceDescription: "Welcome to Thanjavur, the cultural capital! The magnificent Brihadeeswarar Temple is a UNESCO World Heritage marvel. This city is the birthplace of Bharatanatyam and Carnatic music!"
+    description:
+      "Thanjavur, the Rice Bowl of Tamil Nadu, is home to the UNESCO World Heritage Site Brihadeeswarar Temple. It's renowned for classical arts, paintings, and bronze sculptures.",
+    highlights: [
+      "Brihadeeswarar Temple",
+      "Thanjavur Palace",
+      "Saraswathi Mahal Library",
+      "Art Gallery",
+    ],
+    voiceDescription:
+      "Welcome to Thanjavur, the cultural capital! The magnificent Brihadeeswarar Temple is a UNESCO World Heritage marvel. This city is the birthplace of Bharatanatyam and Carnatic music!",
   },
-  { 
-    name: "Kanyakumari", 
-    lat: 8.0883, 
+  {
+    name: "Kanyakumari",
+    lat: 8.0883,
     lng: 77.5385,
-    description: "Kanyakumari, the southernmost tip of India, is where three seas meet - Bay of Bengal, Arabian Sea, and Indian Ocean. Famous for spectacular sunrise and sunset views.",
-    highlights: ["Vivekananda Rock Memorial", "Thiruvalluvar Statue", "Kanyakumari Beach", "Tsunami Memorial"],
-    voiceDescription: "Welcome to Kanyakumari, where India ends and oceans meet! Watch the magical sunrise and sunset from the same spot. The Vivekananda Rock Memorial is a must-visit spiritual destination!"
+    description:
+      "Kanyakumari, the southernmost tip of India, is where three seas meet - Bay of Bengal, Arabian Sea, and Indian Ocean. Famous for spectacular sunrise and sunset views.",
+    highlights: [
+      "Vivekananda Rock Memorial",
+      "Thiruvalluvar Statue",
+      "Kanyakumari Beach",
+      "Tsunami Memorial",
+    ],
+    voiceDescription:
+      "Welcome to Kanyakumari, where India ends and oceans meet! Watch the magical sunrise and sunset from the same spot. The Vivekananda Rock Memorial is a must-visit spiritual destination!",
   },
-  { 
-    name: "Ooty", 
-    lat: 11.4102, 
+  {
+    name: "Ooty",
+    lat: 11.4102,
     lng: 76.695,
-    description: "Ooty, the Queen of Hill Stations, is a picturesque town in the Nilgiris. Known for tea gardens, colonial architecture, and the famous Nilgiri Mountain Railway.",
-    highlights: ["Botanical Gardens", "Ooty Lake", "Doddabetta Peak", "Tea Gardens"],
-    voiceDescription: "Welcome to Ooty, the Queen of Hills! Enjoy the cool climate, scenic tea gardens, and the charming toy train ride. Perfect getaway for nature lovers!"
+    description:
+      "Ooty, the Queen of Hill Stations, is a picturesque town in the Nilgiris. Known for tea gardens, colonial architecture, and the famous Nilgiri Mountain Railway.",
+    highlights: [
+      "Botanical Gardens",
+      "Ooty Lake",
+      "Doddabetta Peak",
+      "Tea Gardens",
+    ],
+    voiceDescription:
+      "Welcome to Ooty, the Queen of Hills! Enjoy the cool climate, scenic tea gardens, and the charming toy train ride. Perfect getaway for nature lovers!",
   },
-  { 
-    name: "Rameswaram", 
-    lat: 9.2876, 
+  {
+    name: "Rameswaram",
+    lat: 9.2876,
     lng: 79.3129,
-    description: "Rameswaram is one of the holiest places in India, connected to Lord Rama's legend. The Ramanathaswamy Temple has the longest corridor among Hindu temples in India.",
-    highlights: ["Ramanathaswamy Temple", "Pamban Bridge", "Dhanushkodi", "APJ Abdul Kalam Memorial"],
-    voiceDescription: "Vanakkam to sacred Rameswaram! Walk through the longest temple corridor in India and visit the historic Pamban Bridge. This island town is where Lord Rama prayed to Shiva!"
+    description:
+      "Rameswaram is one of the holiest places in India, connected to Lord Rama's legend. The Ramanathaswamy Temple has the longest corridor among Hindu temples in India.",
+    highlights: [
+      "Ramanathaswamy Temple",
+      "Pamban Bridge",
+      "Dhanushkodi",
+      "APJ Abdul Kalam Memorial",
+    ],
+    voiceDescription:
+      "Vanakkam to sacred Rameswaram! Walk through the longest temple corridor in India and visit the historic Pamban Bridge. This island town is where Lord Rama prayed to Shiva!",
   },
-  { 
-    name: "Kanchipuram", 
-    lat: 12.8342, 
+  {
+    name: "Kanchipuram",
+    lat: 12.8342,
     lng: 79.7036,
-    description: "Kanchipuram, the City of Thousand Temples, is one of the seven sacred cities in India. Famous for hand-woven silk sarees and ancient Dravidian architecture.",
-    highlights: ["Kailasanathar Temple", "Ekambareswarar Temple", "Varadaraja Perumal Temple", "Silk Sarees"],
-    voiceDescription: "Welcome to Kanchipuram, the golden city of temples! Marvel at ancient architecture and shop for world-famous Kanchipuram silk sarees. This sacred city has over a thousand temples!"
+    description:
+      "Kanchipuram, the City of Thousand Temples, is one of the seven sacred cities in India. Famous for hand-woven silk sarees and ancient Dravidian architecture.",
+    highlights: [
+      "Kailasanathar Temple",
+      "Ekambareswarar Temple",
+      "Varadaraja Perumal Temple",
+      "Silk Sarees",
+    ],
+    voiceDescription:
+      "Welcome to Kanchipuram, the golden city of temples! Marvel at ancient architecture and shop for world-famous Kanchipuram silk sarees. This sacred city has over a thousand temples!",
   },
-  { 
-    name: "Pondicherry", 
-    lat: 11.9416, 
+  {
+    name: "Pondicherry",
+    lat: 11.9416,
     lng: 79.8083,
-    description: "Pondicherry, with its French colonial heritage, offers a unique blend of Indian and European cultures. Known for pristine beaches, Auroville, and charming French Quarter.",
-    highlights: ["French Quarter", "Auroville", "Promenade Beach", "Sri Aurobindo Ashram"],
-    voiceDescription: "Bonjour from Pondicherry! Experience the French Riviera in India with colonial architecture, cafes, and pristine beaches. Don't miss the spiritual Auroville community!"
+    description:
+      "Pondicherry, with its French colonial heritage, offers a unique blend of Indian and European cultures. Known for pristine beaches, Auroville, and charming French Quarter.",
+    highlights: [
+      "French Quarter",
+      "Auroville",
+      "Promenade Beach",
+      "Sri Aurobindo Ashram",
+    ],
+    voiceDescription:
+      "Bonjour from Pondicherry! Experience the French Riviera in India with colonial architecture, cafes, and pristine beaches. Don't miss the spiritual Auroville community!",
   },
-// All 38 districts of Tamil Nadu with their headquarters coordinates
+];
 const tamilNaduDistricts = [
   { name: "Chennai", lat: 13.0827, lng: 80.2707, district: "Chennai" },
   { name: "Coimbatore", lat: 11.0168, lng: 76.9558, district: "Coimbatore" },
@@ -433,23 +517,27 @@ const ARExplorer = () => {
 
   const handleListingTap = (listing) => {
     setSelectedListing(listing);
-    
+
     // Find the district information
-    const district = tamilNaduLocations.find(loc => loc.name === listing.locationName);
-    
+    const district = tamilNaduLocations.find(
+      (loc) => loc.name === listing.locationName,
+    );
+
     if (district) {
       // Speak the district description first
       speakGuide(district.voiceDescription);
-      
+
       // After 6 seconds, speak about the specific listing
       setTimeout(() => {
         const listingMessages = [
           `And here at ${listing.locationName}, you can experience ${listing.title}. It has ${listing.rating} stars from verified travelers!`,
           `${listing.locationName}-la, ${listing.title} romba famous. ${listing.rating} star rating irukku!`,
-          `This ${listing.title} experience in ${listing.locationName} is highly rated by ${listing.reviewCount || 'many'} travelers. Book now for just ${listing.price} rupees!`,
+          `This ${listing.title} experience in ${listing.locationName} is highly rated by ${listing.reviewCount || "many"} travelers. Book now for just ${listing.price} rupees!`,
           `Inga ${listing.title}-nu oru nalla experience irukku. Verified creator, ${listing.rating} rating. Book panlam!`,
         ];
-        speakGuide(listingMessages[Math.floor(Math.random() * listingMessages.length)]);
+        speakGuide(
+          listingMessages[Math.floor(Math.random() * listingMessages.length)],
+        );
       }, 6000);
     } else {
       // Fallback to original messages
@@ -640,12 +728,18 @@ const ARExplorer = () => {
                       <div className="mb-2 p-2 bg-purple-50 rounded-lg">
                         <div className="flex items-center gap-1 mb-1">
                           <MapPin className="w-3 h-3 text-purple-600" />
-                          <span className="text-xs font-semibold text-purple-600">{listing.locationName}</span>
+                          <span className="text-xs font-semibold text-purple-600">
+                            {listing.locationName}
+                          </span>
                         </div>
                         {(() => {
-                          const district = tamilNaduLocations.find(loc => loc.name === listing.locationName);
+                          const district = tamilNaduLocations.find(
+                            (loc) => loc.name === listing.locationName,
+                          );
                           return district ? (
-                            <p className="text-xs text-slate-600 line-clamp-2">{district.description}</p>
+                            <p className="text-xs text-slate-600 line-clamp-2">
+                              {district.description}
+                            </p>
                           ) : null;
                         })()}
                       </div>
@@ -653,9 +747,13 @@ const ARExplorer = () => {
                         <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                         <span>{listing.rating}</span>
                         <span>•</span>
-                        <span className="text-purple-600 font-bold">₹{listing.price}</span>
+                        <span className="text-purple-600 font-bold">
+                          ₹{listing.price}
+                        </span>
                       </div>
-                      <p className="text-xs text-emerald-600 font-medium">Click marker for details & voice guide 🎧</p>
+                      <p className="text-xs text-emerald-600 font-medium">
+                        Click marker for details & voice guide 🎧
+                      </p>
                     </div>
                   </Popup>
                 </Marker>
@@ -677,7 +775,9 @@ const ARExplorer = () => {
           <button
             onClick={() => {
               if (!guideSpeaking) {
-                speakGuide("Testing avatar! This is a test message to configure the 3D model appearance. You can now adjust the Leva controls to make it look perfect!");
+                speakGuide(
+                  "Testing avatar! This is a test message to configure the 3D model appearance. You can now adjust the Leva controls to make it look perfect!",
+                );
               }
             }}
             className="p-3 bg-emerald-500/70 backdrop-blur-xl rounded-full text-white hover:bg-emerald-600/90 transition-all shadow-xl"
@@ -710,40 +810,42 @@ const ARExplorer = () => {
 
       <div className="absolute bottom-0 left-0 right-0 z-[1000] pointer-events-none">
         {/* 3D Avatar Guide - Right Side */}
-          <div className="absolute bottom-0 right-0 top-20 pointer-events-auto">
-            <AnimatePresence>
-              {guideSpeaking && guideMessage && (
-                <motion.div
-                  initial={{ scale: 0, opacity: 0, x: 50 }}
-                  animate={{ scale: 1, opacity: 1, x: 0 }}
-                  exit={{ scale: 0, opacity: 0, x: 50 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  className="w-[500px] h-full relative flex items-center justify-center"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/10 rounded-l-3xl backdrop-blur-md border-l border-t border-b border-purple-500/20 shadow-2xl" />
-                  <div className="relative w-full h-full">
-                    <Suspense fallback={
+        <div className="absolute bottom-0 right-0 top-20 pointer-events-auto">
+          <AnimatePresence>
+            {guideSpeaking && guideMessage && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0, x: 50 }}
+                animate={{ scale: 1, opacity: 1, x: 0 }}
+                exit={{ scale: 0, opacity: 0, x: 50 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="w-[500px] h-full relative flex items-center justify-center"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/10 rounded-l-3xl backdrop-blur-md border-l border-t border-b border-purple-500/20 shadow-2xl" />
+                <div className="relative w-full h-full">
+                  <Suspense
+                    fallback={
                       <div className="w-full h-full flex items-center justify-center">
                         <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
                           <Sparkles className="w-8 h-8 text-white" />
                         </div>
                       </div>
-                    }>
-                      <Avatar3D isAnimating={guideSpeaking} />
-                    </Suspense>
-                    <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
-                      <Volume2 className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full z-10">
-                      <p className="text-white text-sm font-bold">AI Guide</p>
-                    </div>
+                    }
+                  >
+                    <Avatar3D isAnimating={guideSpeaking} />
+                  </Suspense>
+                  <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
+                    <Volume2 className="w-6 h-6 text-white" />
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full z-10">
+                    <p className="text-white text-sm font-bold">AI Guide</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-          {/* Message Bubble - Left Side */}
+        {/* Message Bubble - Left Side */}
         <div className="absolute bottom-6 left-6 right-[34rem]">
           <AnimatePresence>
             {guideSpeaking && guideMessage && (
@@ -764,7 +866,9 @@ const ARExplorer = () => {
                     <p className="text-purple-300 text-xs font-bold mb-2 uppercase tracking-wider">
                       🎙️ Voice Guide Speaking...
                     </p>
-                    <p className="text-white text-base leading-relaxed">{guideMessage}</p>
+                    <p className="text-white text-base leading-relaxed">
+                      {guideMessage}
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -784,21 +888,27 @@ const ARExplorer = () => {
 
               {/* District Information Section */}
               {(() => {
-                const district = tamilNaduLocations.find(loc => loc.name === selectedListing.locationName);
+                const district = tamilNaduLocations.find(
+                  (loc) => loc.name === selectedListing.locationName,
+                );
                 return district ? (
                   <div className="mb-6 p-4 bg-purple-500/10 border border-purple-500/20 rounded-2xl">
                     <div className="flex items-start gap-3 mb-3">
                       <MapPin className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
                       <div>
-                        <h4 className="text-lg font-bold text-purple-300 mb-1">{district.name}</h4>
-                        <p className="text-slate-300 text-sm leading-relaxed">{district.description}</p>
+                        <h4 className="text-lg font-bold text-purple-300 mb-1">
+                          {district.name}
+                        </h4>
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          {district.description}
+                        </p>
                       </div>
                     </div>
                     {district.highlights && district.highlights.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {district.highlights.map((highlight, idx) => (
-                          <span 
-                            key={idx} 
+                          <span
+                            key={idx}
                             className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs font-medium"
                           >
                             ✨ {highlight}
@@ -850,7 +960,9 @@ const ARExplorer = () => {
 
               {/* Replay District Info Button */}
               {(() => {
-                const district = tamilNaduLocations.find(loc => loc.name === selectedListing.locationName);
+                const district = tamilNaduLocations.find(
+                  (loc) => loc.name === selectedListing.locationName,
+                );
                 return district ? (
                   <button
                     onClick={() => speakGuide(district.voiceDescription)}
