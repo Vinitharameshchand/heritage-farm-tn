@@ -14,6 +14,10 @@ import {
   ChevronRight,
   MapPin,
   ShieldCheck,
+  Sparkles,
+  ScrollText,
+  Mountain,
+  Compass,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ListingCard from "../components/ListingCard";
@@ -192,7 +196,6 @@ const Discover = () => {
       return true;
     });
   };
-
   const filteredListings = applyFilters(listings);
 
   // Group filtered listings by category
@@ -203,418 +206,245 @@ const Discover = () => {
     return acc;
   }, {});
 
+  const navItems = [
+    {
+      id: "All",
+      label: "The Whole Arc",
+      icon: Sparkles,
+      count: filteredListings.length,
+    },
+    {
+      id: "AgriRural",
+      label: "Farms & Soil",
+      icon: Leaf,
+      count: groupedListings["AgriRural"]?.length || 0,
+    },
+    {
+      id: "HeritageCulture",
+      label: "Stone & Spirit",
+      icon: ScrollText,
+      count: groupedListings["HeritageCulture"]?.length || 0,
+    },
+    {
+      id: "EcoAdventure",
+      label: "Wild & Peaks",
+      icon: Mountain,
+      count: groupedListings["EcoAdventure"]?.length || 0,
+    },
+  ];
+
   return (
     <div className="min-h-screen  pt-28 pb-20 px-6 max-w-7xl mx-auto relative overflow-hidden">
       {/* Decorative SVGs */}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 relative z-10">
-        <div>
-          <h1 className="text-5xl jaro font-bold mb-4 text-white">
-            {t("discover_experiences").split(" ")[0]}{" "}
-            <span className="text-[#FFD595]">
-              {t("discover_experiences").split(" ").slice(1).join(" ")}
-            </span>
-          </h1>
-          <p className="text-white/70">{t("discover_description")}</p>
-        </div>
 
-        {/* Search Bar */}
-        <div className="relative flex-1 max-w-md group">
-          <div className="absolute inset-0 bg-[#FFD595]/20 rounded-[24px] opacity-0 group-focus-within:opacity-100 blur-xl transition-opacity duration-500"></div>
-          <div className="relative">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[#FFD595] w-5 h-5 pointer-events-none z-10 transition-colors" />
-            <input
-              type="text"
-              placeholder={t("search_placeholder")}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="relative w-full pl-16 pr-6 py-5 bg-white/10 backdrop-blur-xl text-white font-semibold rounded-[24px] border-2 border-[#FFD595]/20 shadow-xl focus:outline-none focus:border-[#FFD595] focus:bg-white/15 transition-all duration-300 placeholder:text-white/50 placeholder:font-medium"
-            />
+      <div className="space-y-16 py-10 relative">
+        {/* 1. The Artisan Header Area */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+          <div className="max-w-xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#FFD595]/30 bg-[#FFD595]/5 mb-6"
+            >
+              <Compass className="w-3 h-3 text-[#FFD595]" />
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#FFD595]/80">
+                Tamil Nadu, India
+              </span>
+            </motion.div>
+            <h2 className="text-7xl md:text-8xl jaro font-bold leading-[0.85] text-white italic">
+              Discover <br />
+              <span className="text-[#FFD595]">Experiences.</span>
+            </h2>
+            <p className="mt-6 text-[#FFD595]/60 text-lg font-medium leading-relaxed max-w-sm">
+              Walk through ancient corridors and breathe the air of rural
+              heritage.
+            </p>
           </div>
-        </div>
-      </div>
 
-      {/* Stats Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white/10 backdrop-blur-xl p-6 rounded-[24px] border border-[#FFD595]/20 mb-8"
-      >
-        <div className="flex flex-wrap items-center justify-center gap-8 text-center">
-          <div>
-            <div className="text-4xl font-black text-[#FFD595]">
-              {filteredListings.length}
-            </div>
-            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
-              Total Experiences
-            </div>
-          </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
-          <div>
-            <div className="text-4xl font-black text-[#FFD595]">
-              {groupedListings["AgriRural"]?.length || 0}
-            </div>
-            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
-              Agri & Rural
-            </div>
-          </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
-          <div>
-            <div className="text-4xl font-black text-[#FFD595]">
-              {groupedListings["HeritageCulture"]?.length || 0}
-            </div>
-            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
-              Heritage & Culture
-            </div>
-          </div>
-          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
-          <div>
-            <div className="text-4xl font-black text-[#FFD595]">
-              {groupedListings["EcoAdventure"]?.length || 0}
-            </div>
-            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
-              Eco & Adventure
-            </div>
-          </div>
-        </div>
-      </motion.div>
+          {/* Floating Search Hub */}
+          <div className="w-full md:w-[600px] relative mt-10 md:mt-20 z-[9999]">
+            <div className="absolute -inset-4 bg-[#FFD595]/10 blur-3xl rounded-full" />
+            <div className="relative flex gap-10 items-center bg-white/5 backdrop-blur-2xl p-4 rounded-[2.5rem] border border-white/10 shadow-2xl">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Where to next?"
+                  className="w-[300px] bg-[#46041F] text-[#FFD595] py-5 pl-14 pr-6 rounded-[2rem] font-bold text-lg outline-none focus:ring-2 ring-[#FFD595]/40 transition-all placeholder-[#FFD595]/20"
+                />
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-[#FFD595]/40" />
+              </div>
 
-      {/* Filters Bar */}
-      <div className="flex flex-wrap items-center gap-4 mb-10 pb-2">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-2.5 rounded-full font-bold transition-all whitespace-nowrap ${
-              activeCategory === cat
-                ? "bg-[#FFD595] text-[#46041F] shadow-lg"
-                : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
-            }`}
-          >
-            {cat === "All"
-              ? t("all_experiences")
-              : t(
-                  cat === "AgriRural"
-                    ? "agri_rural"
-                    : cat === "HeritageCulture"
-                      ? "heritage_culture"
-                      : "eco_adventure",
-                )}
-          </button>
-        ))}
+              {/* Quick District Pill inside search hub */}
+              <div className="relative w-full mt-3 z-[9999]">
+                <button
+                  onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
+                  className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-[#FFD595] text-[#46041F] hover:bg-[#FFD595]/90 transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4" />
+                    <span className="font-black uppercase text-[10px] tracking-widest">
+                      {selectedDistrict === "all"
+                        ? "Explore Districts"
+                        : selectedDistrict}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${showDistrictDropdown ? "rotate-180" : ""}`}
+                  />
+                </button>
 
-        <div className="h-8 w-[1px] bg-white/20 mx-2 hidden md:block"></div>
-
-        {/* District Dropdown */}
-        <div className="relative ml-auto">
-          <button
-            onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
-            className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
-              selectedDistrict !== "all"
-                ? "bg-[#FFD595] text-[#46041F] shadow-lg"
-                : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
-            }`}
-          >
-            <MapPin className="w-4 h-4" />
-            {selectedDistrict === "all" ? "All Districts" : selectedDistrict}
-            <ChevronDown
-              className={`w-4 h-4 transition-transform ${showDistrictDropdown ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          <AnimatePresence>
-            {showDistrictDropdown && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                className="absolute top-full mt-2 right-0 w-64 max-h-80 overflow-y-auto bg-white/90 backdrop-blur-xl rounded-2xl border border-[#FFD595]/20 shadow-2xl z-[100]"
-              >
-                <div className="p-2">
-                  <button
-                    onClick={() => {
-                      setSelectedDistrict("all");
-                      setShowDistrictDropdown(false);
-                    }}
-                    className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${
-                      selectedDistrict === "all"
-                        ? "bg-[#FFD595] text-[#46041F]"
-                        : "text-[#46041F]/70 hover:bg-[#FFD595]/20 hover:text-[#46041F]"
-                    }`}
-                  >
-                    All Districts
-                  </button>
-                  {districts.length === 0 ? (
-                    <div className="px-4 py-3 text-[#46041F]/50 text-sm">
-                      Loading districts...
-                    </div>
-                  ) : (
-                    districts.map((district) => (
+                {/* Districts Dropdown Menu */}
+                <AnimatePresence>
+                  {showDistrictDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-[#46041F] border border-[#FFD595]/30 rounded-2xl shadow-2xl z-[9999] max-h-[400px] overflow-y-auto"
+                    >
+                      {/* All Districts Option */}
                       <button
-                        key={district}
                         onClick={() => {
-                          setSelectedDistrict(district);
+                          setSelectedDistrict("all");
                           setShowDistrictDropdown(false);
                         }}
-                        className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${
-                          selectedDistrict === district
-                            ? "bg-[#FFD595] text-[#46041F]"
-                            : "text-[#46041F]/70 hover:bg-[#FFD595]/20 hover:text-[#46041F]"
+                        className={`w-full text-left px-6 py-4 transition-all flex items-center gap-3 border-b border-[#FFD595]/10 hover:bg-[#FFD595]/10 ${
+                          selectedDistrict === "all"
+                            ? "bg-[#FFD595]/20 text-[#FFD595]"
+                            : "text-[#FFD595]/70 hover:text-[#FFD595]"
                         }`}
                       >
-                        {district}
+                        <MapPin className="w-4 h-4" />
+                        <span className="font-bold uppercase text-[11px] tracking-wider">
+                          All Districts
+                        </span>
+                        {selectedDistrict === "all" && (
+                          <span className="ml-auto text-[#FFD595]">✓</span>
+                        )}
                       </button>
-                    ))
+
+                      {/* Individual Districts */}
+                      {districts.map((district) => (
+                        <button
+                          key={district}
+                          onClick={() => {
+                            setSelectedDistrict(district);
+                            setShowDistrictDropdown(false);
+                          }}
+                          className={`w-full text-left px-6 py-4 transition-all flex items-center gap-3 border-b border-[#FFD595]/10 hover:bg-[#FFD595]/10 last:border-b-0 ${
+                            selectedDistrict === district
+                              ? "bg-[#FFD595]/20 text-[#FFD595]"
+                              : "text-[#FFD595]/70 hover:text-[#FFD595]"
+                          }`}
+                        >
+                          <MapPin className="w-4 h-4" />
+                          <span className="font-bold uppercase text-[11px] tracking-wider">
+                            {district}
+                          </span>
+                          {selectedDistrict === district && (
+                            <span className="ml-auto text-[#FFD595]">✓</span>
+                          )}
+                        </button>
+                      ))}
+
+                      {districts.length === 0 && (
+                        <div className="px-6 py-8 text-center">
+                          <p className="text-[#FFD595]/40 text-sm font-medium">
+                            No districts available
+                          </p>
+                        </div>
+                      )}
+                    </motion.div>
                   )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Women Safety Toggle */}
-        <button
-          onClick={() =>
-            setSafetyFilters((prev) => ({
-              ...prev,
-              womenFriendly: !prev.womenFriendly,
-            }))
-          }
-          className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
-            safetyFilters.womenFriendly
-              ? "bg-pink-500 text-white shadow-lg shadow-pink-500/30"
-              : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
-          }`}
-        >
-          <ShieldCheck className="w-4 h-4" />
-          {t("women_friendly")}
-        </button>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
-            showFilters
-              ? "bg-[#FFD595] text-[#46041F] shadow-lg"
-              : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
-          }`}
-        >
-          <SlidersHorizontal className="w-4 h-4" />
-          {t("filters")}
-        </button>
-      </div>
-
-      {/* Filter Panel */}
-      <AnimatePresence>
-        {showFilters && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="mb-10 overflow-hidden"
-          >
-            <div className="glass p-8 rounded-[32px] border border-white/10">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-black text-white">
-                  {t("filters")}
-                </h3>
-                <button
-                  onClick={() => {
-                    setFilters({
-                      priceRange: "all",
-                      duration: "all",
-                      rating: "all",
-                    });
-                    setShowFilters(false);
-                  }}
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Price Range */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
-                    Price Range
-                  </label>
-                  <select
-                    value={filters.priceRange}
-                    onChange={(e) =>
-                      setFilters({ ...filters, priceRange: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-[#46041F]">
-                      All Prices
-                    </option>
-                    <option value="budget" className="bg-[#46041F]">
-                      Budget (₹0 - ₹1000)
-                    </option>
-                    <option value="moderate" className="bg-[#46041F]">
-                      Moderate (₹1000 - ₹3000)
-                    </option>
-                    <option value="premium" className="bg-[#46041F]">
-                      Premium (₹3000+)
-                    </option>
-                  </select>
-                </div>
-
-                {/* Duration */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
-                    Duration
-                  </label>
-                  <select
-                    value={filters.duration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, duration: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-[#46041F]">
-                      Any Duration
-                    </option>
-                    <option value="short" className="bg-[#46041F]">
-                      Short (1-2 hours)
-                    </option>
-                    <option value="half" className="bg-[#46041F]">
-                      Half Day (3-5 hours)
-                    </option>
-                    <option value="full" className="bg-[#46041F]">
-                      Full Day (6+ hours)
-                    </option>
-                  </select>
-                </div>
-
-                {/* Rating */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
-                    Rating
-                  </label>
-                  <select
-                    value={filters.rating}
-                    onChange={(e) =>
-                      setFilters({ ...filters, rating: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-[#46041F]">
-                      All Ratings
-                    </option>
-                    <option value="4plus" className="bg-[#46041F]">
-                      4+ Stars
-                    </option>
-                    <option value="3plus" className="bg-[#46041F]">
-                      3+ Stars
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Safety Filters */}
-              <div className="mt-6 pt-6 border-t border-white/10">
-                <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-4 block">
-                  {t("safety")} Filters
-                </label>
-                <div className="flex flex-wrap gap-3">
-                  <button
-                    onClick={() =>
-                      setSafetyFilters((prev) => ({
-                        ...prev,
-                        womenFriendly: !prev.womenFriendly,
-                      }))
-                    }
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
-                      safetyFilters.womenFriendly
-                        ? "bg-pink-500 text-white"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
-                    }`}
-                  >
-                    <ShieldCheck className="w-4 h-4" />
-                    {t("women_friendly")}
-                  </button>
-                  <button
-                    onClick={() =>
-                      setSafetyFilters((prev) => ({
-                        ...prev,
-                        verifiedOnly: !prev.verifiedOnly,
-                      }))
-                    }
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
-                      safetyFilters.verifiedOnly
-                        ? "bg-green-500 text-white"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
-                    }`}
-                  >
-                    <ShieldCheck className="w-4 h-4" />
-                    {t("verified_host")}
-                  </button>
-                  <button
-                    onClick={() =>
-                      setSafetyFilters((prev) => ({
-                        ...prev,
-                        insuredOnly: !prev.insuredOnly,
-                      }))
-                    }
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
-                      safetyFilters.insuredOnly
-                        ? "bg-blue-500 text-white"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
-                    }`}
-                  >
-                    <ShieldCheck className="w-4 h-4" />
-                    {t("insured")}
-                  </button>
-                  <button
-                    onClick={() =>
-                      setSafetyFilters((prev) => ({
-                        ...prev,
-                        femaleHostOnly: !prev.femaleHostOnly,
-                      }))
-                    }
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
-                      safetyFilters.femaleHostOnly
-                        ? "bg-purple-500 text-white"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
-                    }`}
-                  >
-                    👩 {t("female_host")}
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-6">
-                <button
-                  onClick={() => {
-                    setFilters({
-                      priceRange: "all",
-                      duration: "all",
-                      rating: "all",
-                    });
-                    setSafetyFilters({
-                      womenFriendly: false,
-                      verifiedOnly: false,
-                      insuredOnly: false,
-                      femaleHostOnly: false,
-                    });
-                  }}
-                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all border border-white/20"
-                >
-                  Clear All
-                </button>
-                <button
-                  onClick={() => setShowFilters(false)}
-                  className="flex-1 px-6 py-3 bg-[#FFD595] text-[#46041F] rounded-2xl font-bold hover:bg-[#FFD595]/80 transition-all shadow-lg"
-                >
-                  Apply Filters
-                </button>
+                </AnimatePresence>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+
+        {/* 2. Overlapping Experience Navigation */}
+        <div className="relative">
+          <div className="flex flex-wrap gap-4 relative">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveCategory(item.id)}
+                className={`relative overflow-hidden flex-1 min-w-[200px] p-8 rounded-[3rem] transition-all duration-500 group ${
+                  activeCategory === item.id
+                    ? "bg-[#FFD595] text-[#46041F] -translate-y-4 shadow-2xl"
+                    : "bg-[#46041F] border border-[#FFD595]/20 text-[#FFD595] hover:bg-[#FFD595]/5"
+                }`}
+              >
+                {/* Decorative background icon for each card */}
+                <item.icon
+                  className={`absolute -right-4 -bottom-4 w-32 h-32 opacity-5 transition-transform duration-700 group-hover:scale-125 group-hover:rotate-12 ${activeCategory === item.id ? "text-[#46041F]" : "text-[#FFD595]"}`}
+                />
+
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-6">
+                    <div
+                      className={`p-3 rounded-2xl ${activeCategory === item.id ? "bg-[#46041F] text-[#FFD595]" : "bg-[#FFD595]/10"}`}
+                    >
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-2xl font-black jaro italic opacity-40">
+                      {item.count}
+                    </span>
+                  </div>
+                  <h4 className="text-xl font-black uppercase tracking-tighter leading-none mb-1">
+                    {item.label}
+                  </h4>
+                  <p
+                    className={`text-[10px] font-bold uppercase tracking-widest ${activeCategory === item.id ? "text-[#46041F]/60" : "text-[#FFD595]/40"}`}
+                  >
+                    Browse {item.id === "All" ? "Collection" : "Stories"}
+                  </p>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* 3. The "Artisan Tray" for Secondary Filters */}
+          <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-white/10 pt-10">
+            <div className="flex items-center gap-6">
+              <button
+                onClick={() =>
+                  setSafetyFilters((prev) => ({
+                    ...prev,
+                    womenFriendly: !prev.womenFriendly,
+                  }))
+                }
+                className={`flex items-center gap-3 px-8 py-4 rounded-full font-black uppercase text-[10px] tracking-widest transition-all ${
+                  safetyFilters.womenFriendly
+                    ? "bg-pink-500 text-white shadow-lg shadow-pink-500/20"
+                    : "text-[#FFD595]/40 hover:text-[#FFD595]"
+                }`}
+              >
+                <ShieldCheck className="w-4 h-4" />
+                Safe for Women
+              </button>
+              <div className="w-px h-6 bg-white/10" />
+              <button className="text-[#FFD595]/40 hover:text-[#FFD595] font-black uppercase text-[10px] tracking-widest flex items-center gap-2">
+                <Leaf className="w-4 h-4" /> Sustainable First
+              </button>
+            </div>
+
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-4 bg-white/5 border border-white/10 px-10 py-4 rounded-full text-[#FFD595] hover:bg-white/10 transition-all group"
+            >
+              <span className="font-black uppercase text-[10px] tracking-widest">
+                Refine Search
+              </span>
+              <div className="w-8 h-8 rounded-full bg-[#FFD595] text-[#46041F] flex items-center justify-center group-hover:rotate-90 transition-transform">
+                <SlidersHorizontal className="w-4 h-4" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Results Section */}
       {loading ? (
@@ -719,9 +549,10 @@ const Discover = () => {
                     <div
                       className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${categoryInfo[activeCategory].gradient} flex items-center justify-center shadow-lg`}
                     >
-                      {React.createElement(categoryInfo[activeCategory].icon, {
-                        className: "w-7 h-7 text-white",
-                      })}
+                      {(() => {
+                        const Icon = categoryInfo[activeCategory].icon;
+                        return <Icon className="w-7 h-7 text-white" />;
+                      })()}
                     </div>
                     <div>
                       <h2 className="text-2xl font-black text-white">
