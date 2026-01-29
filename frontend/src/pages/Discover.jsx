@@ -45,8 +45,8 @@ const Discover = () => {
       title: "Agri & Rural Experiences",
       description:
         "Discover authentic farming experiences and rural traditions",
-      gradient: "from-green-500 to-emerald-600",
-      bgGradient: "from-green-500/10 to-emerald-600/10",
+      gradient: "from-[#FFD595] to-[#FFD595]/80",
+      bgGradient: "from-[#FFD595]/20 to-[#FFD595]/10",
     },
     HeritageCulture: {
       icon: Landmark,
@@ -176,74 +176,86 @@ const Discover = () => {
   }, {});
 
   return (
-    <div className="min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
+    <div className="min-h-screen  pt-28 pb-20 px-6 max-w-7xl mx-auto relative overflow-hidden">
+      {/* Decorative SVGs */}
+      <div className="fixed top-20 left-0 w-32 opacity-20">
+        <img src="/left.svg" alt="decorative left" className="h-full w-auto" />
+      </div>
+      <div className="fixed top-20 right-0 w-32 opacity-20">
+        <img
+          src="/right.svg"
+          alt="decorative right"
+          className="h-full w-auto"
+        />
+      </div>
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 relative z-10">
         <div>
-          <h1 className="text-5xl font-outfit font-black mb-4">
+          <h1 className="text-5xl jaro font-bold mb-4 text-white">
             {t("discover_experiences").split(" ")[0]}{" "}
-            <span className="gradient-text">
+            <span className="text-[#FFD595]">
               {t("discover_experiences").split(" ").slice(1).join(" ")}
             </span>
           </h1>
-          <p className="text-slate-500">{t("discover_description")}</p>
+          <p className="text-white/70">{t("discover_description")}</p>
         </div>
 
         {/* Search Bar */}
         <div className="relative flex-1 max-w-md group">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-[24px] opacity-0 group-focus-within:opacity-100 blur-xl transition-opacity duration-500"></div>
+          <div className="absolute inset-0 bg-[#FFD595]/20 rounded-[24px] opacity-0 group-focus-within:opacity-100 blur-xl transition-opacity duration-500"></div>
           <div className="relative">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-emerald-500 w-5 h-5 pointer-events-none z-10 transition-colors" />
+            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[#FFD595] w-5 h-5 pointer-events-none z-10 transition-colors" />
             <input
               type="text"
               placeholder={t("search_placeholder")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="relative w-full pl-16 pr-6 py-5 bg-white/10 backdrop-blur-xl text-white font-semibold rounded-[24px] border-2 border-white/20 shadow-xl shadow-black/10 focus:outline-none focus:border-emerald-500 focus:bg-white/15 focus:shadow-2xl focus:shadow-emerald-500/30 transition-all duration-300 placeholder:text-white/50 placeholder:font-medium"
+              className="relative w-full pl-16 pr-6 py-5 bg-white/10 backdrop-blur-xl text-white font-semibold rounded-[24px] border-2 border-[#FFD595]/20 shadow-xl focus:outline-none focus:border-[#FFD595] focus:bg-white/15 transition-all duration-300 placeholder:text-white/50 placeholder:font-medium"
             />
           </div>
         </div>
       </div>
 
-      {/* Stats Banner - After description and search */}
+      {/* Stats Banner */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass p-6 rounded-[24px] border border-white/10 mb-8"
+        className="bg-white/10 backdrop-blur-xl p-6 rounded-[24px] border border-[#FFD595]/20 mb-8"
       >
         <div className="flex flex-wrap items-center justify-center gap-8 text-center">
           <div>
-            <div className="text-4xl font-black text-emerald-400">
+            <div className="text-4xl font-black text-[#FFD595]">
               {filteredListings.length}
             </div>
-            <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">
+            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
               Total Experiences
             </div>
           </div>
-          <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
           <div>
-            <div className="text-4xl font-black text-green-400">
+            <div className="text-4xl font-black text-[#FFD595]">
               {groupedListings["AgriRural"]?.length || 0}
             </div>
-            <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">
+            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
               Agri & Rural
             </div>
           </div>
-          <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
           <div>
-            <div className="text-4xl font-black text-amber-400">
+            <div className="text-4xl font-black text-[#FFD595]">
               {groupedListings["HeritageCulture"]?.length || 0}
             </div>
-            <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">
+            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
               Heritage & Culture
             </div>
           </div>
-          <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+          <div className="w-px h-12 bg-white/20 hidden md:block"></div>
           <div>
-            <div className="text-4xl font-black text-blue-400">
+            <div className="text-4xl font-black text-[#FFD595]">
               {groupedListings["EcoAdventure"]?.length || 0}
             </div>
-            <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">
+            <div className="text-xs text-white/60 uppercase tracking-wider font-bold mt-1">
               Eco & Adventure
             </div>
           </div>
@@ -258,8 +270,8 @@ const Discover = () => {
             onClick={() => setActiveCategory(cat)}
             className={`px-6 py-2.5 rounded-full font-bold transition-all whitespace-nowrap ${
               activeCategory === cat
-                ? "bg-primary-600 text-white premium-shadow"
-                : "bg-white text-slate-600 border border-slate-100 hover:bg-slate-50"
+                ? "bg-[#FFD595] text-[#46041F] shadow-lg"
+                : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
             }`}
           >
             {cat === "All"
@@ -274,7 +286,7 @@ const Discover = () => {
           </button>
         ))}
 
-        <div className="h-8 w-[1px] bg-slate-200 mx-2 hidden md:block"></div>
+        <div className="h-8 w-[1px] bg-white/20 mx-2 hidden md:block"></div>
 
         {/* District Dropdown */}
         <div className="relative ml-auto">
@@ -282,8 +294,8 @@ const Discover = () => {
             onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
             className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
               selectedDistrict !== "all"
-                ? "bg-purple-500 text-white shadow-lg shadow-purple-500/30"
-                : "bg-white border border-slate-100 text-slate-600 hover:bg-slate-50"
+                ? "bg-[#FFD595] text-[#46041F] shadow-lg"
+                : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
             }`}
           >
             <MapPin className="w-4 h-4" />
@@ -299,7 +311,7 @@ const Discover = () => {
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                className="absolute top-full mt-2 right-0 w-64 max-h-80 overflow-y-auto bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl z-[100]"
+                className="absolute top-full mt-2 right-0 w-64 max-h-80 overflow-y-auto bg-white/90 backdrop-blur-xl rounded-2xl border border-[#FFD595]/20 shadow-2xl z-[100]"
               >
                 <div className="p-2">
                   <button
@@ -309,14 +321,14 @@ const Discover = () => {
                     }}
                     className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${
                       selectedDistrict === "all"
-                        ? "bg-purple-500 text-white"
-                        : "text-white/70 hover:bg-white/10 hover:text-white"
+                        ? "bg-[#FFD595] text-[#46041F]"
+                        : "text-[#46041F]/70 hover:bg-[#FFD595]/20 hover:text-[#46041F]"
                     }`}
                   >
                     All Districts
                   </button>
                   {districts.length === 0 ? (
-                    <div className="px-4 py-3 text-white/50 text-sm">
+                    <div className="px-4 py-3 text-[#46041F]/50 text-sm">
                       Loading districts...
                     </div>
                   ) : (
@@ -329,8 +341,8 @@ const Discover = () => {
                         }}
                         className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${
                           selectedDistrict === district
-                            ? "bg-purple-500 text-white"
-                            : "text-white/70 hover:bg-white/10 hover:text-white"
+                            ? "bg-[#FFD595] text-[#46041F]"
+                            : "text-[#46041F]/70 hover:bg-[#FFD595]/20 hover:text-[#46041F]"
                         }`}
                       >
                         {district}
@@ -347,8 +359,8 @@ const Discover = () => {
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
             showFilters
-              ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
-              : "bg-white border border-slate-100 text-slate-600 hover:bg-slate-50"
+              ? "bg-[#FFD595] text-[#46041F] shadow-lg"
+              : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
           }`}
         >
           <SlidersHorizontal className="w-4 h-4" />
@@ -379,7 +391,7 @@ const Discover = () => {
                     });
                     setShowFilters(false);
                   }}
-                  className="text-slate-400 hover:text-white transition-colors"
+                  className="text-white/60 hover:text-white transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -388,7 +400,7 @@ const Discover = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Price Range */}
                 <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
+                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
                     Price Range
                   </label>
                   <select
@@ -396,18 +408,18 @@ const Discover = () => {
                     onChange={(e) =>
                       setFilters({ ...filters, priceRange: e.target.value })
                     }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
+                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
                   >
-                    <option value="all" className="bg-slate-900">
+                    <option value="all" className="bg-[#46041F]">
                       All Prices
                     </option>
-                    <option value="budget" className="bg-slate-900">
+                    <option value="budget" className="bg-[#46041F]">
                       Budget (₹0 - ₹1000)
                     </option>
-                    <option value="moderate" className="bg-slate-900">
+                    <option value="moderate" className="bg-[#46041F]">
                       Moderate (₹1000 - ₹3000)
                     </option>
-                    <option value="premium" className="bg-slate-900">
+                    <option value="premium" className="bg-[#46041F]">
                       Premium (₹3000+)
                     </option>
                   </select>
@@ -415,7 +427,7 @@ const Discover = () => {
 
                 {/* Duration */}
                 <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
+                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
                     Duration
                   </label>
                   <select
@@ -423,18 +435,18 @@ const Discover = () => {
                     onChange={(e) =>
                       setFilters({ ...filters, duration: e.target.value })
                     }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
+                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
                   >
-                    <option value="all" className="bg-slate-900">
+                    <option value="all" className="bg-[#46041F]">
                       Any Duration
                     </option>
-                    <option value="short" className="bg-slate-900">
+                    <option value="short" className="bg-[#46041F]">
                       Short (1-2 hours)
                     </option>
-                    <option value="half" className="bg-slate-900">
+                    <option value="half" className="bg-[#46041F]">
                       Half Day (3-5 hours)
                     </option>
-                    <option value="full" className="bg-slate-900">
+                    <option value="full" className="bg-[#46041F]">
                       Full Day (6+ hours)
                     </option>
                   </select>
@@ -442,7 +454,7 @@ const Discover = () => {
 
                 {/* Rating */}
                 <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
+                  <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-3 block">
                     Rating
                   </label>
                   <select
@@ -450,15 +462,15 @@ const Discover = () => {
                     onChange={(e) =>
                       setFilters({ ...filters, rating: e.target.value })
                     }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
+                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-[#FFD595]/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-[#FFD595] transition-all cursor-pointer"
                   >
-                    <option value="all" className="bg-slate-900">
+                    <option value="all" className="bg-[#46041F]">
                       All Ratings
                     </option>
-                    <option value="4plus" className="bg-slate-900">
+                    <option value="4plus" className="bg-[#46041F]">
                       4+ Stars
                     </option>
-                    <option value="3plus" className="bg-slate-900">
+                    <option value="3plus" className="bg-[#46041F]">
                       3+ Stars
                     </option>
                   </select>
@@ -474,13 +486,13 @@ const Discover = () => {
                       rating: "all",
                     })
                   }
-                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all"
+                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all border border-white/20"
                 >
                   Clear All
                 </button>
                 <button
                   onClick={() => setShowFilters(false)}
-                  className="flex-1 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/30"
+                  className="flex-1 px-6 py-3 bg-[#FFD595] text-[#46041F] rounded-2xl font-bold hover:bg-[#FFD595]/80 transition-all shadow-lg"
                 >
                   Apply Filters
                 </button>
@@ -496,7 +508,7 @@ const Discover = () => {
           {[1, 2, 3, 4, 5, 6].map((i) => (
             <div
               key={i}
-              className="bg-slate-100 rounded-3xl h-[450px] animate-pulse"
+              className="bg-white/10 rounded-3xl h-[450px] animate-pulse"
             ></div>
           ))}
         </div>
@@ -538,7 +550,7 @@ const Discover = () => {
                               {catListings.length} experiences
                             </span>
                           </h2>
-                          <p className="text-slate-400 text-sm mt-1">
+                          <p className="text-white/60 text-sm mt-1">
                             {info.description}
                           </p>
                         </div>
@@ -626,7 +638,7 @@ const Discover = () => {
                 >
                   <button
                     onClick={() => setSingleCategoryPage((prev) => prev + 1)}
-                    className={`group flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all bg-gradient-to-r ${categoryInfo[activeCategory]?.gradient || "from-emerald-500 to-emerald-600"} text-white shadow-lg hover:shadow-xl hover:scale-105`}
+                    className={`group flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all bg-[#FFD595] text-[#46041F] shadow-lg hover:shadow-xl hover:scale-105`}
                   >
                     View More Experiences
                     <span className="text-white/70">
@@ -644,214 +656,13 @@ const Discover = () => {
         </>
       ) : (
         <div className="py-20 text-center">
-          <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Search className="w-10 h-10 text-slate-300" />
+          <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Search className="w-10 h-10 text-white/40" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">
-            {t("no_experiences_found")}
+          <h3 className="text-2xl font-bold text-white mb-2">
+            No experiences found
           </h3>
-          <p className="text-slate-500">{t("try_adjusting_filters")}</p>
-        </div>
-      )}
-
-      {/* Filters Bar */}
-      <div className="flex flex-wrap items-center gap-4 mb-10 overflow-x-auto pb-2 scrollbar-hide">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-2.5 rounded-full font-bold transition-all whitespace-nowrap ${
-              activeCategory === cat
-                ? "bg-primary-600 text-white premium-shadow"
-                : "bg-white text-slate-600 border border-slate-100 hover:bg-slate-50"
-            }`}
-          >
-            {cat === "All"
-              ? t("all_experiences")
-              : t(
-                  cat === "AgriRural"
-                    ? "agri_rural"
-                    : cat === "HeritageCulture"
-                      ? "heritage_culture"
-                      : "eco_adventure",
-                )}
-          </button>
-        ))}
-
-        <div className="h-8 w-[1px] bg-slate-200 mx-2 hidden md:block"></div>
-
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ml-auto ${
-            showFilters
-              ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/30"
-              : "bg-white border border-slate-100 text-slate-600 hover:bg-slate-50"
-          }`}
-        >
-          <SlidersHorizontal className="w-4 h-4" />
-          {t("filters")}
-        </button>
-      </div>
-
-      {/* Filter Panel */}
-      <AnimatePresence>
-        {showFilters && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="mb-10 overflow-hidden"
-          >
-            <div className="glass p-8 rounded-[32px] border border-white/10">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-black text-white">
-                  {t("filters")}
-                </h3>
-                <button
-                  onClick={() => {
-                    setFilters({
-                      priceRange: "all",
-                      duration: "all",
-                      rating: "all",
-                    });
-                    setShowFilters(false);
-                  }}
-                  className="text-slate-400 hover:text-white transition-colors"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Price Range */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
-                    Price Range
-                  </label>
-                  <select
-                    value={filters.priceRange}
-                    onChange={(e) =>
-                      setFilters({ ...filters, priceRange: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-slate-900">
-                      All Prices
-                    </option>
-                    <option value="budget" className="bg-slate-900">
-                      Budget (₹0 - ₹1000)
-                    </option>
-                    <option value="moderate" className="bg-slate-900">
-                      Moderate (₹1000 - ₹3000)
-                    </option>
-                    <option value="premium" className="bg-slate-900">
-                      Premium (₹3000+)
-                    </option>
-                  </select>
-                </div>
-
-                {/* Duration */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
-                    Duration
-                  </label>
-                  <select
-                    value={filters.duration}
-                    onChange={(e) =>
-                      setFilters({ ...filters, duration: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-slate-900">
-                      Any Duration
-                    </option>
-                    <option value="short" className="bg-slate-900">
-                      Short (1-2 hours)
-                    </option>
-                    <option value="half" className="bg-slate-900">
-                      Half Day (3-5 hours)
-                    </option>
-                    <option value="full" className="bg-slate-900">
-                      Full Day (6+ hours)
-                    </option>
-                  </select>
-                </div>
-
-                {/* Rating */}
-                <div>
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 block">
-                    Rating
-                  </label>
-                  <select
-                    value={filters.rating}
-                    onChange={(e) =>
-                      setFilters({ ...filters, rating: e.target.value })
-                    }
-                    className="w-full bg-white/10 backdrop-blur-sm text-white border-2 border-white/20 rounded-2xl px-4 py-3 font-semibold focus:outline-none focus:border-emerald-500 transition-all cursor-pointer"
-                  >
-                    <option value="all" className="bg-slate-900">
-                      All Ratings
-                    </option>
-                    <option value="4plus" className="bg-slate-900">
-                      4+ Stars
-                    </option>
-                    <option value="3plus" className="bg-slate-900">
-                      3+ Stars
-                    </option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="flex gap-4 mt-6">
-                <button
-                  onClick={() =>
-                    setFilters({
-                      priceRange: "all",
-                      duration: "all",
-                      rating: "all",
-                    })
-                  }
-                  className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all"
-                >
-                  Clear All
-                </button>
-                <button
-                  onClick={() => setShowFilters(false)}
-                  className="flex-1 px-6 py-3 bg-emerald-500 text-white rounded-2xl font-bold hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/30"
-                >
-                  Apply Filters
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Results Grid */}
-      {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="bg-slate-100 rounded-3xl h-[450px] animate-pulse"
-            ></div>
-          ))}
-        </div>
-      ) : listings.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {listings.map((listing) => (
-            <ListingCard key={listing._id} listing={listing} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-20 text-center">
-          <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Search className="w-10 h-10 text-slate-300" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-2">
-            {t("no_experiences_found")}
-          </h3>
-          <p className="text-slate-500">{t("try_adjusting_filters")}</p>
+          <p className="text-white/60">{t("try_adjusting_filters")}</p>
         </div>
       )}
     </div>
