@@ -844,7 +844,9 @@ const ARExplorer = () => {
                     <Volume2 className="w-6 h-6 text-black" />
                   </div>
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-[#FFD595] to-orange-400 rounded-full z-10 border border-[#FFD595]/40">
-                    <p className="text-black text-sm font-bold">Reserve Arc Guide</p>
+                    <p className="text-black text-sm font-bold">
+                      Reserve Arc Guide
+                    </p>
                   </div>
                 </div>
               </motion.div>
