@@ -21,6 +21,7 @@ const Signup = () => {
     password: "",
     role: "tourist",
     gender: "",
+    bloodGroup: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -188,6 +189,35 @@ const Signup = () => {
                       {t("female")}
                     </span>
                   </button>
+                </div>
+              </div>
+            )}
+
+            {/* Blood Group Selection - Only for Tourists */}
+            {formData.role === "tourist" && (
+              <div className="space-y-4">
+                <label className="text-xs font-black uppercase tracking-[0.2em] text-white/60 ml-2">
+                  {t("blood_group")} <span className="text-red-400">*</span>
+                </label>
+                <div className="grid grid-cols-4 gap-3">
+                  {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map(
+                    (bg) => (
+                      <button
+                        key={bg}
+                        type="button"
+                        onClick={() =>
+                          setFormData({ ...formData, bloodGroup: bg })
+                        }
+                        className={`p-3 rounded-xl border-2 transition-all font-bold text-sm ${
+                          formData.bloodGroup === bg
+                            ? "border-red-400 bg-red-400/10 text-red-400"
+                            : "border-white/20 bg-white/5 text-white/60 hover:border-white/30"
+                        }`}
+                      >
+                        {bg}
+                      </button>
+                    ),
+                  )}
                 </div>
               </div>
             )}
