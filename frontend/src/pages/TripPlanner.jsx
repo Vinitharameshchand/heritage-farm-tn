@@ -203,31 +203,31 @@ const TripPlanner = () => {
                         >
                           <option
                             value="Chennai"
-                            className="bg-slate-900/95 text-slate-100 py-2 hover:bg-emerald-500"
+                            className="bg-[#46041F] text-white py-2"
                           >
                             Chennai
                           </option>
                           <option
                             value="Tiruvallur"
-                            className="bg-slate-900/95 text-slate-100 py-2"
+                            className="bg-[#46041F] text-white py-2"
                           >
                             Tiruvallur
                           </option>
                           <option
                             value="Kanchipuram"
-                            className="bg-slate-900/95 text-slate-100 py-2"
+                            className="bg-[#46041F] text-white py-2"
                           >
                             Kanchipuram
                           </option>
                           <option
                             value="Chengalpattu"
-                            className="bg-slate-900/95 text-slate-100 py-2"
+                            className="bg-[#46041F] text-white py-2"
                           >
                             Chengalpattu
                           </option>
                           <option
                             value="Vellore"
-                            className="bg-slate-900/95 text-slate-100 py-2"
+                            className="bg-[#46041F] text-white py-2"
                           >
                             Vellore
                           </option>
@@ -509,17 +509,17 @@ const TripPlanner = () => {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <h2 className="text-4xl font-black gradient-text">
+                    <h2 className="text-4xl font-black text-[#46041F]">
                       {plan.title}
                     </h2>
-                    <p className="text-slate-400 mt-2">{plan.summary}</p>
+                    <p className="text-[#46041F]/60 mt-2">{plan.summary}</p>
                   </div>
                   <button
                     onClick={() => setStep(1)}
-                    className="p-3 bg-white/5 rounded-2xl hover:bg-white/10 transition-colors"
+                    className="p-3 bg-[#46041F]/10 rounded-2xl hover:bg-[#46041F]/20 transition-colors"
                     title={t("new_plan")}
                   >
-                    <Clock className="w-5 h-5 text-slate-400" />
+                    <Clock className="w-5 h-5 text-[#46041F]" />
                   </button>
                 </div>
 
@@ -527,19 +527,19 @@ const TripPlanner = () => {
                   {plan.itinerary.map((day, idx) => (
                     <div
                       key={idx}
-                      className="relative pl-10 border-l border-white/10"
+                      className="relative pl-10 border-l border-[#46041F]/30"
                     >
-                      <div className="absolute -left-4 top-0 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-emerald-500/50">
+                      <div className="absolute -left-4 top-0 w-8 h-8 bg-[#FFD595] rounded-full flex items-center justify-center font-bold text-sm text-[#46041F] shadow-lg">
                         {day.day}
                       </div>
-                      <h3 className="text-xl font-bold mb-6">
+                      <h3 className="text-xl font-bold mb-6 text-[#46041F]">
                         {t("day_modules", { day: day.day })}
                       </h3>
                       <div className="grid gap-4">
                         {day.activities.map((act, aIdx) => (
                           <div
                             key={aIdx}
-                            className="bg-white/5 p-5 rounded-3xl border border-white/5 hover:border-emerald-500/30 transition-all group flex items-center gap-6"
+                            className="bg-[#46041F]/10 p-5 rounded-3xl border border-[#FFD595]/20 hover:border-[#FFD595] transition-all group flex items-center gap-6"
                           >
                             <div className="w-24 h-24 rounded-2xl overflow-hidden shadow-xl shrink-0">
                               <img
@@ -550,23 +550,25 @@ const TripPlanner = () => {
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500 px-2 py-0.5 bg-emerald-500/10 rounded-full">
+                                <span className="text-[10px] font-black uppercase tracking-widest text-[#46041F] px-2 py-0.5 bg-[#FFD595]/20 rounded-full">
                                   {act.category}
                                 </span>
-                                <div className="flex items-center gap-0.5 text-[10px] text-yellow-500 font-bold">
+                                <div className="flex items-center gap-0.5 text-[10px] text-[#FFD595] font-bold">
                                   <Star className="w-2 h-2 fill-current" />{" "}
                                   {act.rating}
                                 </div>
                               </div>
-                              <h4 className="text-lg font-bold">{act.title}</h4>
-                              <p className="text-xs text-slate-500 flex items-center gap-2 mt-1">
+                              <h4 className="text-lg font-bold text-[#46041F]">
+                                {act.title}
+                              </h4>
+                              <p className="text-xs text-[#46041F]/60 flex items-center gap-2 mt-1">
                                 <MapPin className="w-3 h-3" />{" "}
                                 {act.location.city}, {act.location.district}
                               </p>
                             </div>
                             <a
                               href={`/listings/${act._id}`}
-                              className="p-3 bg-emerald-500/10 text-emerald-500 rounded-xl hover:bg-emerald-500 hover:text-white transition-all"
+                              className="p-3 bg-[#FFD595]/10 text-[#46041F] rounded-xl hover:bg-[#FFD595] hover:text-[#46041F] transition-all"
                             >
                               <ArrowRight className="w-5 h-5" />
                             </a>
@@ -577,8 +579,8 @@ const TripPlanner = () => {
                   ))}
                 </div>
 
-                <div className="pt-8 border-t border-white/10 flex justify-center">
-                  <button className="btn-primary px-12 py-4 flex items-center gap-3">
+                <div className="pt-8 border-t border-[#46041F]/20 flex justify-center">
+                  <button className="bg-[#46041F] text-white px-12 py-4 rounded-full font-bold hover:bg-[#46041F]/90 transition-all flex items-center gap-3 shadow-lg">
                     {t("book_complete_arc")}{" "}
                     <ChevronRight className="w-5 h-5" />
                   </button>
