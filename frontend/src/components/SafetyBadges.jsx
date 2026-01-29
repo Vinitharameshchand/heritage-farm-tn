@@ -42,8 +42,8 @@ const SafetyBadges = ({
       label: "Women Friendly",
       labelTamil: "பெண்களுக்கு உகந்தது",
       icon: Heart,
-      color: "bg-pink-500",
-      textColor: "text-pink-500",
+      color: "bg-[#FFD595]",
+      textColor: "text-[#46041F]",
     });
   }
 
@@ -53,8 +53,8 @@ const SafetyBadges = ({
       label: "Verified Host",
       labelTamil: "சரிபார்க்கப்பட்டது",
       icon: BadgeCheck,
-      color: "bg-green-500",
-      textColor: "text-green-500",
+      color: "bg-[#FFD595]/80",
+      textColor: "text-[#46041F]",
     });
   }
 
@@ -64,8 +64,8 @@ const SafetyBadges = ({
       label: "Insured",
       labelTamil: "காப்பீடு",
       icon: Shield,
-      color: "bg-blue-500",
-      textColor: "text-blue-500",
+      color: "bg-[#FFD595]/60",
+      textColor: "text-[#46041F]",
     });
   }
 
@@ -75,8 +75,8 @@ const SafetyBadges = ({
       label: "Family Friendly",
       labelTamil: "குடும்பத்திற்கு உகந்தது",
       icon: Users,
-      color: "bg-purple-500",
-      textColor: "text-purple-500",
+      color: "bg-white/20",
+      textColor: "text-white",
     });
   }
 
@@ -86,8 +86,8 @@ const SafetyBadges = ({
       label: "Accessible",
       labelTamil: "அணுகக்கூடியது",
       icon: Accessibility,
-      color: "bg-teal-500",
-      textColor: "text-teal-500",
+      color: "bg-white/20",
+      textColor: "text-white",
     });
   }
 
@@ -97,8 +97,8 @@ const SafetyBadges = ({
       label: "Kid Friendly",
       labelTamil: "குழந்தைகளுக்கு உகந்தது",
       icon: Baby,
-      color: "bg-orange-500",
-      textColor: "text-orange-500",
+      color: "bg-white/20",
+      textColor: "text-white",
     });
   }
 
@@ -108,8 +108,8 @@ const SafetyBadges = ({
       label: "Pet Friendly",
       labelTamil: "செல்லப்பிராணிகள்",
       icon: Dog,
-      color: "bg-amber-600",
-      textColor: "text-amber-600",
+      color: "bg-white/20",
+      textColor: "text-white",
     });
   }
 
@@ -140,7 +140,7 @@ const SafetyBadges = ({
       {badges.map((badge) => (
         <div
           key={badge.id}
-          className={`flex items-center gap-1.5 ${classes.badge} ${badge.color} text-white rounded-full font-bold shadow-sm`}
+          className={`flex items-center gap-1.5 ${classes.badge} ${badge.color} ${badge.textColor} rounded-full font-bold shadow-sm border border-[#FFD595]/20`}
           title={`${badge.label} - ${badge.labelTamil}`}
         >
           <badge.icon className={classes.icon} />
@@ -155,23 +155,31 @@ export const SafetyBadgesMini = ({ listing }) => {
   const badges = [];
 
   if (listing?.womenFriendly) {
-    badges.push({ icon: Heart, color: "text-pink-400", bg: "bg-pink-500/20" });
+    badges.push({
+      icon: Heart,
+      color: "text-[#FFD595]",
+      bg: "bg-[#FFD595]/20",
+    });
   }
   if (listing?.verified) {
     badges.push({
       icon: BadgeCheck,
-      color: "text-green-400",
-      bg: "bg-green-500/20",
+      color: "text-[#FFD595]",
+      bg: "bg-[#FFD595]/20",
     });
   }
   if (listing?.insured) {
-    badges.push({ icon: Shield, color: "text-blue-400", bg: "bg-blue-500/20" });
+    badges.push({
+      icon: Shield,
+      color: "text-[#FFD595]",
+      bg: "bg-[#FFD595]/20",
+    });
   }
   if (listing?.familyFriendly) {
     badges.push({
       icon: Users,
-      color: "text-purple-400",
-      bg: "bg-purple-500/20",
+      color: "text-[#FFD595]",
+      bg: "bg-[#FFD595]/20",
     });
   }
 
@@ -198,10 +206,10 @@ export const SafetyBadgesMini = ({ listing }) => {
 
 export const WomenSafetyRating = ({ rating = 4.5, reviewCount = 0 }) => {
   return (
-    <div className="flex items-center gap-2 px-3 py-1.5 bg-pink-500/10 rounded-full border border-pink-500/20">
-      <Heart className="w-4 h-4 text-pink-400 fill-current" />
-      <span className="text-sm font-bold text-pink-400">{rating}</span>
-      <span className="text-xs text-pink-400/60">
+    <div className="flex items-center gap-2 px-3 py-1.5 bg-[#FFD595]/10 rounded-full border border-[#FFD595]/20">
+      <Heart className="w-4 h-4 text-[#FFD595] fill-current" />
+      <span className="text-sm font-bold text-[#FFD595]">{rating}</span>
+      <span className="text-xs text-[#FFD595]/60">
         ({reviewCount} women reviews)
       </span>
     </div>
@@ -232,17 +240,17 @@ export const HostVerificationBadge = ({
 
   return (
     <div className="space-y-2">
-      <p className="text-xs font-bold text-white/50 uppercase tracking-wider">
+      <p className="text-xs font-bold text-[#FFD595]/50 uppercase tracking-wider">
         Host Verifications
       </p>
       <div className="flex flex-wrap gap-2">
         {verifications.map((v, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-green-500/10 rounded-full border border-green-500/20"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FFD595]/10 rounded-full border border-[#FFD595]/20"
           >
-            <v.icon className="w-4 h-4 text-green-400" />
-            <span className="text-xs font-bold text-green-400">{v.label}</span>
+            <v.icon className="w-4 h-4 text-[#FFD595]" />
+            <span className="text-xs font-bold text-[#FFD595]">{v.label}</span>
           </div>
         ))}
       </div>
@@ -253,12 +261,16 @@ export const HostVerificationBadge = ({
 export const SafetyScore = ({ score = 95 }) => {
   const getScoreColor = (s) => {
     if (s >= 90)
-      return { bg: "bg-green-500", text: "text-green-500", label: "Excellent" };
+      return { bg: "bg-[#FFD595]", text: "text-[#FFD595]", label: "Excellent" };
     if (s >= 75)
-      return { bg: "bg-blue-500", text: "text-blue-500", label: "Good" };
+      return { bg: "bg-[#FFD595]/80", text: "text-[#FFD595]", label: "Good" };
     if (s >= 60)
-      return { bg: "bg-yellow-500", text: "text-yellow-500", label: "Fair" };
-    return { bg: "bg-red-500", text: "text-red-500", label: "Needs Review" };
+      return {
+        bg: "bg-[#FFD595]/60",
+        text: "text-[#FFD595]/80",
+        label: "Fair",
+      };
+    return { bg: "bg-white/40", text: "text-white/60", label: "Needs Review" };
   };
 
   const scoreInfo = getScoreColor(score);
@@ -292,8 +304,10 @@ export const SafetyScore = ({ score = 95 }) => {
         </div>
       </div>
       <div>
-        <p className="font-bold text-white">Safety Score</p>
-        <p className={`text-sm ${scoreInfo.text}`}>{scoreInfo.label}</p>
+        <p className="font-bold text-white text-sm">Safety Score</p>
+        <p className={`text-xs font-bold ${scoreInfo.text}`}>
+          {scoreInfo.label}
+        </p>
       </div>
     </div>
   );
