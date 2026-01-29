@@ -291,9 +291,9 @@ const ARExplorer = () => {
 
     if (guideVoiceEnabled && "speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(message);
-      utterance.rate = 0.85;
-      utterance.pitch = 1.1;
-      utterance.volume = 0.9;
+      utterance.rate = 0.6;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
 
       const voices = window.speechSynthesis.getVoices();
 
