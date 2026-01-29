@@ -121,6 +121,7 @@ const ARExplorer = () => {
   const [guideSpeaking, setGuideSpeaking] = useState(false);
   const [guideMessage, setGuideMessage] = useState("");
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [voicesLoaded, setVoicesLoaded] = useState(false);
   const mapRef = useRef(null);
 
   const tamilNaduBounds = [
@@ -128,10 +129,33 @@ const ARExplorer = () => {
     [13.5, 80.3],
   ];
 
+  // Load voices when component mounts
+  useEffect(() => {
+    if ("speechSynthesis" in window) {
+      // Load voices
+      const loadVoices = () => {
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          setVoicesLoaded(true);
+        }
+      };
+      
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      
+      return () => {
+        window.speechSynthesis.onvoiceschanged = null;
+      };
+    }
+  }, []);
+
   useEffect(() => {
     if (isMapActive) {
       fetchNearbyListings();
-      welcomeMessage();
+      // Delay welcome message to ensure voices are loaded
+      setTimeout(() => {
+        welcomeMessage();
+      }, 500);
     }
   }, [isMapActive]);
 
@@ -200,42 +224,87 @@ const ARExplorer = () => {
 
   const welcomeMessage = () => {
     const messages = [
-      "Vanakkam! Welcome to Tamil Nadu's heritage. I'll guide you to amazing experiences nearby.",
-      "வணக்கம்! I'm your guide. Let me show you the treasures around you.",
-      "Welcome! Explore the map to discover verified local experiences.",
-      "Vanakkam! Tamil Nadu heritage-kku welcome. Map-la experiences-a kandu pudiunga!",
+      "வணக்கம்! தமிழ்நாட்டின் பாரம்பரியத்திற்கு வரவேற்கிறோம். அருகிலுள்ள அற்புதமான அனுபவங்களுக்கு நான் உங்களை வழிநடத்துவேன்.",
+      "வணக்கம்! நான் உங்கள் வழிகாட்டி. உங்களைச் சுற்றியுள்ள புதையல்களைக் காட்டுகிறேன்.",
+      "வணக்கம்! சரிபார்க்கப்பட்ட உள்ளூர் அனுபவங்களைக் கண்டறிய வரைபடத்தை ஆராயுங்கள்.",
     ];
     const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    speakGuide(randomMessage);
+    speakGuide(randomMessage, 'ta');
   };
 
-  const speakGuide = (message) => {
+  const speakGuide = (message, lang = 'ta') => {
     setGuideMessage(message);
     setGuideSpeaking(true);
 
+    // Cancel any ongoing speech
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
     if (guideVoiceEnabled && "speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(message);
-      utterance.rate = 0.9;
+      utterance.rate = 0.85;
       utterance.pitch = 1.1;
-      utterance.volume = 0.8;
+      utterance.volume = 0.9;
+      
+      const voices = window.speechSynthesis.getVoices();
+      
+      // Try to get a Tamil voice first
+      let selectedVoice = voices.find(voice => 
+        voice.lang === 'ta-IN' || 
+        voice.lang === 'ta' ||
+        voice.lang.startsWith('ta-') ||
+        voice.name.toLowerCase().includes('tamil')
+      );
+      
+      // If Tamil voice found, use it
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+        utterance.lang = 'ta-IN';
+      } else {
+        // Fallback to Google Hindi or any Indian voice for better pronunciation
+        selectedVoice = voices.find(voice => 
+          voice.lang === 'hi-IN' ||
+          voice.name.includes('Google हिन्दी') ||
+          voice.name.toLowerCase().includes('india')
+        );
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+        utterance.lang = 'ta-IN';
+      }
+      
       window.speechSynthesis.speak(utterance);
     }
 
     setTimeout(() => {
       setGuideSpeaking(false);
       setGuideMessage("");
-    }, 5000);
+    }, 10000);
   };
 
   const handleListingTap = (listing) => {
     setSelectedListing(listing);
-    const messages = [
-      `Great choice! ${listing.title} has ${listing.rating} stars from ${listing.reviewCount} travelers.`,
-      `Super! Idhu ${listing.locationName || "Tamil Nadu"}-la irukku. Book pannalama?`,
-      `${listing.title} is highly rated. This creator is verified and experienced.`,
-      `Nalla selection! ${listing.title} verified creator-oda experience. Safe-a irukum.`,
+    
+    // Create detailed description for voice in Tamil
+    const price = listing.price || 500;
+    const durationMins = listing.duration || 120;
+    const hours = Math.floor(durationMins / 60);
+    const durationText = hours > 0 ? `${hours} மணி நேரம்` : `${durationMins} நிமிடங்கள்`;
+    
+    const category = listing.category === "AgriRural" ? "விவசாய மற்றும் கிராமப்புற" : 
+                     listing.category === "HeritageCulture" ? "பாரம்பரியம் மற்றும் கலாச்சார" : 
+                     listing.category === "EcoAdventure" ? "சுற்றுச்சூழல் மற்றும் சாகச" : "சிறப்பான";
+    const location = listing.locationName || listing.location?.city || "தமிழ்நாடு";
+    const rating = listing.rating || 4.5;
+    
+    const descriptions = [
+      `வணக்கம்! ${listing.title} என்ற இடத்திற்கு வரவேற்கிறோம்! இது ${location}-ல் அமைந்துள்ள ${category} அனுபவம். ஒரு நபருக்கு ${price} ரூபாய் செலவாகும், சுமார் ${durationText} எடுக்கும். ${rating} நட்சத்திர மதிப்பீடு பெற்றது!`,
+      `அருமையான தேர்வு! ${listing.title} ${location}-ல் உள்ளது. இது ஒரு ${category} அனுபவம். கட்டணம் ${price} ரூபாய். நேரம் ${durationText}. பயணிகளால் ${rating} நட்சத்திரங்கள் பெற்றது!`,
+      `${listing.title} பற்றி தெரிந்துகொள்ளுங்கள்! ${location}-ல் இந்த ${category} அனுபவம் உங்களுக்காக காத்திருக்கிறது. ${price} ரூபாய்க்கு ${durationText} தமிழ்நாட்டின் பாரம்பரியத்தை அனுபவியுங்கள்!`,
     ];
-    speakGuide(messages[Math.floor(Math.random() * messages.length)]);
+    
+    speakGuide(descriptions[Math.floor(Math.random() * descriptions.length)], 'ta');
   };
 
   if (!isMapActive) {
