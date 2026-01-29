@@ -344,18 +344,66 @@ const TouristProfile = () => {
                   </div>
                 </div>
 
-                {/* Medical Conditions */}
+                {/* Medical Information - Enhanced */}
                 <div className="md:col-span-2">
-                  <label className="text-xs font-black uppercase tracking-wider text-white/50 mb-2 block">
-                    Medical Conditions / Allergies
+                  <label className="text-xs font-black uppercase tracking-wider text-white/50 mb-3 block">
+                    Medical Information
                   </label>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/10">
-                    <p className="text-white/70">
-                      {profileData.medicalConditions ||
-                        profileData.allergies ||
-                        "No conditions listed"}
-                    </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="p-4 bg-red-500/10 rounded-xl border border-red-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Droplets className="w-4 h-4 text-red-400" />
+                        <span className="text-xs font-bold text-red-400 uppercase">
+                          Blood Group
+                        </span>
+                      </div>
+                      <p className="text-xl font-black text-white">
+                        {profileData.bloodGroup || "Not Set"}
+                      </p>
+                    </div>
+                    <div className="p-4 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertCircle className="w-4 h-4 text-orange-400" />
+                        <span className="text-xs font-bold text-orange-400 uppercase">
+                          Allergies
+                        </span>
+                      </div>
+                      <p className="text-sm text-white/70">
+                        {profileData.allergies || "None listed"}
+                      </p>
+                    </div>
+                    <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Heart className="w-4 h-4 text-purple-400" />
+                        <span className="text-xs font-bold text-purple-400 uppercase">
+                          Conditions
+                        </span>
+                      </div>
+                      <p className="text-sm text-white/70">
+                        {profileData.medicalConditions || "None listed"}
+                      </p>
+                    </div>
+                    <div className="p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Shield className="w-4 h-4 text-blue-400" />
+                        <span className="text-xs font-bold text-blue-400 uppercase">
+                          Insurance
+                        </span>
+                      </div>
+                      <p className="text-sm text-white/70">
+                        {profileData.insuranceActive ? (
+                          <span className="text-green-400 font-bold">
+                            Active ✓
+                          </span>
+                        ) : (
+                          <span className="text-white/50">Not Active</span>
+                        )}
+                      </p>
+                    </div>
                   </div>
+                  <button className="mt-3 text-xs text-[#FFD595] hover:text-[#FFD595]/80 font-bold flex items-center gap-1">
+                    <Edit3 className="w-3 h-3" /> Edit Medical Info
+                  </button>
                 </div>
               </div>
             </motion.div>
