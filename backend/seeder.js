@@ -104,7 +104,7 @@ const seedData = async () => {
             },
             {
                 creator: creator._id,
-                title: 'Edward Elliot\'s Beach Calm Trail',
+                title: 'Edward Elliot\'s Beach',
                 description: 'A peaceful coastal experience at Besant Nagar with sea breeze, cultural landmarks, and sunset serenity.',
                 category: 'EcoAdventure',
                 price: 400,
@@ -112,12 +112,12 @@ const seedData = async () => {
                 duration: 90,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2705, 12.9987] },
-                images: ['https://images.unsplash.com/photo-1600965962361-9035dbfd1c50?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769670168766-4ffbeeb8-242c-49b5-9bda-62409913fd46.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'Leela Palace Heritage Luxury Tour',
+                title: 'Leela Palace Luxury Heritage',
                 description: 'Discover Indo-Chettinad architecture, luxury hospitality, and coastal elegance at one of Chennai\'s iconic landmarks.',
                 category: 'HeritageCulture',
                 price: 2000,
@@ -125,12 +125,12 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2702, 13.0176] },
-                images: ['https://images.unsplash.com/photo-1551887373-6d7f4b6f48b3?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769669867581-c5873ad4-e104-4cd7-9584-b1f3dbe430f0.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'T Nagar Bazaar Culture Walk',
+                title: 'T Nagar Bazaar Walk',
                 description: 'Navigate the chaos of Chennai\'s busiest shopping district, from silk sarees to street snacks and temple stops.',
                 category: 'HeritageCulture',
                 price: 400,
@@ -138,12 +138,12 @@ const seedData = async () => {
                 duration: 150,
                 difficulty: 'Moderate',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2337, 13.0423] },
-                images: ['https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769669779837-8703e3c3-0259-4a9b-9ab8-491e31ee8068.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'Wonderla Amusement Adventure',
+                title: 'Wonderla Amusement Park Adventure',
                 description: 'High-energy amusement park experience with water rides, roller coasters, and full-day thrills.',
                 category: 'EcoAdventure',
                 price: 1800,
@@ -151,12 +151,12 @@ const seedData = async () => {
                 duration: 360,
                 difficulty: 'Moderate',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.0289, 13.0099] },
-                images: ['https://images.unsplash.com/photo-1596443686116-2a9d1b0d57c7?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769670065144-7d785ea8-6f6e-479c-a4b8-7860b9aeff57.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'Government Museum History Trail',
+                title: 'Government Museum - Madras',
                 description: 'Guided exploration of one of India\'s oldest museums, featuring archaeology, bronze sculptures, and colonial history.',
                 category: 'HeritageCulture',
                 price: 350,
@@ -164,12 +164,12 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2580, 13.0722] },
-                images: ['https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769669669711-2c09caef-ea7e-4b15-8786-fcffb824b3b0.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'Fort St. George Colonial Walk',
+                title: 'Fort St. George',
                 description: 'Walk through the birthplace of British Chennai with military architecture, museums, and historic churches.',
                 category: 'HeritageCulture',
                 price: 450,
@@ -177,12 +177,12 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2870, 13.0827] },
-                images: ['https://images.unsplash.com/photo-1617191519105-9b3a6d7f1d7c?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769669599020-b8e50003-ad87-4b34-a3dc-3218cbfe058a.png'],
                 status: 'approved'
             },
             {
                 creator: creator._id,
-                title: 'Guindy National Park Nature Walk',
+                title: 'Guindy National Park',
                 description: 'Explore one of India\'s few urban national parks with guided trails, deer sightings, and native flora.',
                 category: 'EcoAdventure',
                 price: 500,
@@ -190,7 +190,124 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2206, 13.0067] },
-                images: ['https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769670018511-79b801f8-8b51-4372-91ac-c727870bddfe.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Santhome Basilica Church Visit',
+                description: 'Explore the historic Santhome Basilica, one of the few churches built over an apostle\'s tomb.',
+                category: 'HeritageCulture',
+                price: 300,
+                capacity: 25,
+                duration: 90,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2767, 13.0338] },
+                images: ['https://image2url.com/r2/default/images/1769671161481-aaf69ddb-b3a0-4b3d-8c91-6eeeeb2ce937.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Parthasarathy Temple',
+                description: 'Guided walk through Triplicane focusing on Parthasarathy Temple history, rituals, and streets.',
+                category: 'HeritageCulture',
+                price: 250,
+                capacity: 25,
+                duration: 90,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2785, 13.0577] },
+                images: ['https://image2url.com/r2/default/images/1769670974811-ba6e651e-c9f6-40e8-a50b-20609225a379.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Chennai Snake Park Conservation Tour',
+                description: 'Educational tour of Chennai Snake Park focusing on reptiles, conservation, and awareness.',
+                category: 'EcoAdventure',
+                price: 300,
+                capacity: 20,
+                duration: 90,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2391, 13.0108] },
+                images: ['https://image2url.com/r2/default/images/1769671539319-1edb6c7a-60e8-4fa8-b2ee-0cf7aee3674a.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Chetpet Eco Park & Lake Walk',
+                description: 'Leisure eco walk around Chetpet Lake focusing on urban wetlands and birdlife.',
+                category: 'EcoAdventure',
+                price: 250,
+                capacity: 20,
+                duration: 90,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2426, 13.0729] },
+                images: ['https://image2url.com/r2/default/images/1769671855250-c5c53550-7d5a-4be4-b858-80ece36034ad.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Semmozhi Poonga Botanical Walk',
+                description: 'Guided walk through Semmozhi Poonga highlighting native plants and urban green design.',
+                category: 'EcoAdventure',
+                price: 200,
+                capacity: 20,
+                duration: 60,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2500, 13.0487] },
+                images: ['https://image2url.com/r2/default/images/1769671472395-9b828d35-6e16-44e9-978a-be1a76336cf3.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Theosophical Society Natural Heritage',
+                description: 'Explore heritage buildings, banyan trees, and spiritual history at Adyar Theosophical Society.',
+                category: 'HeritageCulture',
+                price: 300,
+                capacity: 20,
+                duration: 120,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2630, 13.0064] },
+                images: ['https://image2url.com/r2/default/images/1769670877678-eb2b8d67-5919-4b50-8508-0198e56fc458.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Pallikaranai Marshland Eco Exploration',
+                description: 'Eco exploration of Pallikaranai Marsh focusing on wetlands, birds, and urban conservation.',
+                category: 'EcoAdventure',
+                price: 400,
+                capacity: 15,
+                duration: 150,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2094, 12.9467] },
+                images: ['https://image2url.com/r2/default/images/1769671283067-b0d0557d-a441-45b5-bd40-f592db18cf46.blob'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Covelong Beach Fishing',
+                description: 'Walk along Covelong Beach exploring coastal ecology and traditional fishing livelihoods.',
+                category: 'AgriRural',
+                price: 300,
+                capacity: 20,
+                duration: 120,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2606, 12.7916] },
+                images: ['https://image2url.com/r2/default/images/1769670744263-f2c8a0c0-7387-4d03-a2aa-91fd6f243de9.png'],
+                status: 'approved'
+            },
+            {
+                creator: creator._id,
+                title: 'Taramani Green Belt & MRTS Urban Space',
+                description: 'Urban eco walk along Taramani green belt focusing on rail corridors and city ecology.',
+                category: 'EcoAdventure',
+                price: 250,
+                capacity: 20,
+                duration: 90,
+                difficulty: 'Easy',
+                location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2445, 12.9843] },
+                images: ['https://image2url.com/r2/default/images/1769671778385-34f204f4-44e4-4aed-9221-80de7c81c7a2.png'],
                 status: 'approved'
             },
             // Tiruvallur Listings
@@ -7168,7 +7285,7 @@ const seedData = async () => {
                 duration: 210,
                 difficulty: 'Moderate',
                 location: { city: 'Palacode', district: 'Dharmapuri', coordinates: [77.9234, 12.1834] },
-                images: ['https://images.unsplash.com/photo-1590650153855-d9e808231d41'],
+                images: ['https://image2url.com/r2/default/images/1769673050659-f626dc27-5ecf-47c6-ac42-44865d539142.png'],
                 status: 'approved'
             },
             {
@@ -7220,7 +7337,7 @@ const seedData = async () => {
                 duration: 180,
                 difficulty: 'Easy',
                 location: { city: 'Hanumanthapuram', district: 'Dharmapuri', coordinates: [78.0923, 12.0845] },
-                images: ['https://images.unsplash.com/photo-1501004318641-b39e6451bec6'],
+                images: ['https://image2url.com/r2/default/images/1769672963671-d6078913-c5df-4fef-a4c4-124ea227c225.png'],
                 status: 'approved'
             },
             {
@@ -7299,7 +7416,7 @@ const seedData = async () => {
                 duration: 180,
                 difficulty: 'Easy',
                 location: { city: 'Mango Farms', district: 'Krishnagiri', coordinates: [78.2389, 12.5134] },
-                images: ['https://images.unsplash.com/photo-1560493676-04071c5f467b'],
+                images: ['https://image2url.com/r2/default/images/1769672847193-5acb995a-86c4-4d44-b8f7-bdbd23bc4128.png'],
                 status: 'approved'
             },
             {
@@ -7377,7 +7494,7 @@ const seedData = async () => {
                 duration: 150,
                 difficulty: 'Easy',
                 location: { city: 'Kelavarapalli', district: 'Krishnagiri', coordinates: [77.8945, 12.5978] },
-                images: ['https://images.unsplash.com/photo-1502082553048-f009c37129b9'],
+                images: ['https://image2url.com/r2/default/images/1769672737577-b175b3f8-5e1b-4218-968c-d768e8da6a6b.png'],
                 status: 'approved'
             },
             {
@@ -7455,7 +7572,7 @@ const seedData = async () => {
                 duration: 180,
                 difficulty: 'Easy',
                 location: { city: 'Bagalur', district: 'Krishnagiri', coordinates: [77.9456, 12.5812] },
-                images: ['https://images.unsplash.com/photo-1590650153855-d9e808231d41'],
+                images: ['https://image2url.com/r2/default/images/1769672646514-922b6ca0-79a4-4db4-b5e0-6df6fa5c67df.png'],
                 status: 'approved'
             },
             {

@@ -8,8 +8,8 @@ import {
   ChevronDown,
   X,
   Leaf,
-  Landmark,
-  Mountain,
+  Castle,
+  Trees,
   ChevronRight,
   MapPin,
 } from "lucide-react";
@@ -49,17 +49,18 @@ const Discover = () => {
       bgGradient: "from-[#FFD595]/20 to-[#FFD595]/10",
     },
     HeritageCulture: {
-      icon: Landmark,
+      icon: Castle,
       title: "Heritage & Culture",
       description: "Explore temples, monuments, and rich cultural traditions",
-      gradient: "from-amber-500 to-orange-600",
+      gradient: "from-[#FFD595] to-[#FFD595]/80",
+      bgGradient: "from-[#FFD595]/20 to-[#FFD595]/10",
     },
     EcoAdventure: {
-      icon: Mountain,
+      icon: Trees,
       title: "Eco & Adventure",
       description: "Thrilling outdoor adventures and eco-tourism experiences",
-      gradient: "from-blue-500 to-cyan-600",
-      bgGradient: "from-blue-500/10 to-cyan-600/10",
+      gradient: "from-[#FFD595] to-[#FFD595]/80",
+      bgGradient: "from-[#FFD595]/20 to-[#FFD595]/10",
     },
   };
 
