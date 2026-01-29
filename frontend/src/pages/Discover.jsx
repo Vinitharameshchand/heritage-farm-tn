@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, useSearchParams } from "react-router-dom";
 import i18n from "../i18n/config";
 import {
   Search,
@@ -21,10 +22,13 @@ const ITEMS_PER_PAGE = 6;
 
 const Discover = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [listings, setListings] = useState([]);
   const [allListings, setAllListings] = useState([]); // Store all listings for district extraction
   const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState(
+    searchParams.get("category") || "All",
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
