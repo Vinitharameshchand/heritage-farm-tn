@@ -178,16 +178,6 @@ const Discover = () => {
   return (
     <div className="min-h-screen  pt-28 pb-20 px-6 max-w-7xl mx-auto relative overflow-hidden">
       {/* Decorative SVGs */}
-      <div className="fixed top-20 left-0 w-32 opacity-20">
-        <img src="/left.svg" alt="decorative left" className="h-full w-auto" />
-      </div>
-      <div className="fixed top-20 right-0 w-32 opacity-20">
-        <img
-          src="/right.svg"
-          alt="decorative right"
-          className="h-full w-auto"
-        />
-      </div>
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 relative z-10">

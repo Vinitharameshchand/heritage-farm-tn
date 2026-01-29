@@ -20,6 +20,12 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      <div className="absolute inset-y-0 top-2 left-0 w-40 ">
+        <img src="/left.svg" alt="decorative left" className="h-full" />
+      </div>
+      <div className="absolute inset-y-0 top-2 right-0 w-40">
+        <img src="/right.svg" alt="decorative left" className="h-full" />
+      </div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/discover" element={<Discover />} />
