@@ -11,10 +11,32 @@ import {
   Dog,
 } from "lucide-react";
 
-const SafetyBadges = ({ listing, size = "md" }) => {
+const SafetyBadges = ({
+  listing,
+  womenFriendly,
+  verified,
+  insured,
+  firstAid,
+  familyFriendly,
+  accessibleFriendly,
+  kidFriendly,
+  petFriendly,
+  size = "md",
+}) => {
   const badges = [];
 
-  if (listing?.womenFriendly) {
+  const data = listing || {
+    womenFriendly,
+    verified,
+    insured,
+    firstAid,
+    familyFriendly,
+    accessibleFriendly,
+    kidFriendly,
+    petFriendly,
+  };
+
+  if (data?.womenFriendly) {
     badges.push({
       id: "women",
       label: "Women Friendly",
@@ -25,7 +47,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.verified) {
+  if (data?.verified) {
     badges.push({
       id: "verified",
       label: "Verified Host",
@@ -36,7 +58,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.insured) {
+  if (data?.insured) {
     badges.push({
       id: "insured",
       label: "Insured",
@@ -47,7 +69,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.familyFriendly) {
+  if (data?.familyFriendly) {
     badges.push({
       id: "family",
       label: "Family Friendly",
@@ -58,7 +80,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.accessibleFriendly) {
+  if (data?.accessibleFriendly) {
     badges.push({
       id: "accessible",
       label: "Accessible",
@@ -69,7 +91,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.kidFriendly) {
+  if (data?.kidFriendly) {
     badges.push({
       id: "kids",
       label: "Kid Friendly",
@@ -80,7 +102,7 @@ const SafetyBadges = ({ listing, size = "md" }) => {
     });
   }
 
-  if (listing?.petFriendly) {
+  if (data?.petFriendly) {
     badges.push({
       id: "pets",
       label: "Pet Friendly",
@@ -186,16 +208,23 @@ export const WomenSafetyRating = ({ rating = 4.5, reviewCount = 0 }) => {
   );
 };
 
-export const HostVerificationBadge = ({ host }) => {
+export const HostVerificationBadge = ({
+  host,
+  hostName,
+  isVerified,
+  rating,
+}) => {
   const verifications = [];
 
-  if (host?.idVerified) {
+  const hostData = host || { idVerified: isVerified, name: hostName, rating };
+
+  if (hostData?.idVerified || isVerified) {
     verifications.push({ label: "ID Verified", icon: CheckCircle2 });
   }
-  if (host?.backgroundChecked) {
+  if (hostData?.backgroundChecked) {
     verifications.push({ label: "Background Checked", icon: Shield });
   }
-  if (host?.firstAidCertified) {
+  if (hostData?.firstAidCertified) {
     verifications.push({ label: "First Aid Certified", icon: Heart });
   }
 
@@ -270,4 +299,5 @@ export const SafetyScore = ({ score = 95 }) => {
   );
 };
 
+export { SafetyBadges };
 export default SafetyBadges;
