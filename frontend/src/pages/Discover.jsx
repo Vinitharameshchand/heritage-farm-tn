@@ -596,6 +596,7 @@ const Discover = () => {
                       womenFriendly: false,
                       verifiedOnly: false,
                       insuredOnly: false,
+                      femaleHostOnly: false,
                     });
                   }}
                   className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all border border-white/20"
