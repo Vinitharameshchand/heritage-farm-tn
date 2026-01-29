@@ -89,6 +89,14 @@ const Discover = () => {
   const fetchListings = async () => {
     try {
       setLoading(true);
+      const params = { lang: i18n.language, limit: 1000 };
+      if (activeCategory !== "All") {
+        params.category = activeCategory;
+      }
+      if (searchTerm) {
+        params.search = searchTerm;
+      }
+      const response = await api.get("/listings", { params });
       setListings(response.data.data);
       // Also update allListings if this is the full fetch
       if (activeCategory === "All" && !searchTerm) {
