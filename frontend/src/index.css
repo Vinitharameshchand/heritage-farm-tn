@@ -114,7 +114,7 @@
   }
 
   body {
-    @apply bg-slate-950 text-slate-100 font-inter selection:bg-emerald-500/30;
+    @apply bg-[#580527];
     overflow-x: hidden;
   }
 
