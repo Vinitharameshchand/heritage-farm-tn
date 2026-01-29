@@ -41,6 +41,7 @@ const Discover = () => {
     womenFriendly: false,
     verifiedOnly: false,
     insuredOnly: false,
+    femaleHostOnly: false,
   });
   const [expandedCategories, setExpandedCategories] = useState({});
   const [singleCategoryPage, setSingleCategoryPage] = useState(1);
@@ -157,6 +158,8 @@ const Discover = () => {
       if (safetyFilters.verifiedOnly && listing.verified === false)
         return false;
       if (safetyFilters.insuredOnly && !listing.insured) return false;
+      if (safetyFilters.femaleHostOnly && listing.host?.gender !== "female")
+        return false;
 
       // District filter
       if (selectedDistrict !== "all") {
@@ -562,6 +565,21 @@ const Discover = () => {
                   >
                     <ShieldCheck className="w-4 h-4" />
                     {t("insured")}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setSafetyFilters((prev) => ({
+                        ...prev,
+                        femaleHostOnly: !prev.femaleHostOnly,
+                      }))
+                    }
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
+                      safetyFilters.femaleHostOnly
+                        ? "bg-purple-500 text-white"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                    }`}
+                  >
+                    👩 {t("female_host")}
                   </button>
                 </div>
               </div>

@@ -14,7 +14,10 @@ import {
   Users,
 } from "lucide-react";
 
-export const SafetyRatingDisplay = ({ safetyRating = 4.5, reviewCount = 24 }) => {
+export const SafetyRatingDisplay = ({
+  safetyRating = 4.5,
+  reviewCount = 24,
+}) => {
   const [expanded, setExpanded] = useState(false);
 
   const safetyMetrics = [
@@ -26,9 +29,24 @@ export const SafetyRatingDisplay = ({ safetyRating = 4.5, reviewCount = 24 }) =>
   ];
 
   const getSafetyLevel = (rating) => {
-    if (rating >= 4.5) return { label: "Excellent", color: "text-green-400", bg: "bg-green-500/20" };
-    if (rating >= 4.0) return { label: "Very Good", color: "text-blue-400", bg: "bg-blue-500/20" };
-    if (rating >= 3.5) return { label: "Good", color: "text-yellow-400", bg: "bg-yellow-500/20" };
+    if (rating >= 4.5)
+      return {
+        label: "Excellent",
+        color: "text-green-400",
+        bg: "bg-green-500/20",
+      };
+    if (rating >= 4.0)
+      return {
+        label: "Very Good",
+        color: "text-blue-400",
+        bg: "bg-blue-500/20",
+      };
+    if (rating >= 3.5)
+      return {
+        label: "Good",
+        color: "text-yellow-400",
+        bg: "bg-yellow-500/20",
+      };
     return { label: "Fair", color: "text-orange-400", bg: "bg-orange-500/20" };
   };
 
@@ -41,19 +59,27 @@ export const SafetyRatingDisplay = ({ safetyRating = 4.5, reviewCount = 24 }) =>
         className="w-full p-4 flex items-center justify-between hover:bg-white/5 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className={`w-12 h-12 rounded-xl ${level.bg} flex items-center justify-center`}>
+          <div
+            className={`w-12 h-12 rounded-xl ${level.bg} flex items-center justify-center`}
+          >
             <Shield className={`w-6 h-6 ${level.color}`} />
           </div>
           <div className="text-left">
             <p className="text-white font-bold">Safety Rating</p>
             <div className="flex items-center gap-2">
-              <span className={`font-black text-xl ${level.color}`}>{safetyRating}</span>
-              <span className="text-white/40 text-sm">({reviewCount} safety reviews)</span>
+              <span className={`font-black text-xl ${level.color}`}>
+                {safetyRating}
+              </span>
+              <span className="text-white/40 text-sm">
+                ({reviewCount} safety reviews)
+              </span>
             </div>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className={`px-3 py-1 rounded-full text-sm font-bold ${level.bg} ${level.color}`}>
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-bold ${level.bg} ${level.color}`}
+          >
             {level.label}
           </span>
           {expanded ? (
@@ -76,7 +102,9 @@ export const SafetyRatingDisplay = ({ safetyRating = 4.5, reviewCount = 24 }) =>
               {safetyMetrics.map((metric, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <metric.icon className="w-4 h-4 text-[#FFD595]" />
-                  <span className="flex-1 text-sm text-white/70">{metric.label}</span>
+                  <span className="flex-1 text-sm text-white/70">
+                    {metric.label}
+                  </span>
                   <div className="flex items-center gap-2">
                     <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden">
                       <div
@@ -84,7 +112,9 @@ export const SafetyRatingDisplay = ({ safetyRating = 4.5, reviewCount = 24 }) =>
                         style={{ width: `${(metric.score / 5) * 100}%` }}
                       />
                     </div>
-                    <span className="text-sm font-bold text-white w-8">{metric.score}</span>
+                    <span className="text-sm font-bold text-white w-8">
+                      {metric.score}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -127,7 +157,9 @@ export const SafetyReviewForm = ({ onSubmit }) => {
     <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
       <div className="flex items-center gap-3 mb-6">
         <Shield className="w-6 h-6 text-[#FFD595]" />
-        <h3 className="text-lg font-bold text-white">Rate Your Safety Experience</h3>
+        <h3 className="text-lg font-bold text-white">
+          Rate Your Safety Experience
+        </h3>
       </div>
 
       <div className="space-y-4 mb-6">
@@ -156,7 +188,9 @@ export const SafetyReviewForm = ({ onSubmit }) => {
       </div>
 
       <div className="mb-6">
-        <p className="text-sm text-white/70 mb-3">Would you recommend this experience as safe?</p>
+        <p className="text-sm text-white/70 mb-3">
+          Would you recommend this experience as safe?
+        </p>
         <div className="flex gap-3">
           <button
             onClick={() => setWouldRecommend(true)}
@@ -184,7 +218,9 @@ export const SafetyReviewForm = ({ onSubmit }) => {
       </div>
 
       <div className="mb-6">
-        <p className="text-sm text-white/70 mb-3">Any safety concerns or suggestions?</p>
+        <p className="text-sm text-white/70 mb-3">
+          Any safety concerns or suggestions?
+        </p>
         <textarea
           value={feedback}
           onChange={(e) => setFeedback(e.target.value)}
@@ -213,27 +249,37 @@ export const SafetyReviewCard = ({ review }) => {
             {review.userName?.charAt(0) || "U"}
           </div>
           <div>
-            <p className="font-bold text-white text-sm">{review.userName || "Anonymous"}</p>
+            <p className="font-bold text-white text-sm">
+              {review.userName || "Anonymous"}
+            </p>
             <p className="text-white/40 text-xs">{review.date || "Recently"}</p>
           </div>
         </div>
         <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 rounded-full">
           <Shield className="w-3 h-3 text-green-400" />
-          <span className="text-green-400 font-bold text-sm">{review.safetyRating || 4.5}</span>
+          <span className="text-green-400 font-bold text-sm">
+            {review.safetyRating || 4.5}
+          </span>
         </div>
       </div>
-      <p className="text-white/70 text-sm mb-3">{review.comment || "Great safety experience!"}</p>
+      <p className="text-white/70 text-sm mb-3">
+        {review.comment || "Great safety experience!"}
+      </p>
       {review.wouldRecommend !== undefined && (
         <div className="flex items-center gap-2">
           {review.wouldRecommend ? (
             <>
               <ThumbsUp className="w-4 h-4 text-green-400" />
-              <span className="text-green-400 text-xs font-bold">Recommends as safe</span>
+              <span className="text-green-400 text-xs font-bold">
+                Recommends as safe
+              </span>
             </>
           ) : (
             <>
               <ThumbsDown className="w-4 h-4 text-red-400" />
-              <span className="text-red-400 text-xs font-bold">Safety concerns reported</span>
+              <span className="text-red-400 text-xs font-bold">
+                Safety concerns reported
+              </span>
             </>
           )}
         </div>

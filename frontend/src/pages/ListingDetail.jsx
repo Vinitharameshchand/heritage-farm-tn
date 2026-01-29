@@ -22,6 +22,8 @@ import {
   HostVerificationBadge,
 } from "../components/SafetyBadges";
 import WeatherWidget from "../components/WeatherWidget";
+import NearbyEmergency from "../components/NearbyEmergency";
+import { SafetyRatingDisplay } from "../components/SafetyRating";
 
 const ListingDetail = () => {
   const { t } = useTranslation();
@@ -233,6 +235,19 @@ const ListingDetail = () => {
                   compact={false}
                 />
               </div>
+            </div>
+
+            {/* Safety Rating & Nearby Emergency */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <SafetyRatingDisplay
+                safetyRating={listing.safetyRating || 4.6}
+                reviewCount={listing.safetyReviewCount || 18}
+              />
+              <NearbyEmergency
+                location={listing.location?.city || "Tamil Nadu"}
+                lat={listing.location?.coordinates?.lat}
+                lon={listing.location?.coordinates?.lon}
+              />
             </div>
           </section>
         </div>
