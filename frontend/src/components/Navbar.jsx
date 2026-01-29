@@ -11,6 +11,7 @@ import {
   Sparkles,
   Calendar,
   Camera,
+  Shield,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -51,7 +52,7 @@ const Navbar = () => {
       </div>
 
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
-        <Link to="/" className="flex items-center -gap-10 group">
+        <Link to="/" className="flex items-center gap-0 group">
           <span className="text-2xl jaro font-bold tracking-tight text-white">
             Heritage Farm
           </span>
@@ -148,13 +149,15 @@ const Navbar = () => {
           {user ? (
             <div className="flex items-center gap-4">
               {user.role === "tourist" && (
-                <Link
-                  to="/my-bookings"
-                  className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
-                >
-                  <Calendar className="w-4 h-4" />
-                  {t("my_bookings")}
-                </Link>
+                <>
+                  <Link
+                    to="/my-bookings"
+                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    {t("my_bookings")}
+                  </Link>
+                </>
               )}
               {user.role === "creator" && (
                 <Link
@@ -167,12 +170,18 @@ const Navbar = () => {
               )}
               <div className="flex items-center gap-3 pl-4 border-l border-slate-700">
                 <div className="text-right">
-                  <div className="text-sm font-bold text-white">
-                    {user.name}
-                  </div>
-                  <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
-                    {user.role}
-                  </div>
+                  <Link
+                    to="/profile"
+                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex flex-col gap-0 hover:bg-white/5 transition-all"
+                  >
+                    <div className="text-sm font-bold text-white">
+                      {user.name}
+                    </div>
+
+                    <div className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">
+                      {user.role}
+                    </div>
+                  </Link>
                 </div>
                 <button
                   onClick={handleLogout}
@@ -294,14 +303,24 @@ const Navbar = () => {
               {user ? (
                 <>
                   {user.role === "tourist" && (
-                    <Link
-                      to="/my-bookings"
-                      className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Calendar className="w-5 h-5" />
-                      {t("my_bookings")}
-                    </Link>
+                    <>
+                      <Link
+                        to="/profile"
+                        className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Shield className="w-5 h-5" />
+                        {t("safety_card")}
+                      </Link>
+                      <Link
+                        to="/my-bookings"
+                        className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Calendar className="w-5 h-5" />
+                        {t("my_bookings")}
+                      </Link>
+                    </>
                   )}
                   {user.role === "creator" && (
                     <Link

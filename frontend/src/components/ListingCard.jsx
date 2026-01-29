@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Star, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SafetyBadgesMini } from "./SafetyBadges";
 
 const ListingCard = ({ listing }) => {
   return (
@@ -31,6 +32,17 @@ const ListingCard = ({ listing }) => {
               {listing.rating || "4.8"}
             </div>
           </div>
+
+          {/* Safety Badges */}
+          <div className="absolute bottom-4 left-4">
+            <SafetyBadgesMini
+              womenFriendly={listing.womenFriendly}
+              verified={listing.verified !== false}
+              insured={listing.insured}
+              firstAid={listing.firstAid}
+            />
+          </div>
+
           <div className="absolute inset-0 bg-gradient-to-t from-[#46041F]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
 

@@ -6,7 +6,7 @@ import User from "../models/User.js";
 // @access  Public
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role, creatorProfile } = req.body;
+    const { name, email, password, role, gender, creatorProfile } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
@@ -19,6 +19,10 @@ export const register = async (req, res) => {
       password,
       role: role || "tourist",
     };
+
+    if (role === "tourist" && gender) {
+      userData.gender = gender;
+    }
 
     if (role === "creator" && creatorProfile) {
       userData.creatorProfile = creatorProfile;

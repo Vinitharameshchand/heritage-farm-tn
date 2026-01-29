@@ -50,9 +50,9 @@ const HeritageVision = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-        <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
-        <p className="text-slate-500 font-bold tracking-widest uppercase text-xs">
+      <div className="min-h-screen bg-[#46041F] flex flex-col items-center justify-center">
+        <Loader2 className="w-12 h-12 text-[#FFD595] animate-spin mb-4" />
+        <p className="text-white/60 font-bold tracking-widest uppercase text-xs">
           Initializing Neural Link...
         </p>
       </div>
@@ -71,7 +71,7 @@ const HeritageVision = () => {
         </p>
         <button
           onClick={() => navigate("/discover")}
-          className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-semibold transition-all"
+          className="px-8 py-3 bg-[#FFD595] hover:bg-[#FFD595]/90 text-[#46041F] rounded-full font-semibold transition-all"
         >
           Browse Experiences
         </button>
@@ -86,18 +86,18 @@ const HeritageVision = () => {
         <h2 className="text-3xl font-black mb-4 text-white">
           No AR Data Available
         </h2>
-        <p className="text-slate-400 mb-2 max-w-md text-lg">
-          <span className="text-emerald-400 font-bold">{listing.title}</span>{" "}
+        <p className="text-white/60 mb-2 max-w-md text-lg">
+          <span className="text-[#FFD595] font-bold">{listing.title}</span>{" "}
           hasn't been scanned into Heritage Vision yet.
         </p>
-        <p className="text-slate-500 mb-8 max-w-sm text-sm">
+        <p className="text-white/40 mb-8 max-w-sm text-sm">
           AR experiences allow you to view 3D models of heritage sites and
           artifacts. Check back soon!
         </p>
         <div className="flex gap-4">
           <button
             onClick={() => navigate(`/listings/${id}`)}
-            className="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full font-semibold transition-all"
+            className="px-8 py-3 bg-[#FFD595] hover:bg-[#FFD595]/90 text-[#46041F] rounded-full font-semibold transition-all"
           >
             View Listing
           </button>
@@ -129,7 +129,7 @@ const HeritageVision = () => {
           <motion.div
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest mb-2 border border-emerald-500/20"
+            className="inline-flex items-center gap-2 bg-[#FFD595]/10 text-[#FFD595] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest mb-2 border border-[#FFD595]/20"
           >
             <Sparkles className="w-3 h-3" /> Live AR Projection
           </motion.div>
@@ -146,7 +146,7 @@ const HeritageVision = () => {
       <div className="flex-1 relative">
         {!modelLoaded && (
           <div className="absolute inset-0 flex items-center justify-center z-10">
-            <Loader2 className="w-8 h-8 text-emerald-500/50 animate-spin" />
+            <Loader2 className="w-8 h-8 text-[#FFD595]/50 animate-spin" />
           </div>
         )}
 
@@ -173,7 +173,7 @@ const HeritageVision = () => {
           {/* AR Button Overlay */}
           <button
             slot="ar-button"
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-8 py-4 rounded-3xl font-black uppercase tracking-widest text-xs flex items-center gap-3 shadow-2xl shadow-emerald-500/50 hover:scale-105 transition-all"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-[#FFD595] text-[#46041F] px-8 py-4 rounded-3xl font-black uppercase tracking-widest text-xs flex items-center gap-3 shadow-2xl shadow-[#FFD595]/50 hover:scale-105 transition-all"
           >
             <Maximize2 className="w-5 h-5" /> View in Your Space
           </button>
@@ -188,8 +188,8 @@ const HeritageVision = () => {
           className="p-6 glass rounded-[32px] border border-white/10 max-w-sm"
         >
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-emerald-500/10 rounded-xl">
-              <ShieldCheck className="w-5 h-5 text-emerald-500" />
+            <div className="p-2 bg-[#FFD595]/10 rounded-xl">
+              <ShieldCheck className="w-5 h-5 text-[#FFD595]" />
             </div>
             <h4 className="font-bold text-sm">Artifact Verified</h4>
           </div>
