@@ -130,14 +130,6 @@ const TouristProfile = () => {
 
   return (
     <div className="min-h-screen bg-[#46041F] text-white pt-24 pb-20 px-4 md:px-10">
-      {/* Decorative Elements */}
-      <div className="fixed top-20 left-0 w-32 opacity-20 pointer-events-none">
-        <img src="/left.svg" alt="" className="h-full w-auto" />
-      </div>
-      <div className="fixed top-20 right-0 w-32 opacity-20 pointer-events-none">
-        <img src="/right.svg" alt="" className="h-full w-auto" />
-      </div>
-
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
