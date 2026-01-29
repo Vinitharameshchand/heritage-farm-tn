@@ -208,9 +208,11 @@ const ListingDetail = () => {
               {t("safety")} & Weather
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
+              <div className="bg-gradient-to-br from-[#46041F] to-[#2a0213] p-6 rounded-3xl border border-[#FFD595]/20 shadow-xl">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-lg">{t("safety_score")}</h3>
+                  <h3 className="font-black text-white uppercase tracking-wider text-sm">
+                    {t("safety_score")}
+                  </h3>
                   <SafetyScore score={listing.safetyScore || 92} />
                 </div>
                 <SafetyBadges
@@ -219,7 +221,7 @@ const ListingDetail = () => {
                   insured={listing.insured}
                   firstAid={listing.firstAid}
                 />
-                <div className="mt-4 pt-4 border-t border-white/10">
+                <div className="mt-4 pt-4 border-t border-[#FFD595]/10">
                   <HostVerificationBadge
                     hostName={listing.host?.name || "Local Host"}
                     isVerified={listing.host?.verified !== false}
@@ -227,7 +229,7 @@ const ListingDetail = () => {
                   />
                 </div>
               </div>
-              <div className="bg-white/5 p-6 rounded-3xl border border-white/10 overflow-hidden">
+              <div className="bg-gradient-to-br from-[#46041F] to-[#2a0213] p-6 rounded-3xl border border-[#FFD595]/20 overflow-hidden shadow-xl">
                 <WeatherWidget
                   location={listing.location?.city || "Tamil Nadu"}
                   lat={listing.location?.coordinates?.lat}

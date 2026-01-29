@@ -338,62 +338,62 @@ const TouristProfile = () => {
 
                 {/* Medical Information - Enhanced */}
                 <div className="md:col-span-2">
-                  <label className="text-xs font-black uppercase tracking-wider text-white/50 mb-3 block">
+                  <label className="text-xs font-black uppercase tracking-wider text-[#FFD595]/60 mb-3 block">
                     Medical Information
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div className="p-4 bg-red-500/10 rounded-xl border border-red-500/20">
+                    <div className="p-4 bg-gradient-to-br from-[#FFD595]/20 to-[#FFD595]/5 rounded-2xl border border-[#FFD595]/30">
                       <div className="flex items-center gap-2 mb-2">
-                        <Droplets className="w-4 h-4 text-red-400" />
-                        <span className="text-xs font-bold text-red-400 uppercase">
+                        <Droplets className="w-4 h-4 text-[#FFD595]" />
+                        <span className="text-xs font-bold text-[#FFD595] uppercase tracking-wider">
                           Blood Group
                         </span>
                       </div>
-                      <p className="text-xl font-black text-white">
-                        {profileData.bloodGroup || "Not Set"}
+                      <p className="text-2xl font-black text-white">
+                        {profileData.bloodGroup || "—"}
                       </p>
                     </div>
-                    <div className="p-4 bg-orange-500/10 rounded-xl border border-orange-500/20">
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <AlertCircle className="w-4 h-4 text-orange-400" />
-                        <span className="text-xs font-bold text-orange-400 uppercase">
+                        <AlertCircle className="w-4 h-4 text-[#FFD595]/70" />
+                        <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
                           Allergies
                         </span>
                       </div>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white/70 font-medium">
                         {profileData.allergies || "None listed"}
                       </p>
                     </div>
-                    <div className="p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <Heart className="w-4 h-4 text-purple-400" />
-                        <span className="text-xs font-bold text-purple-400 uppercase">
+                        <Heart className="w-4 h-4 text-[#FFD595]/70" />
+                        <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
                           Conditions
                         </span>
                       </div>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white/70 font-medium">
                         {profileData.medicalConditions || "None listed"}
                       </p>
                     </div>
-                    <div className="p-4 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <Shield className="w-4 h-4 text-blue-400" />
-                        <span className="text-xs font-bold text-blue-400 uppercase">
+                        <Shield className="w-4 h-4 text-[#FFD595]/70" />
+                        <span className="text-xs font-bold text-white/50 uppercase tracking-wider">
                           Insurance
                         </span>
                       </div>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm font-bold">
                         {profileData.insuranceActive ? (
-                          <span className="text-green-400 font-bold">
-                            Active ✓
+                          <span className="text-[#FFD595] flex items-center gap-1">
+                            ✓ Active
                           </span>
                         ) : (
-                          <span className="text-white/50">Not Active</span>
+                          <span className="text-white/40">Not Active</span>
                         )}
                       </p>
                     </div>
                   </div>
-                  <button className="mt-3 text-xs text-[#FFD595] hover:text-[#FFD595]/80 font-bold flex items-center gap-1">
+                  <button className="mt-4 text-xs text-[#FFD595] hover:text-[#FFD595]/80 font-bold flex items-center gap-1 transition-colors">
                     <Edit3 className="w-3 h-3" /> Edit Medical Info
                   </button>
                 </div>
@@ -405,16 +405,16 @@ const TouristProfile = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-6 border border-red-500/20"
+              className="bg-white/5 backdrop-blur-xl rounded-[2rem] p-6 border border-[#FFD595]/20"
             >
               <h3 className="text-xl font-black text-white flex items-center gap-2 mb-6">
-                <Phone className="w-5 h-5 text-red-400" />
+                <Phone className="w-5 h-5 text-[#FFD595]" />
                 Emergency Contacts
               </h3>
 
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
-                  <p className="text-xs font-black uppercase tracking-wider text-red-400/60 mb-2">
+                <div className="p-4 bg-[#FFD595]/5 rounded-2xl border border-[#FFD595]/20">
+                  <p className="text-xs font-black uppercase tracking-wider text-[#FFD595]/60 mb-2">
                     Primary Contact
                   </p>
                   <input

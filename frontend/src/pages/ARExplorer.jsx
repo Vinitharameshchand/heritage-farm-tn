@@ -42,20 +42,65 @@ const customIcon = new L.Icon({
   popupAnchor: [0, -32],
 });
 
-const tamilNaduLocations = [
-  { name: "Chennai", lat: 13.0827, lng: 80.2707 },
-  { name: "Madurai", lat: 9.9252, lng: 78.1198 },
-  { name: "Coimbatore", lat: 11.0168, lng: 76.9558 },
-  { name: "Trichy", lat: 10.7905, lng: 78.7047 },
-  { name: "Salem", lat: 11.6643, lng: 78.146 },
-  { name: "Tirunelveli", lat: 8.7139, lng: 77.7567 },
-  { name: "Thanjavur", lat: 10.787, lng: 79.1378 },
-  { name: "Kanyakumari", lat: 8.0883, lng: 77.5385 },
-  { name: "Ooty", lat: 11.4102, lng: 76.695 },
-  { name: "Rameswaram", lat: 9.2876, lng: 79.3129 },
-  { name: "Kanchipuram", lat: 12.8342, lng: 79.7036 },
-  { name: "Pondicherry", lat: 11.9416, lng: 79.8083 },
+// All 38 districts of Tamil Nadu with their headquarters coordinates
+const tamilNaduDistricts = [
+  { name: "Chennai", lat: 13.0827, lng: 80.2707, district: "Chennai" },
+  { name: "Coimbatore", lat: 11.0168, lng: 76.9558, district: "Coimbatore" },
+  { name: "Madurai", lat: 9.9252, lng: 78.1198, district: "Madurai" },
+  { name: "Tiruchirappalli", lat: 10.7905, lng: 78.7047, district: "Tiruchirappalli" },
+  { name: "Salem", lat: 11.6643, lng: 78.146, district: "Salem" },
+  { name: "Tirunelveli", lat: 8.7139, lng: 77.7567, district: "Tirunelveli" },
+  { name: "Tiruppur", lat: 11.1085, lng: 77.3411, district: "Tiruppur" },
+  { name: "Erode", lat: 11.341, lng: 77.7172, district: "Erode" },
+  { name: "Vellore", lat: 12.9165, lng: 79.1325, district: "Vellore" },
+  { name: "Thoothukudi", lat: 8.7642, lng: 78.1348, district: "Thoothukudi" },
+  { name: "Dindigul", lat: 10.3624, lng: 77.9695, district: "Dindigul" },
+  { name: "Thanjavur", lat: 10.787, lng: 79.1378, district: "Thanjavur" },
+  { name: "Ranipet", lat: 12.9224, lng: 79.3326, district: "Ranipet" },
+  { name: "Sivaganga", lat: 9.8433, lng: 78.4809, district: "Sivaganga" },
+  { name: "Kanyakumari", lat: 8.0883, lng: 77.5385, district: "Kanyakumari" },
+  { name: "Kanchipuram", lat: 12.8342, lng: 79.7036, district: "Kanchipuram" },
+  { name: "Cuddalore", lat: 11.748, lng: 79.7714, district: "Cuddalore" },
+  { name: "Nagapattinam", lat: 10.7672, lng: 79.8449, district: "Nagapattinam" },
+  { name: "Villupuram", lat: 11.9401, lng: 79.4861, district: "Villupuram" },
+  { name: "Tiruvannamalai", lat: 12.2253, lng: 79.0747, district: "Tiruvannamalai" },
+  { name: "Namakkal", lat: 11.2189, lng: 78.1674, district: "Namakkal" },
+  { name: "Karur", lat: 10.9601, lng: 78.0766, district: "Karur" },
+  { name: "Nilgiris", lat: 11.4102, lng: 76.695, district: "Nilgiris" },
+  { name: "Krishnagiri", lat: 12.5186, lng: 78.2137, district: "Krishnagiri" },
+  { name: "Dharmapuri", lat: 12.1211, lng: 78.1582, district: "Dharmapuri" },
+  { name: "Ramanathapuram", lat: 9.3639, lng: 78.8395, district: "Ramanathapuram" },
+  { name: "Theni", lat: 10.0104, lng: 77.4768, district: "Theni" },
+  { name: "Virudhunagar", lat: 9.5681, lng: 77.9624, district: "Virudhunagar" },
+  { name: "Pudukkottai", lat: 10.3833, lng: 78.8001, district: "Pudukkottai" },
+  { name: "Ariyalur", lat: 11.1401, lng: 79.0787, district: "Ariyalur" },
+  { name: "Perambalur", lat: 11.2320, lng: 78.8806, district: "Perambalur" },
+  { name: "Tiruvarur", lat: 10.7661, lng: 79.6344, district: "Tiruvarur" },
+  { name: "Kallakurichi", lat: 11.7380, lng: 78.9620, district: "Kallakurichi" },
+  { name: "Chengalpattu", lat: 12.6819, lng: 79.9888, district: "Chengalpattu" },
+  { name: "Tenkasi", lat: 8.9604, lng: 77.3152, district: "Tenkasi" },
+  { name: "Tirupattur", lat: 12.4967, lng: 78.5730, district: "Tirupattur" },
+  { name: "Mayiladuthurai", lat: 11.1018, lng: 79.6526, district: "Mayiladuthurai" },
+  { name: "Tiruvallur", lat: 13.1231, lng: 79.9120, district: "Tiruvallur" },
 ];
+
+// Check if coordinates are within Tamil Nadu land boundaries
+const isWithinTamilNadu = (lat, lng) => {
+  // Tamil Nadu approximate land boundaries
+  const minLat = 8.0;
+  const maxLat = 13.6;
+  const minLng = 76.2;
+  const maxLng = 80.4;
+  
+  // Exclude points that would fall in sea (eastern coastal check)
+  if (lng > 80.0 && lat < 10.5) return false;
+  // Southern tip check - avoid Bay of Bengal
+  if (lat < 8.2 && lng > 78.0) return false;
+  // Palk Strait area (between India and Sri Lanka)
+  if (lat < 10.0 && lat > 9.0 && lng > 79.3) return false;
+  
+  return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
+};
 
 const MapBoundsController = ({ bounds }) => {
   const map = useMap();
@@ -92,23 +137,61 @@ const ARExplorer = () => {
 
   const fetchNearbyListings = async () => {
     try {
-      const response = await api.get("/listings?status=approved&limit=20");
-      const listingsWithCoords = (response.data.data || []).map(
-        (listing, index) => {
-          const location =
-            tamilNaduLocations[index % tamilNaduLocations.length];
-          const latOffset = (Math.random() - 0.5) * 0.2;
-          const lngOffset = (Math.random() - 0.5) * 0.2;
-          return {
-            ...listing,
-            coordinates: {
-              lat: location.lat + latOffset,
-              lng: location.lng + lngOffset,
-            },
-            locationName: location.name,
-          };
-        },
-      );
+      const response = await api.get("/listings?status=approved&limit=100");
+      const listings = response.data.data || [];
+      
+      // Select 20 diverse locations spread across Tamil Nadu (North, South, East, West, Central)
+      const diverseLocations = [
+        // North
+        { name: "Chennai", lat: 13.0827, lng: 80.2707, region: "North" },
+        { name: "Tiruvallur", lat: 13.1231, lng: 79.9120, region: "North" },
+        { name: "Vellore", lat: 12.9165, lng: 79.1325, region: "North" },
+        { name: "Krishnagiri", lat: 12.5186, lng: 78.2137, region: "North" },
+        // South
+        { name: "Kanyakumari", lat: 8.0883, lng: 77.5385, region: "South" },
+        { name: "Tirunelveli", lat: 8.7139, lng: 77.7567, region: "South" },
+        { name: "Thoothukudi", lat: 8.7642, lng: 78.1348, region: "South" },
+        { name: "Tenkasi", lat: 8.9604, lng: 77.3152, region: "South" },
+        // East
+        { name: "Cuddalore", lat: 11.748, lng: 79.7714, region: "East" },
+        { name: "Nagapattinam", lat: 10.7672, lng: 79.8449, region: "East" },
+        { name: "Ramanathapuram", lat: 9.3639, lng: 78.8395, region: "East" },
+        { name: "Thanjavur", lat: 10.787, lng: 79.1378, region: "East" },
+        // West
+        { name: "Coimbatore", lat: 11.0168, lng: 76.9558, region: "West" },
+        { name: "Nilgiris", lat: 11.4102, lng: 76.695, region: "West" },
+        { name: "Tiruppur", lat: 11.1085, lng: 77.3411, region: "West" },
+        { name: "Erode", lat: 11.341, lng: 77.7172, region: "West" },
+        // Central
+        { name: "Tiruchirappalli", lat: 10.7905, lng: 78.7047, region: "Central" },
+        { name: "Madurai", lat: 9.9252, lng: 78.1198, region: "Central" },
+        { name: "Salem", lat: 11.6643, lng: 78.146, region: "Central" },
+        { name: "Dindigul", lat: 10.3624, lng: 77.9695, region: "Central" },
+      ];
+      
+      // Take up to 20 listings and distribute them across diverse locations
+      const selectedListings = listings.slice(0, 20);
+      
+      const listingsWithCoords = selectedListings.map((listing, index) => {
+        // Force distribution across diverse locations
+        const location = diverseLocations[index % diverseLocations.length];
+        
+        // Add small offset to avoid exact overlap
+        const latOffset = (Math.random() - 0.5) * 0.02;
+        const lngOffset = (Math.random() - 0.5) * 0.02;
+        
+        return {
+          ...listing,
+          coordinates: {
+            lat: location.lat + latOffset,
+            lng: location.lng + lngOffset,
+          },
+          locationName: location.name,
+          districtName: location.name,
+          region: location.region,
+        };
+      });
+      
       setNearbyListings(listingsWithCoords);
     } catch (error) {
       console.error("Error fetching nearby listings:", error);
