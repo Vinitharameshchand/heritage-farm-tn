@@ -13,6 +13,7 @@ import {
   Mountain,
   ChevronRight,
   MapPin,
+  ShieldCheck,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import ListingCard from "../components/ListingCard";
@@ -35,6 +36,11 @@ const Discover = () => {
     priceRange: "all",
     duration: "all",
     rating: "all",
+  });
+  const [safetyFilters, setSafetyFilters] = useState({
+    womenFriendly: false,
+    verifiedOnly: false,
+    insuredOnly: false,
   });
   const [expandedCategories, setExpandedCategories] = useState({});
   const [singleCategoryPage, setSingleCategoryPage] = useState(1);
@@ -143,9 +149,15 @@ const Discover = () => {
     return Array.from(districtSet).sort();
   }, [allListings, listings]);
 
-  // Filter listings based on price, duration, rating, and district filters
+  // Filter listings based on price, duration, rating, district, and safety filters
   const applyFilters = (listingsToFilter) => {
     return listingsToFilter.filter((listing) => {
+      // Safety filters
+      if (safetyFilters.womenFriendly && !listing.womenFriendly) return false;
+      if (safetyFilters.verifiedOnly && listing.verified === false)
+        return false;
+      if (safetyFilters.insuredOnly && !listing.insured) return false;
+
       // District filter
       if (selectedDistrict !== "all") {
         if (listing.location?.district !== selectedDistrict) return false;
@@ -357,6 +369,24 @@ const Discover = () => {
           </AnimatePresence>
         </div>
 
+        {/* Women Safety Toggle */}
+        <button
+          onClick={() =>
+            setSafetyFilters((prev) => ({
+              ...prev,
+              womenFriendly: !prev.womenFriendly,
+            }))
+          }
+          className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
+            safetyFilters.womenFriendly
+              ? "bg-pink-500 text-white shadow-lg shadow-pink-500/30"
+              : "bg-white/10 border border-white/20 text-white hover:bg-white/20"
+          }`}
+        >
+          <ShieldCheck className="w-4 h-4" />
+          {t("women_friendly")}
+        </button>
+
         <button
           onClick={() => setShowFilters(!showFilters)}
           className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${
@@ -479,15 +509,77 @@ const Discover = () => {
                 </div>
               </div>
 
+              {/* Safety Filters */}
+              <div className="mt-6 pt-6 border-t border-white/10">
+                <label className="text-xs font-black uppercase tracking-wider text-white/60 mb-4 block">
+                  {t("safety")} Filters
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() =>
+                      setSafetyFilters((prev) => ({
+                        ...prev,
+                        womenFriendly: !prev.womenFriendly,
+                      }))
+                    }
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
+                      safetyFilters.womenFriendly
+                        ? "bg-pink-500 text-white"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                    }`}
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    {t("women_friendly")}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setSafetyFilters((prev) => ({
+                        ...prev,
+                        verifiedOnly: !prev.verifiedOnly,
+                      }))
+                    }
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
+                      safetyFilters.verifiedOnly
+                        ? "bg-green-500 text-white"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                    }`}
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    {t("verified_host")}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setSafetyFilters((prev) => ({
+                        ...prev,
+                        insuredOnly: !prev.insuredOnly,
+                      }))
+                    }
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold transition-all ${
+                      safetyFilters.insuredOnly
+                        ? "bg-blue-500 text-white"
+                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                    }`}
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    {t("insured")}
+                  </button>
+                </div>
+              </div>
+
               <div className="flex gap-4 mt-6">
                 <button
-                  onClick={() =>
+                  onClick={() => {
                     setFilters({
                       priceRange: "all",
                       duration: "all",
                       rating: "all",
-                    })
-                  }
+                    });
+                    setSafetyFilters({
+                      womenFriendly: false,
+                      verifiedOnly: false,
+                      insuredOnly: false,
+                    });
+                  }}
                   className="flex-1 px-6 py-3 bg-white/10 text-white rounded-2xl font-bold hover:bg-white/20 transition-all border border-white/20"
                 >
                   Clear All

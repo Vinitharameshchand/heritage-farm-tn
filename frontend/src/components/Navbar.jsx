@@ -11,6 +11,7 @@ import {
   Sparkles,
   Calendar,
   Camera,
+  Shield,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -148,13 +149,22 @@ const Navbar = () => {
           {user ? (
             <div className="flex items-center gap-4">
               {user.role === "tourist" && (
-                <Link
-                  to="/my-bookings"
-                  className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
-                >
-                  <Calendar className="w-4 h-4" />
-                  {t("my_bookings")}
-                </Link>
+                <>
+                  <Link
+                    to="/profile"
+                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
+                  >
+                    <Shield className="w-4 h-4" />
+                    {t("safety_card")}
+                  </Link>
+                  <Link
+                    to="/my-bookings"
+                    className="text-slate-300 hover:text-amber-400 px-3 py-2 rounded-lg font-semibold text-sm flex items-center gap-2 hover:bg-white/5 transition-all"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    {t("my_bookings")}
+                  </Link>
+                </>
               )}
               {user.role === "creator" && (
                 <Link
@@ -294,14 +304,24 @@ const Navbar = () => {
               {user ? (
                 <>
                   {user.role === "tourist" && (
-                    <Link
-                      to="/my-bookings"
-                      className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <Calendar className="w-5 h-5" />
-                      {t("my_bookings")}
-                    </Link>
+                    <>
+                      <Link
+                        to="/profile"
+                        className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Shield className="w-5 h-5" />
+                        {t("safety_card")}
+                      </Link>
+                      <Link
+                        to="/my-bookings"
+                        className="text-lg font-bold text-slate-300 hover:text-amber-400 flex items-center gap-2"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <Calendar className="w-5 h-5" />
+                        {t("my_bookings")}
+                      </Link>
+                    </>
                   )}
                   {user.role === "creator" && (
                     <Link

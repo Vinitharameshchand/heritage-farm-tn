@@ -16,6 +16,12 @@ import api from "../services/api";
 import BookingModal from "../components/BookingModal";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/config";
+import {
+  SafetyBadges,
+  SafetyScore,
+  HostVerificationBadge,
+} from "../components/SafetyBadges";
+import WeatherWidget from "../components/WeatherWidget";
 
 const ListingDetail = () => {
   const { t } = useTranslation();
@@ -190,6 +196,41 @@ const ListingDetail = () => {
                   </span>
                 </motion.div>
               ))}
+            </div>
+          </section>
+
+          {/* Safety & Weather Section */}
+          <section>
+            <h2 className="text-3xl font-outfit font-bold mb-8 flex items-center gap-3">
+              <span className="w-8 h-1 bg-[#FFD595] rounded-full" />
+              {t("safety")} & Weather
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-bold text-lg">{t("safety_score")}</h3>
+                  <SafetyScore score={listing.safetyScore || 92} />
+                </div>
+                <SafetyBadges
+                  womenFriendly={listing.womenFriendly}
+                  verified={listing.verified !== false}
+                  insured={listing.insured}
+                  firstAid={listing.firstAid}
+                />
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <HostVerificationBadge
+                    hostName={listing.host?.name || "Local Host"}
+                    isVerified={listing.host?.verified !== false}
+                    rating={listing.host?.rating || 4.8}
+                  />
+                </div>
+              </div>
+              <div className="bg-white/5 p-6 rounded-3xl border border-white/10">
+                <WeatherWidget
+                  location={listing.location?.city || "Tamil Nadu"}
+                  compact={false}
+                />
+              </div>
             </div>
           </section>
         </div>

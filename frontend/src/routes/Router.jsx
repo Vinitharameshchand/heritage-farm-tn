@@ -15,6 +15,7 @@ import HeritageVision from "../pages/HeritageVision";
 import DiscoveryMap from "../pages/DiscoveryMap";
 import JourneyBuilder from "../pages/JourneyBuilder";
 import GovAnalytics from "../pages/GovAnalytics";
+import TouristProfile from "../pages/TouristProfile";
 
 const AppRouter = () => {
   return (
@@ -45,6 +46,14 @@ const AppRouter = () => {
           element={
             <ProtectedRoute>
               <MyBookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <TouristProfile />
             </ProtectedRoute>
           }
         />
