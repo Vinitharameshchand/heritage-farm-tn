@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles,
@@ -22,6 +22,8 @@ const TripPlanner = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState(null);
+  const [listings, setListings] = useState([]);
+  const [loadingDistricts, setLoadingDistricts] = useState(true);
   const [formData, setFormData] = useState({
     interests: [],
     duration: 3,
@@ -55,6 +57,40 @@ const TripPlanner = () => {
     { id: 2, label: "Logistics", icon: Calendar },
     { id: 3, label: "Curation", icon: Sparkles },
   ];
+
+  // Fetch listings for district data
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        setLoadingDistricts(true);
+        const response = await api.get("/listings", {
+          params: { limit: 1000, lang: i18n.language },
+        });
+        setListings(response.data.data);
+      } catch (error) {
+        console.error("Error fetching listings for districts:", error);
+      } finally {
+        setLoadingDistricts(false);
+      }
+    };
+
+    fetchListings();
+  }, [i18n.language]);
+
+  // Process districts with counts
+  const districtsWithCounts = useMemo(() => {
+    const districtCounts = {};
+    listings.forEach((listing) => {
+      if (listing.location?.district) {
+        const district = listing.location.district;
+        districtCounts[district] = (districtCounts[district] || 0) + 1;
+      }
+    });
+
+    return Object.entries(districtCounts)
+      .map(([district, count]) => ({ district, count }))
+      .sort((a, b) => b.count - a.count); // Sort by experience count desc
+  }, [listings]);
 
   const toggleInterest = (id) => {
     setFormData((prev) => ({
@@ -223,30 +259,33 @@ const TripPlanner = () => {
                         <label className="text-[#46041F] font-black uppercase tracking-widest text-sm mb-3 block px-4">
                           Start Point
                         </label>
-                        <select
-                          value={formData.location}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              location: e.target.value,
-                            })
-                          }
-                          className="w-full bg-[#46041F] text-[#FFD595] font-black text-xl rounded-[2rem] px-8 py-6 outline-none appearance-none cursor-pointer shadow-xl"
-                        >
-                          <option value="All">Across Tamil Nadu</option>
-                          <option value="Chennai">
-                            Northern (Chennai/Vellore)
-                          </option>
-                          <option value="Coimbatore">
-                            Western (Coimbatore/Salem)
-                          </option>
-                          <option value="Madurai">
-                            Southern (Madurai/Kanyakumari)
-                          </option>
-                          <option value="Thanjavur">
-                            Central (Thanjavur/Trichy)
-                          </option>
-                        </select>
+                        {loadingDistricts ? (
+                          <div className="w-full bg-[#46041F]/20 text-[#46041F] font-black text-xl rounded-[2rem] px-8 py-6 flex items-center justify-center">
+                            <Loader2 className="w-6 h-6 animate-spin mr-3" />
+                            Loading districts...
+                          </div>
+                        ) : (
+                          <select
+                            value={formData.location}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                location: e.target.value,
+                              })
+                            }
+                            className="w-full bg-[#46041F] text-[#FFD595] font-black text-xl rounded-[2rem] px-8 py-6 outline-none appearance-none cursor-pointer shadow-xl"
+                          >
+                            <option value="All">
+                              Across Tamil Nadu ({listings.length} experiences)
+                            </option>
+                            {districtsWithCounts.map(({ district, count }) => (
+                              <option key={district} value={district}>
+                                {district} ({count} experience
+                                {count !== 1 ? "s" : ""})
+                              </option>
+                            ))}
+                          </select>
+                        )}
                         <ChevronRight className="absolute right-8 bottom-7 w-6 h-6 text-[#FFD595] rotate-90 pointer-events-none" />
                       </div>
                     </div>
