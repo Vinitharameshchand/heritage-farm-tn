@@ -47,7 +47,12 @@ const tamilNaduDistricts = [
   { name: "Chennai", lat: 13.0827, lng: 80.2707, district: "Chennai" },
   { name: "Coimbatore", lat: 11.0168, lng: 76.9558, district: "Coimbatore" },
   { name: "Madurai", lat: 9.9252, lng: 78.1198, district: "Madurai" },
-  { name: "Tiruchirappalli", lat: 10.7905, lng: 78.7047, district: "Tiruchirappalli" },
+  {
+    name: "Tiruchirappalli",
+    lat: 10.7905,
+    lng: 78.7047,
+    district: "Tiruchirappalli",
+  },
   { name: "Salem", lat: 11.6643, lng: 78.146, district: "Salem" },
   { name: "Tirunelveli", lat: 8.7139, lng: 77.7567, district: "Tirunelveli" },
   { name: "Tiruppur", lat: 11.1085, lng: 77.3411, district: "Tiruppur" },
@@ -61,27 +66,52 @@ const tamilNaduDistricts = [
   { name: "Kanyakumari", lat: 8.0883, lng: 77.5385, district: "Kanyakumari" },
   { name: "Kanchipuram", lat: 12.8342, lng: 79.7036, district: "Kanchipuram" },
   { name: "Cuddalore", lat: 11.748, lng: 79.7714, district: "Cuddalore" },
-  { name: "Nagapattinam", lat: 10.7672, lng: 79.8449, district: "Nagapattinam" },
+  {
+    name: "Nagapattinam",
+    lat: 10.7672,
+    lng: 79.8449,
+    district: "Nagapattinam",
+  },
   { name: "Villupuram", lat: 11.9401, lng: 79.4861, district: "Villupuram" },
-  { name: "Tiruvannamalai", lat: 12.2253, lng: 79.0747, district: "Tiruvannamalai" },
+  {
+    name: "Tiruvannamalai",
+    lat: 12.2253,
+    lng: 79.0747,
+    district: "Tiruvannamalai",
+  },
   { name: "Namakkal", lat: 11.2189, lng: 78.1674, district: "Namakkal" },
   { name: "Karur", lat: 10.9601, lng: 78.0766, district: "Karur" },
   { name: "Nilgiris", lat: 11.4102, lng: 76.695, district: "Nilgiris" },
   { name: "Krishnagiri", lat: 12.5186, lng: 78.2137, district: "Krishnagiri" },
   { name: "Dharmapuri", lat: 12.1211, lng: 78.1582, district: "Dharmapuri" },
-  { name: "Ramanathapuram", lat: 9.3639, lng: 78.8395, district: "Ramanathapuram" },
+  {
+    name: "Ramanathapuram",
+    lat: 9.3639,
+    lng: 78.8395,
+    district: "Ramanathapuram",
+  },
   { name: "Theni", lat: 10.0104, lng: 77.4768, district: "Theni" },
   { name: "Virudhunagar", lat: 9.5681, lng: 77.9624, district: "Virudhunagar" },
   { name: "Pudukkottai", lat: 10.3833, lng: 78.8001, district: "Pudukkottai" },
   { name: "Ariyalur", lat: 11.1401, lng: 79.0787, district: "Ariyalur" },
-  { name: "Perambalur", lat: 11.2320, lng: 78.8806, district: "Perambalur" },
+  { name: "Perambalur", lat: 11.232, lng: 78.8806, district: "Perambalur" },
   { name: "Tiruvarur", lat: 10.7661, lng: 79.6344, district: "Tiruvarur" },
-  { name: "Kallakurichi", lat: 11.7380, lng: 78.9620, district: "Kallakurichi" },
-  { name: "Chengalpattu", lat: 12.6819, lng: 79.9888, district: "Chengalpattu" },
+  { name: "Kallakurichi", lat: 11.738, lng: 78.962, district: "Kallakurichi" },
+  {
+    name: "Chengalpattu",
+    lat: 12.6819,
+    lng: 79.9888,
+    district: "Chengalpattu",
+  },
   { name: "Tenkasi", lat: 8.9604, lng: 77.3152, district: "Tenkasi" },
-  { name: "Tirupattur", lat: 12.4967, lng: 78.5730, district: "Tirupattur" },
-  { name: "Mayiladuthurai", lat: 11.1018, lng: 79.6526, district: "Mayiladuthurai" },
-  { name: "Tiruvallur", lat: 13.1231, lng: 79.9120, district: "Tiruvallur" },
+  { name: "Tirupattur", lat: 12.4967, lng: 78.573, district: "Tirupattur" },
+  {
+    name: "Mayiladuthurai",
+    lat: 11.1018,
+    lng: 79.6526,
+    district: "Mayiladuthurai",
+  },
+  { name: "Tiruvallur", lat: 13.1231, lng: 79.912, district: "Tiruvallur" },
 ];
 
 // Check if coordinates are within Tamil Nadu land boundaries
@@ -91,14 +121,14 @@ const isWithinTamilNadu = (lat, lng) => {
   const maxLat = 13.6;
   const minLng = 76.2;
   const maxLng = 80.4;
-  
+
   // Exclude points that would fall in sea (eastern coastal check)
   if (lng > 80.0 && lat < 10.5) return false;
   // Southern tip check - avoid Bay of Bengal
   if (lat < 8.2 && lng > 78.0) return false;
   // Palk Strait area (between India and Sri Lanka)
   if (lat < 10.0 && lat > 9.0 && lng > 79.3) return false;
-  
+
   return lat >= minLat && lat <= maxLat && lng >= minLng && lng <= maxLng;
 };
 
@@ -139,10 +169,10 @@ const ARExplorer = () => {
           setVoicesLoaded(true);
         }
       };
-      
+
       loadVoices();
       window.speechSynthesis.onvoiceschanged = loadVoices;
-      
+
       return () => {
         window.speechSynthesis.onvoiceschanged = null;
       };
@@ -152,10 +182,11 @@ const ARExplorer = () => {
   useEffect(() => {
     if (isMapActive) {
       fetchNearbyListings();
-      // Delay welcome message to ensure voices are loaded
+      // Enable user interaction and play welcome message
       setTimeout(() => {
+        setUserHasInteracted(true); // Enable speech for welcome message
         welcomeMessage();
-      }, 500);
+      }, 1000);
     }
   }, [isMapActive]);
 
@@ -163,12 +194,12 @@ const ARExplorer = () => {
     try {
       const response = await api.get("/listings?status=approved&limit=100");
       const listings = response.data.data || [];
-      
+
       // Select 20 diverse locations spread across Tamil Nadu (North, South, East, West, Central)
       const diverseLocations = [
         // North
         { name: "Chennai", lat: 13.0827, lng: 80.2707, region: "North" },
-        { name: "Tiruvallur", lat: 13.1231, lng: 79.9120, region: "North" },
+        { name: "Tiruvallur", lat: 13.1231, lng: 79.912, region: "North" },
         { name: "Vellore", lat: 12.9165, lng: 79.1325, region: "North" },
         { name: "Krishnagiri", lat: 12.5186, lng: 78.2137, region: "North" },
         // South
@@ -187,23 +218,28 @@ const ARExplorer = () => {
         { name: "Tiruppur", lat: 11.1085, lng: 77.3411, region: "West" },
         { name: "Erode", lat: 11.341, lng: 77.7172, region: "West" },
         // Central
-        { name: "Tiruchirappalli", lat: 10.7905, lng: 78.7047, region: "Central" },
+        {
+          name: "Tiruchirappalli",
+          lat: 10.7905,
+          lng: 78.7047,
+          region: "Central",
+        },
         { name: "Madurai", lat: 9.9252, lng: 78.1198, region: "Central" },
         { name: "Salem", lat: 11.6643, lng: 78.146, region: "Central" },
         { name: "Dindigul", lat: 10.3624, lng: 77.9695, region: "Central" },
       ];
-      
+
       // Take up to 20 listings and distribute them across diverse locations
       const selectedListings = listings.slice(0, 20);
-      
+
       const listingsWithCoords = selectedListings.map((listing, index) => {
         // Force distribution across diverse locations
         const location = diverseLocations[index % diverseLocations.length];
-        
+
         // Add small offset to avoid exact overlap
         const latOffset = (Math.random() - 0.5) * 0.02;
         const lngOffset = (Math.random() - 0.5) * 0.02;
-        
+
         return {
           ...listing,
           coordinates: {
@@ -215,7 +251,7 @@ const ARExplorer = () => {
           region: location.region,
         };
       });
-      
+
       setNearbyListings(listingsWithCoords);
     } catch (error) {
       console.error("Error fetching nearby listings:", error);
@@ -223,16 +259,28 @@ const ARExplorer = () => {
   };
 
   const welcomeMessage = () => {
-    const messages = [
+    console.log("🎉 Playing welcome message");
+    const tamilMessages = [
       "வணக்கம்! தமிழ்நாட்டின் பாரம்பரியத்திற்கு வரவேற்கிறோம். அருகிலுள்ள அற்புதமான அனுபவங்களுக்கு நான் உங்களை வழிநடத்துவேன்.",
       "வணக்கம்! நான் உங்கள் வழிகாட்டி. உங்களைச் சுற்றியுள்ள புதையல்களைக் காட்டுகிறேன்.",
       "வணக்கம்! சரிபார்க்கப்பட்ட உள்ளூர் அனுபவங்களைக் கண்டறிய வரைபடத்தை ஆராயுங்கள்.",
     ];
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    speakGuide(randomMessage, 'ta');
+
+    const englishMessages = [
+      "Welcome to Tamil Nadu's heritage! I'm your AI guide. I'll lead you to amazing nearby experiences.",
+      "Hello! I'm your guide. Let me show you the treasures around you.",
+      "Welcome! Explore the map to discover verified local experiences.",
+    ];
+
+    const randomIndex = Math.floor(Math.random() * tamilMessages.length);
+    const tamilMessage = tamilMessages[randomIndex];
+    const englishMessage = englishMessages[randomIndex];
+
+    // Use the new fallback system for welcome message
+    speakWithFallback(tamilMessage, englishMessage);
   };
 
-  const speakGuide = (message, lang = 'ta') => {
+  const speakGuide = (message, lang = "ta") => {
     setGuideMessage(message);
     setGuideSpeaking(true);
 
@@ -246,34 +294,36 @@ const ARExplorer = () => {
       utterance.rate = 0.85;
       utterance.pitch = 1.1;
       utterance.volume = 0.9;
-      
+
       const voices = window.speechSynthesis.getVoices();
-      
+
       // Try to get a Tamil voice first
-      let selectedVoice = voices.find(voice => 
-        voice.lang === 'ta-IN' || 
-        voice.lang === 'ta' ||
-        voice.lang.startsWith('ta-') ||
-        voice.name.toLowerCase().includes('tamil')
+      let selectedVoice = voices.find(
+        (voice) =>
+          voice.lang === "ta-IN" ||
+          voice.lang === "ta" ||
+          voice.lang.startsWith("ta-") ||
+          voice.name.toLowerCase().includes("tamil"),
       );
-      
+
       // If Tamil voice found, use it
       if (selectedVoice) {
         utterance.voice = selectedVoice;
-        utterance.lang = 'ta-IN';
+        utterance.lang = "ta-IN";
       } else {
         // Fallback to Google Hindi or any Indian voice for better pronunciation
-        selectedVoice = voices.find(voice => 
-          voice.lang === 'hi-IN' ||
-          voice.name.includes('Google हिन्दी') ||
-          voice.name.toLowerCase().includes('india')
+        selectedVoice = voices.find(
+          (voice) =>
+            voice.lang === "hi-IN" ||
+            voice.name.includes("Google हिन्दी") ||
+            voice.name.toLowerCase().includes("india"),
         );
         if (selectedVoice) {
           utterance.voice = selectedVoice;
         }
-        utterance.lang = 'ta-IN';
+        utterance.lang = "ta-IN";
       }
-      
+
       window.speechSynthesis.speak(utterance);
     }
 
@@ -285,26 +335,36 @@ const ARExplorer = () => {
 
   const handleListingTap = (listing) => {
     setSelectedListing(listing);
-    
+
     // Create detailed description for voice in Tamil
     const price = listing.price || 500;
     const durationMins = listing.duration || 120;
     const hours = Math.floor(durationMins / 60);
-    const durationText = hours > 0 ? `${hours} மணி நேரம்` : `${durationMins} நிமிடங்கள்`;
-    
-    const category = listing.category === "AgriRural" ? "விவசாய மற்றும் கிராமப்புற" : 
-                     listing.category === "HeritageCulture" ? "பாரம்பரியம் மற்றும் கலாச்சார" : 
-                     listing.category === "EcoAdventure" ? "சுற்றுச்சூழல் மற்றும் சாகச" : "சிறப்பான";
-    const location = listing.locationName || listing.location?.city || "தமிழ்நாடு";
+    const durationText =
+      hours > 0 ? `${hours} மணி நேரம்` : `${durationMins} நிமிடங்கள்`;
+
+    const category =
+      listing.category === "AgriRural"
+        ? "விவசாய மற்றும் கிராமப்புற"
+        : listing.category === "HeritageCulture"
+          ? "பாரம்பரியம் மற்றும் கலாச்சார"
+          : listing.category === "EcoAdventure"
+            ? "சுற்றுச்சூழல் மற்றும் சாகச"
+            : "சிறப்பான";
+    const location =
+      listing.locationName || listing.location?.city || "தமிழ்நாடு";
     const rating = listing.rating || 4.5;
-    
+
     const descriptions = [
       `வணக்கம்! ${listing.title} என்ற இடத்திற்கு வரவேற்கிறோம்! இது ${location}-ல் அமைந்துள்ள ${category} அனுபவம். ஒரு நபருக்கு ${price} ரூபாய் செலவாகும், சுமார் ${durationText} எடுக்கும். ${rating} நட்சத்திர மதிப்பீடு பெற்றது!`,
       `அருமையான தேர்வு! ${listing.title} ${location}-ல் உள்ளது. இது ஒரு ${category} அனுபவம். கட்டணம் ${price} ரூபாய். நேரம் ${durationText}. பயணிகளால் ${rating} நட்சத்திரங்கள் பெற்றது!`,
       `${listing.title} பற்றி தெரிந்துகொள்ளுங்கள்! ${location}-ல் இந்த ${category} அனுபவம் உங்களுக்காக காத்திருக்கிறது. ${price} ரூபாய்க்கு ${durationText} தமிழ்நாட்டின் பாரம்பரியத்தை அனுபவியுங்கள்!`,
     ];
-    
-    speakGuide(descriptions[Math.floor(Math.random() * descriptions.length)], 'ta');
+
+    speakGuide(
+      descriptions[Math.floor(Math.random() * descriptions.length)],
+      "ta",
+    );
   };
 
   if (!isMapActive) {
@@ -612,9 +672,14 @@ const ARExplorer = () => {
                   <Sparkles className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-white font-bold">AI Guide Active</p>
+                  <p className="text-white font-bold">
+                    AI Guide {guideSpeaking ? "Speaking..." : "Active"}
+                  </p>
                   <p className="text-purple-300 text-sm">
-                    Click markers on map • {nearbyListings.length} spots found
+                    {guideSpeaking
+                      ? "Listening to guide"
+                      : "Click markers on map"}{" "}
+                    • {nearbyListings.length} spots found
                   </p>
                 </div>
               </div>
