@@ -778,20 +778,6 @@ const ARExplorer = () => {
         </div>
 
         <div className="flex gap-2">
-          {/* Test Avatar Button - for configuration */}
-          <button
-            onClick={() => {
-              if (!guideSpeaking) {
-                speakGuide(
-                  "Testing avatar! This is a test message to configure the 3D model appearance. You can now adjust the Leva controls to make it look perfect!",
-                );
-              }
-            }}
-            className="p-3 bg-[#FFD595]/20 backdrop-blur-xl rounded-full text-white hover:bg-[#FFD595]/30 transition-all shadow-xl border border-[#FFD595]/30"
-            title="Test Voice Guide"
-          >
-            <Sparkles className="w-6 h-6 text-[#FFD595]" />
-          </button>
           <button
             onClick={() => setGuideVoiceEnabled(!guideVoiceEnabled)}
             className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
@@ -816,42 +802,49 @@ const ARExplorer = () => {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 z-[1000] pointer-events-none">
-        {/* 3D Avatar Guide - Right Side */}
-        <div className="absolute bottom-0 right-0 top-20 pointer-events-auto">
-          <AnimatePresence>
-            {guideSpeaking && guideMessage && (
-              <motion.div
-                initial={{ scale: 0, opacity: 0, x: 50 }}
-                animate={{ scale: 1, opacity: 1, x: 0 }}
-                exit={{ scale: 0, opacity: 0, x: 50 }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="w-[500px] h-full relative flex items-center justify-center"
+        {/* 3D Avatar Guide - Right Side - Always Visible */}
+        <div className="absolute bottom-0 right-0 top-[100px] pointer-events-auto">
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 100,
+              damping: 20,
+              delay: 0.5,
+            }}
+            className="w-[450px] h-full relative flex items-center justify-center"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FFD595]/5 via-orange-500/5 to-[#FFD595]/5 rounded-l-3xl backdrop-blur-md border-l border-t border-b border-[#FFD595]/20 shadow-2xl" />
+            <div className="relative w-full h-full">
+              <Suspense
+                fallback={
+                  <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center animate-pulse">
+                      <Sparkles className="w-8 h-8 text-black" />
+                    </div>
+                  </div>
+                }
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-purple-500/10 rounded-l-3xl backdrop-blur-md border-l border-t border-b border-purple-500/20 shadow-2xl" />
-                <div className="relative w-full h-full">
-                  <Suspense
-                    fallback={
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
-                          <Sparkles className="w-8 h-8 text-white" />
-                        </div>
-                      </div>
-                    }
-                  >
-                    <Avatar3D isAnimating={guideSpeaking} />
-                  </Suspense>
-                  <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
-                    <Volume2 className="w-6 h-6 text-black" />
-                  </div>
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-[#FFD595] to-orange-400 rounded-full z-10 border border-[#FFD595]/40">
-                    <p className="text-black text-sm font-bold">
-                      Reserve Arc Guide
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <Avatar3D isAnimating={guideSpeaking} />
+              </Suspense>
+              {guideSpeaking && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0 }}
+                  className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10"
+                >
+                  <Volume2 className="w-6 h-6 text-black" />
+                </motion.div>
+              )}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-[#FFD595] to-orange-400 rounded-full z-10 border border-[#FFD595]/40">
+                <p className="text-black text-sm font-bold">
+                  {guideSpeaking ? "🎙️ Speaking..." : "Reserve Arc Guide"}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Message Bubble - Left Side */}
@@ -863,17 +856,17 @@ const ARExplorer = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ delay: 0.2 }}
-                className="bg-black/90 backdrop-blur-xl rounded-2xl p-5 border border-purple-500/30 shadow-2xl pointer-events-auto relative"
+                className="bg-black/90 backdrop-blur-xl rounded-2xl p-5 border border-[#FFD595]/30 shadow-2xl pointer-events-auto relative"
               >
                 {/* Speech bubble arrow pointing right */}
-                <div className="absolute -right-3 bottom-8 w-6 h-6 bg-black/90 border-r border-t border-purple-500/30 transform rotate-45" />
+                <div className="absolute -right-3 bottom-8 w-6 h-6 bg-black/90 border-r border-t border-[#FFD595]/30 transform rotate-45" />
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse">
-                    <Sparkles className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center flex-shrink-0 animate-pulse">
+                    <Sparkles className="w-6 h-6 text-black" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-purple-300 text-xs font-bold mb-2 uppercase tracking-wider">
-                      🎙️ Voice Guide Speaking...
+                    <p className="text-[#FFD595] text-xs font-bold mb-2 uppercase tracking-wider">
+                      🎙️ Reserve Arc Guide Speaking...
                     </p>
                     <p className="text-white text-base leading-relaxed">
                       {guideMessage}
@@ -901,11 +894,11 @@ const ARExplorer = () => {
                   (loc) => loc.name === selectedListing.locationName,
                 );
                 return district ? (
-                  <div className="mb-6 p-4 bg-purple-500/10 border border-purple-500/20 rounded-2xl">
+                  <div className="mb-6 p-4 bg-[#FFD595]/10 border border-[#FFD595]/20 rounded-2xl">
                     <div className="flex items-start gap-3 mb-3">
-                      <MapPin className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
+                      <MapPin className="w-6 h-6 text-[#FFD595] flex-shrink-0 mt-1" />
                       <div>
-                        <h4 className="text-lg font-bold text-purple-300 mb-1">
+                        <h4 className="text-lg font-bold text-[#FFD595] mb-1">
                           {district.name}
                         </h4>
                         <p className="text-slate-300 text-sm leading-relaxed">
@@ -918,7 +911,7 @@ const ARExplorer = () => {
                         {district.highlights.map((highlight, idx) => (
                           <span
                             key={idx}
-                            className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs font-medium"
+                            className="px-3 py-1 bg-[#FFD595]/20 text-[#FFD595] rounded-full text-xs font-medium border border-[#FFD595]/30"
                           >
                             ✨ {highlight}
                           </span>
@@ -975,10 +968,10 @@ const ARExplorer = () => {
                 return district ? (
                   <button
                     onClick={() => speakGuide(district.voiceDescription)}
-                    className="w-full mb-3 py-2 bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 text-purple-300 rounded-xl font-medium flex items-center justify-center gap-2 transition-all"
+                    className="w-full mb-3 py-2 bg-[#FFD595]/20 hover:bg-[#FFD595]/30 border border-[#FFD595]/30 text-[#FFD595] rounded-xl font-medium flex items-center justify-center gap-2 transition-all"
                   >
                     <Volume2 className="w-4 h-4" />
-                    Hear About {district.name}
+                    🎧 Hear About {district.name}
                   </button>
                 ) : null;
               })()}
