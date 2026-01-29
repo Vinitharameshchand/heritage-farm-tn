@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n/config';
-import { Search, Filter, SlidersHorizontal, ChevronDown, X } from 'lucide-react';
+import { Search, Filter, SlidersHorizontal, ChevronDown, X, Leaf, Landmark, Mountain, ChevronRight, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ListingCard from '../components/ListingCard';
 import api from '../services/api';
 
+const ITEMS_PER_PAGE = 6;
+
 const Discover = () => {
     const { t } = useTranslation();
     const [listings, setListings] = useState([]);
+    const [allListings, setAllListings] = useState([]); // Store all listings for district extraction
     const [loading, setLoading] = useState(true);
     const [activeCategory, setActiveCategory] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
@@ -18,8 +21,49 @@ const Discover = () => {
         duration: 'all',
         rating: 'all'
     });
+    const [expandedCategories, setExpandedCategories] = useState({});
+    const [singleCategoryPage, setSingleCategoryPage] = useState(1);
+    const [selectedDistrict, setSelectedDistrict] = useState('all');
+    const [showDistrictDropdown, setShowDistrictDropdown] = useState(false);
 
     const categories = ['All', 'AgriRural', 'HeritageCulture', 'EcoAdventure'];
+
+    const categoryInfo = {
+        AgriRural: {
+            icon: Leaf,
+            title: 'Agri & Rural Experiences',
+            description: 'Discover authentic farming experiences and rural traditions',
+            gradient: 'from-green-500 to-emerald-600',
+            bgGradient: 'from-green-500/10 to-emerald-600/10'
+        },
+        HeritageCulture: {
+            icon: Landmark,
+            title: 'Heritage & Culture',
+            description: 'Explore temples, monuments, and rich cultural traditions',
+            gradient: 'from-amber-500 to-orange-600',
+            bgGradient: 'from-amber-500/10 to-orange-600/10'
+        },
+        EcoAdventure: {
+            icon: Mountain,
+            title: 'Eco & Adventure',
+            description: 'Thrilling outdoor adventures and eco-tourism experiences',
+            gradient: 'from-blue-500 to-cyan-600',
+            bgGradient: 'from-blue-500/10 to-cyan-600/10'
+        }
+    };
+
+    useEffect(() => {
+        // Fetch all listings once for district extraction
+        const fetchAllListings = async () => {
+            try {
+                const response = await api.get('/listings', { params: { limit: 1000, lang: i18n.language } });
+                setAllListings(response.data.data);
+            } catch (error) {
+                console.error('Error fetching all listings:', error);
+            }
+        };
+        fetchAllListings();
+    }, [i18n.language]);
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -32,13 +76,20 @@ const Discover = () => {
     const fetchListings = async () => {
         try {
             setLoading(true);
-            const params = {};
+            const params = { limit: 1000 }; // Fetch all listings
             if (activeCategory !== 'All') params.category = activeCategory;
             if (searchTerm) params.search = searchTerm;
             params.lang = i18n.language; // Add language parameter
 
             const response = await api.get('/listings', { params });
             setListings(response.data.data);
+            // Also update allListings if this is the full fetch
+            if (activeCategory === 'All' && !searchTerm) {
+                setAllListings(response.data.data);
+            }
+            // Reset pagination when fetching new listings
+            setExpandedCategories({});
+            setSingleCategoryPage(1);
         } catch (error) {
             console.error('Error fetching listings:', error);
         } finally {
@@ -46,10 +97,67 @@ const Discover = () => {
         }
     };
 
+    const getVisibleCount = (category) => {
+        return expandedCategories[category] || ITEMS_PER_PAGE;
+    };
+
+    const handleViewMore = (category, totalCount) => {
+        setExpandedCategories(prev => ({
+            ...prev,
+            [category]: Math.min((prev[category] || ITEMS_PER_PAGE) + ITEMS_PER_PAGE, totalCount)
+        }));
+    };
+
+    // Extract unique districts from ALL listings (not filtered)
+    const districts = useMemo(() => {
+        const districtSet = new Set();
+        // Use allListings if available, otherwise fall back to listings
+        const sourceListings = allListings.length > 0 ? allListings : listings;
+        sourceListings.forEach(listing => {
+            if (listing.location?.district) {
+                districtSet.add(listing.location.district);
+            }
+        });
+        return Array.from(districtSet).sort();
+    }, [allListings, listings]);
+
+    // Filter listings based on price, duration, rating, and district filters
+    const applyFilters = (listingsToFilter) => {
+        return listingsToFilter.filter(listing => {
+            // District filter
+            if (selectedDistrict !== 'all') {
+                if (listing.location?.district !== selectedDistrict) return false;
+            }
+            // Price filter
+            if (filters.priceRange !== 'all') {
+                if (filters.priceRange === 'budget' && listing.price > 1000) return false;
+                if (filters.priceRange === 'moderate' && (listing.price < 1000 || listing.price > 3000)) return false;
+                if (filters.priceRange === 'premium' && listing.price < 3000) return false;
+            }
+            // Duration filter
+            if (filters.duration !== 'all') {
+                if (filters.duration === 'short' && listing.duration > 120) return false;
+                if (filters.duration === 'half' && (listing.duration < 180 || listing.duration > 300)) return false;
+                if (filters.duration === 'full' && listing.duration < 360) return false;
+            }
+            return true;
+        });
+    };
+
+    const filteredListings = applyFilters(listings);
+
+    // Group filtered listings by category
+    const groupedListings = filteredListings.reduce((acc, listing) => {
+        const cat = listing.category;
+        if (!acc[cat]) acc[cat] = [];
+        acc[cat].push(listing);
+        return acc;
+    }, {});
+
     return (
         <div className="min-h-screen pt-28 pb-20 px-6 max-w-7xl mx-auto">
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
                 <div>
                     <h1 className="text-5xl font-outfit font-black mb-4">{t('discover_experiences').split(' ')[0]} <span className="gradient-text">{t('discover_experiences').split(' ').slice(1).join(' ')}</span></h1>
                     <p className="text-slate-500">{t('discover_description')}</p>
@@ -71,8 +179,37 @@ const Discover = () => {
                 </div>
             </div>
 
+            {/* Stats Banner - After description and search */}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="glass p-6 rounded-[24px] border border-white/10 mb-8"
+            >
+                <div className="flex flex-wrap items-center justify-center gap-8 text-center">
+                    <div>
+                        <div className="text-4xl font-black text-emerald-400">{filteredListings.length}</div>
+                        <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">Total Experiences</div>
+                    </div>
+                    <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+                    <div>
+                        <div className="text-4xl font-black text-green-400">{groupedListings['AgriRural']?.length || 0}</div>
+                        <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">Agri & Rural</div>
+                    </div>
+                    <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+                    <div>
+                        <div className="text-4xl font-black text-amber-400">{groupedListings['HeritageCulture']?.length || 0}</div>
+                        <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">Heritage & Culture</div>
+                    </div>
+                    <div className="w-px h-12 bg-white/10 hidden md:block"></div>
+                    <div>
+                        <div className="text-4xl font-black text-blue-400">{groupedListings['EcoAdventure']?.length || 0}</div>
+                        <div className="text-xs text-slate-400 uppercase tracking-wider font-bold mt-1">Eco & Adventure</div>
+                    </div>
+                </div>
+            </motion.div>
+
             {/* Filters Bar */}
-            <div className="flex flex-wrap items-center gap-4 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+            <div className="flex flex-wrap items-center gap-4 mb-10 pb-2">
                 {categories.map(cat => (
                     <button
                         key={cat}
@@ -88,9 +225,69 @@ const Discover = () => {
 
                 <div className="h-8 w-[1px] bg-slate-200 mx-2 hidden md:block"></div>
 
+                {/* District Dropdown */}
+                <div className="relative ml-auto">
+                    <button 
+                        onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
+                        className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${selectedDistrict !== 'all' 
+                            ? 'bg-purple-500 text-white shadow-lg shadow-purple-500/30' 
+                            : 'bg-white border border-slate-100 text-slate-600 hover:bg-slate-50'
+                        }`}
+                    >
+                        <MapPin className="w-4 h-4" />
+                        {selectedDistrict === 'all' ? 'All Districts' : selectedDistrict}
+                        <ChevronDown className={`w-4 h-4 transition-transform ${showDistrictDropdown ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    <AnimatePresence>
+                        {showDistrictDropdown && (
+                            <motion.div
+                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                className="absolute top-full mt-2 right-0 w-64 max-h-80 overflow-y-auto bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl z-[100]"
+                            >
+                                <div className="p-2">
+                                    <button
+                                        onClick={() => {
+                                            setSelectedDistrict('all');
+                                            setShowDistrictDropdown(false);
+                                        }}
+                                        className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${selectedDistrict === 'all' 
+                                            ? 'bg-purple-500 text-white' 
+                                            : 'text-white/70 hover:bg-white/10 hover:text-white'
+                                        }`}
+                                    >
+                                        All Districts
+                                    </button>
+                                    {districts.length === 0 ? (
+                                        <div className="px-4 py-3 text-white/50 text-sm">Loading districts...</div>
+                                    ) : (
+                                        districts.map(district => (
+                                            <button
+                                                key={district}
+                                                onClick={() => {
+                                                    setSelectedDistrict(district);
+                                                    setShowDistrictDropdown(false);
+                                                }}
+                                                className={`w-full text-left px-4 py-3 rounded-xl font-semibold transition-all ${selectedDistrict === district 
+                                                    ? 'bg-purple-500 text-white' 
+                                                    : 'text-white/70 hover:bg-white/10 hover:text-white'
+                                                }`}
+                                            >
+                                                {district}
+                                            </button>
+                                        ))
+                                    )}
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+
                 <button 
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ml-auto ${showFilters 
+                    className={`flex items-center gap-2 px-6 py-2.5 rounded-full font-bold transition-all ${showFilters 
                         ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/30' 
                         : 'bg-white border border-slate-100 text-slate-600 hover:bg-slate-50'
                     }`}
@@ -194,19 +391,128 @@ const Discover = () => {
                 )}
             </AnimatePresence>
 
-            {/* Results Grid */}
+            {/* Results Section */}
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[1, 2, 3, 4, 5, 6].map(i => (
                         <div key={i} className="bg-slate-100 rounded-3xl h-[450px] animate-pulse"></div>
                     ))}
                 </div>
-            ) : listings.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {listings.map(listing => (
-                        <ListingCard key={listing._id} listing={listing} />
-                    ))}
-                </div>
+            ) : filteredListings.length > 0 ? (
+                <>
+                    {/* Show All Experiences or Filtered by Category */}
+                    {activeCategory === 'All' ? (
+                        <>
+                            {/* Categorized Sections */}
+                            {['AgriRural', 'HeritageCulture', 'EcoAdventure'].map(cat => {
+                                const catListings = groupedListings[cat] || [];
+                                if (catListings.length === 0) return null;
+                                
+                                const info = categoryInfo[cat];
+                                const Icon = info.icon;
+
+                                return (
+                                    <motion.section 
+                                        key={cat}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        className="mb-16"
+                                    >
+                                        {/* Category Header */}
+                                        <div className={`glass p-6 rounded-[24px] border border-white/10 mb-8 bg-gradient-to-r ${info.bgGradient}`}>
+                                            <div className="flex items-center gap-4">
+                                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${info.gradient} flex items-center justify-center shadow-lg`}>
+                                                    <Icon className="w-7 h-7 text-white" />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h2 className="text-2xl font-black text-white flex items-center gap-3">
+                                                        {info.title}
+                                                        <span className="text-sm font-bold px-3 py-1 rounded-full bg-white/10 text-white/70">
+                                                            {catListings.length} experiences
+                                                        </span>
+                                                    </h2>
+                                                    <p className="text-slate-400 text-sm mt-1">{info.description}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Category Grid */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                            {catListings.slice(0, getVisibleCount(cat)).map(listing => (
+                                                <ListingCard key={listing._id} listing={listing} />
+                                            ))}
+                                        </div>
+
+                                        {/* View More Button */}
+                                        {getVisibleCount(cat) < catListings.length && (
+                                            <motion.div 
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                className="flex justify-center mt-8"
+                                            >
+                                                <button
+                                                    onClick={() => handleViewMore(cat, catListings.length)}
+                                                    className={`group flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all bg-gradient-to-r ${info.gradient} text-white shadow-lg hover:shadow-xl hover:scale-105`}
+                                                >
+                                                    View More {info.title.split(' ')[0]}
+                                                    <span className="text-white/70">({catListings.length - getVisibleCount(cat)} remaining)</span>
+                                                    <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                                </button>
+                                            </motion.div>
+                                        )}
+                                    </motion.section>
+                                );
+                            })}
+                        </>
+                    ) : (
+                        /* Single Category View */
+                        <>
+                            {categoryInfo[activeCategory] && (
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className={`glass p-6 rounded-[24px] border border-white/10 mb-10 bg-gradient-to-r ${categoryInfo[activeCategory].bgGradient}`}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${categoryInfo[activeCategory].gradient} flex items-center justify-center shadow-lg`}>
+                                            {React.createElement(categoryInfo[activeCategory].icon, { className: "w-7 h-7 text-white" })}
+                                        </div>
+                                        <div>
+                                            <h2 className="text-2xl font-black text-white">{categoryInfo[activeCategory].title}</h2>
+                                            <p className="text-slate-400 text-sm mt-1">
+                                                {filteredListings.length} experiences available
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredListings.slice(0, singleCategoryPage * ITEMS_PER_PAGE).map(listing => (
+                                    <ListingCard key={listing._id} listing={listing} />
+                                ))}
+                            </div>
+
+                            {/* View More Button for single category */}
+                            {singleCategoryPage * ITEMS_PER_PAGE < filteredListings.length && (
+                                <motion.div 
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="flex justify-center mt-10"
+                                >
+                                    <button
+                                        onClick={() => setSingleCategoryPage(prev => prev + 1)}
+                                        className={`group flex items-center gap-2 px-8 py-4 rounded-2xl font-bold transition-all bg-gradient-to-r ${categoryInfo[activeCategory]?.gradient || 'from-emerald-500 to-emerald-600'} text-white shadow-lg hover:shadow-xl hover:scale-105`}
+                                    >
+                                        View More Experiences
+                                        <span className="text-white/70">({filteredListings.length - singleCategoryPage * ITEMS_PER_PAGE} remaining)</span>
+                                        <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                </motion.div>
+                            )}
+                        </>
+                    )}
+                </>
             ) : (
                 <div className="py-20 text-center">
                     <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">

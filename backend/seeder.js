@@ -33,7 +33,7 @@ const seedData = async () => {
                 duration: 180,
                 difficulty: 'Easy',
                 location: { city: 'Erode', district: 'Erode', coordinates: [77.7172, 11.3410] },
-                images: ['https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769663572058-0e7157d7-5ccd-4f91-a5ff-40f3105d5525.jpeg'],
                 status: 'approved'
             },
             {
@@ -46,7 +46,7 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Moderate',
                 location: { city: 'Thanjavur', district: 'Thanjavur', coordinates: [79.1378, 10.7870] },
-                images: ['https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769663709133-b00e351c-a013-44ae-8a2b-10e2cd2f4ccc.jpeg'],
                 status: 'approved'
             },
             {
@@ -65,7 +65,7 @@ const seedData = async () => {
             // Chennai Listings
             {
                 creator: creator._id,
-                title: 'Kapaleeshwarar Temple Walk',
+                title: 'Kapaleeshwarar Temple',
                 description: 'Explore the vibrant Dravidian architecture of Kapaleeshwarar Temple and the lively streets of Mylapore filled with tradition, prasadam, and rhythm.',
                 category: 'HeritageCulture',
                 price: 500,
@@ -73,7 +73,7 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2707, 13.0339] },
-                images: ['https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664731243-1d4142c3-ec5b-44b4-92e4-e091ecc86cf3.png'],
                 status: 'approved'
             },
             {
@@ -86,7 +86,7 @@ const seedData = async () => {
                 duration: 90,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2483, 12.9054] },
-                images: ['https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664796336-d4d87cb2-43fa-44d5-9898-296dbb51a8cd.png'],
                 status: 'approved'
             },
             {
@@ -99,7 +99,7 @@ const seedData = async () => {
                 duration: 90,
                 difficulty: 'Easy',
                 location: { city: 'Chennai', district: 'Chennai', coordinates: [80.2837, 13.0500] },
-                images: ['https://images.unsplash.com/photo-1591012911207-7e6c8b1b9c89?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664896104-9d817bd0-019f-459d-8cef-4673c899a333.png'],
                 status: 'approved'
             },
             {
@@ -452,7 +452,7 @@ const seedData = async () => {
                 duration: 90,
                 difficulty: 'Easy',
                 location: { city: 'Kanchipuram', district: 'Kanchipuram', coordinates: [79.6893, 12.8412] },
-                images: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664104569-ce5dd11b-39c7-4a7b-92bf-d6a2eab17e44.png'],
                 status: 'approved'
             },
             {
@@ -621,7 +621,7 @@ const seedData = async () => {
                 duration: 90,
                 difficulty: 'Easy',
                 location: { city: 'Kanchipuram', district: 'Kanchipuram', coordinates: [79.6945, 12.8439] },
-                images: ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664003368-28277e3f-2e70-40d5-80f6-8914f8ef70e9.png'],
                 status: 'approved'
             },
             {
@@ -634,7 +634,7 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Kanchipuram', district: 'Kanchipuram', coordinates: [79.6884, 12.8461] },
-                images: ['https://images.unsplash.com/photo-1601049541289-9b1b7bbb0b1c?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769664386353-16f10572-bc57-4667-90b7-9e283e688d3d.blob'],
                 status: 'approved'
             },
             {
@@ -686,7 +686,7 @@ const seedData = async () => {
                 duration: 120,
                 difficulty: 'Easy',
                 location: { city: 'Rural Kanchipuram', district: 'Kanchipuram', coordinates: [79.7126, 12.8295] },
-                images: ['https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&q=80&w=800'],
+                images: ['https://image2url.com/r2/default/images/1769663804144-3d38979c-8123-42a6-8580-183dfd4162a5.png'],
                 status: 'approved'
             },
             // Chengalpattu Listings

@@ -12,7 +12,7 @@ export const getListings = async (req, res) => {
         const reqQuery = { ...req.query };
 
         // Fields to exclude from filtering
-        const removeFields = ['select', 'sort', 'page', 'limit'];
+        const removeFields = ['select', 'sort', 'page', 'limit', 'lang', 'language', 'search'];
         removeFields.forEach(param => delete reqQuery[param]);
 
         // Create query string
