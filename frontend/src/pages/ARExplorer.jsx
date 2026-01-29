@@ -722,13 +722,13 @@ const ARExplorer = () => {
                 >
                   <Popup>
                     <div className="p-2 min-w-[250px] max-w-[300px]">
-                      <h4 className="font-bold text-base mb-2 text-purple-700">
+                      <h4 className="font-bold text-base mb-2 text-[#FFD595]">
                         {listing.title}
                       </h4>
-                      <div className="mb-2 p-2 bg-purple-50 rounded-lg">
+                      <div className="mb-2 p-2 bg-[#FFD595]/10 rounded-lg border border-[#FFD595]/20">
                         <div className="flex items-center gap-1 mb-1">
-                          <MapPin className="w-3 h-3 text-purple-600" />
-                          <span className="text-xs font-semibold text-purple-600">
+                          <MapPin className="w-3 h-3 text-[#FFD595]" />
+                          <span className="text-xs font-semibold text-[#FFD595]">
                             {listing.locationName}
                           </span>
                         </div>
@@ -737,7 +737,7 @@ const ARExplorer = () => {
                             (loc) => loc.name === listing.locationName,
                           );
                           return district ? (
-                            <p className="text-xs text-slate-600 line-clamp-2">
+                            <p className="text-xs text-slate-700 line-clamp-2">
                               {district.description}
                             </p>
                           ) : null;
@@ -747,12 +747,12 @@ const ARExplorer = () => {
                         <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                         <span>{listing.rating}</span>
                         <span>•</span>
-                        <span className="text-purple-600 font-bold">
+                        <span className="text-[#FFD595] font-bold">
                           ₹{listing.price}
                         </span>
                       </div>
-                      <p className="text-xs text-emerald-600 font-medium">
-                        Click marker for details & voice guide 🎧
+                      <p className="text-xs text-[#FFD595] font-medium">
+                        🎧 Reserve Arc Voice Guide • Click for booking
                       </p>
                     </div>
                   </Popup>
@@ -763,12 +763,19 @@ const ARExplorer = () => {
       </div>
 
       <div className="absolute top-6 left-6 right-6 z-[1000] flex justify-between items-start">
-        <button
-          onClick={() => navigate("/")}
-          className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
-        >
-          <X className="w-6 h-6" />
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="px-4 py-2 bg-black/80 backdrop-blur-xl rounded-full border border-[#FFD595]/20">
+            <p className="text-[#FFD595] text-sm font-bold">
+              Reserve Arc Explorer
+            </p>
+          </div>
+        </div>
 
         <div className="flex gap-2">
           {/* Test Avatar Button - for configuration */}
@@ -780,17 +787,17 @@ const ARExplorer = () => {
                 );
               }
             }}
-            className="p-3 bg-emerald-500/70 backdrop-blur-xl rounded-full text-white hover:bg-emerald-600/90 transition-all shadow-xl"
-            title="Test Avatar (for configuration)"
+            className="p-3 bg-[#FFD595]/20 backdrop-blur-xl rounded-full text-white hover:bg-[#FFD595]/30 transition-all shadow-xl border border-[#FFD595]/30"
+            title="Test Voice Guide"
           >
-            <Sparkles className="w-6 h-6" />
+            <Sparkles className="w-6 h-6 text-[#FFD595]" />
           </button>
           <button
             onClick={() => setGuideVoiceEnabled(!guideVoiceEnabled)}
             className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
           >
             {guideVoiceEnabled ? (
-              <Volume2 className="w-6 h-6 text-purple-400" />
+              <Volume2 className="w-6 h-6 text-[#FFD595]" />
             ) : (
               <VolumeX className="w-6 h-6 text-slate-400" />
             )}
@@ -800,9 +807,9 @@ const ARExplorer = () => {
             className="p-3 bg-black/70 backdrop-blur-xl rounded-full text-white hover:bg-black/90 transition-all shadow-xl"
           >
             {isFullscreen ? (
-              <Minimize2 className="w-6 h-6 text-emerald-400" />
+              <Minimize2 className="w-6 h-6 text-[#FFD595]" />
             ) : (
-              <Maximize2 className="w-6 h-6 text-emerald-400" />
+              <Maximize2 className="w-6 h-6 text-[#FFD595]" />
             )}
           </button>
         </div>
@@ -833,11 +840,11 @@ const ARExplorer = () => {
                   >
                     <Avatar3D isAnimating={guideSpeaking} />
                   </Suspense>
-                  <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
-                    <Volume2 className="w-6 h-6 text-white" />
+                  <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center animate-pulse shadow-lg z-10">
+                    <Volume2 className="w-6 h-6 text-black" />
                   </div>
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full z-10">
-                    <p className="text-white text-sm font-bold">AI Guide</p>
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-gradient-to-r from-[#FFD595] to-orange-400 rounded-full z-10 border border-[#FFD595]/40">
+                    <p className="text-black text-sm font-bold">Reserve Arc Guide</p>
                   </div>
                 </div>
               </motion.div>
@@ -983,9 +990,9 @@ const ARExplorer = () => {
                 </button>
                 <button
                   onClick={() => navigate(`/listings/${selectedListing._id}`)}
-                  className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all"
+                  className="flex-1 py-3 bg-gradient-to-r from-[#FFD595] to-orange-400 hover:from-orange-400 hover:to-[#FFD595] text-black rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FFD595]/20"
                 >
-                  Book Now
+                  Reserve Arc
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
@@ -1006,19 +1013,19 @@ const ARExplorer = () => {
             animate={{ opacity: 1 }}
             className="flex items-center justify-center gap-4 pb-8 pointer-events-auto"
           >
-            <div className="px-6 py-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-purple-500/30 shadow-xl">
+            <div className="px-6 py-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-[#FFD595]/30 shadow-xl">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center animate-pulse">
-                  <Sparkles className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-gradient-to-br from-[#FFD595] to-orange-400 rounded-full flex items-center justify-center animate-pulse">
+                  <Sparkles className="w-6 h-6 text-black" />
                 </div>
                 <div>
                   <p className="text-white font-bold">
-                    AI Guide {guideSpeaking ? "Speaking..." : "Active"}
+                    Reserve Arc Guide {guideSpeaking ? "Speaking..." : "Active"}
                   </p>
-                  <p className="text-purple-300 text-sm">
+                  <p className="text-[#FFD595] text-sm">
                     {guideSpeaking
-                      ? "Listening to guide"
-                      : "Click markers on map"}{" "}
+                      ? "🎧 Listening to voice guide"
+                      : "📍 Click markers to reserve experiences"}{" "}
                     • {nearbyListings.length} spots found
                   </p>
                 </div>
