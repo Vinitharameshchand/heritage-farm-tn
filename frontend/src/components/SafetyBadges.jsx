@@ -224,12 +224,12 @@ export const HostVerificationBadge = ({
 }) => {
   const verifications = [];
 
-  const hostData = host || { 
-    idVerified: isVerified !== false, 
-    name: hostName || "Local Heritage Host", 
+  const hostData = host || {
+    idVerified: isVerified !== false,
+    name: hostName || "Local Heritage Host",
     rating: rating || 4.8,
     backgroundChecked: true,
-    firstAidCertified: false
+    firstAidCertified: false,
   };
 
   if (hostData?.idVerified !== false) {
@@ -269,7 +269,9 @@ export const HostVerificationBadge = ({
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FFD595]/10 rounded-full border border-[#FFD595]/20"
             >
               <v.icon className="w-4 h-4 text-[#FFD595]" />
-              <span className="text-xs font-bold text-[#FFD595]">{v.label}</span>
+              <span className="text-xs font-bold text-[#FFD595]">
+                {v.label}
+              </span>
             </div>
           ))}
         </div>
