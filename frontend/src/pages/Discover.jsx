@@ -264,7 +264,7 @@ const Discover = () => {
           </div>
 
           {/* Floating Search Hub */}
-          <div className="w-full md:w-[600px] relative mt-10 md:mt-20">
+          <div className="w-full md:w-[600px] relative mt-10 md:mt-20 z-[9999]">
             <div className="absolute -inset-4 bg-[#FFD595]/10 blur-3xl rounded-full" />
             <div className="relative flex gap-10 items-center bg-white/5 backdrop-blur-2xl p-4 rounded-[2.5rem] border border-white/10 shadow-2xl">
               <div className="relative">
@@ -277,29 +277,96 @@ const Discover = () => {
               </div>
 
               {/* Quick District Pill inside search hub */}
-              <button
-                onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
-                className="w-full mt-3 flex items-center justify-between px-6 py-4 rounded-2xl bg-[#FFD595] text-[#46041F] hover:bg-[#FFD595]/90 transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4" />
-                  <span className="font-black uppercase text-[10px] tracking-widest">
-                    {selectedDistrict === "all"
-                      ? "Explore Districts"
-                      : selectedDistrict}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform ${showDistrictDropdown ? "rotate-180" : ""}`}
-                />
-              </button>
+              <div className="relative w-full mt-3 z-[9999]">
+                <button
+                  onClick={() => setShowDistrictDropdown(!showDistrictDropdown)}
+                  className="w-full flex items-center justify-between px-6 py-4 rounded-2xl bg-[#FFD595] text-[#46041F] hover:bg-[#FFD595]/90 transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-4 h-4" />
+                    <span className="font-black uppercase text-[10px] tracking-widest">
+                      {selectedDistrict === "all"
+                        ? "Explore Districts"
+                        : selectedDistrict}
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${showDistrictDropdown ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {/* Districts Dropdown Menu */}
+                <AnimatePresence>
+                  {showDistrictDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-[#46041F] border border-[#FFD595]/30 rounded-2xl shadow-2xl z-[9999] max-h-[400px] overflow-y-auto"
+                    >
+                      {/* All Districts Option */}
+                      <button
+                        onClick={() => {
+                          setSelectedDistrict("all");
+                          setShowDistrictDropdown(false);
+                        }}
+                        className={`w-full text-left px-6 py-4 transition-all flex items-center gap-3 border-b border-[#FFD595]/10 hover:bg-[#FFD595]/10 ${
+                          selectedDistrict === "all"
+                            ? "bg-[#FFD595]/20 text-[#FFD595]"
+                            : "text-[#FFD595]/70 hover:text-[#FFD595]"
+                        }`}
+                      >
+                        <MapPin className="w-4 h-4" />
+                        <span className="font-bold uppercase text-[11px] tracking-wider">
+                          All Districts
+                        </span>
+                        {selectedDistrict === "all" && (
+                          <span className="ml-auto text-[#FFD595]">✓</span>
+                        )}
+                      </button>
+
+                      {/* Individual Districts */}
+                      {districts.map((district) => (
+                        <button
+                          key={district}
+                          onClick={() => {
+                            setSelectedDistrict(district);
+                            setShowDistrictDropdown(false);
+                          }}
+                          className={`w-full text-left px-6 py-4 transition-all flex items-center gap-3 border-b border-[#FFD595]/10 hover:bg-[#FFD595]/10 last:border-b-0 ${
+                            selectedDistrict === district
+                              ? "bg-[#FFD595]/20 text-[#FFD595]"
+                              : "text-[#FFD595]/70 hover:text-[#FFD595]"
+                          }`}
+                        >
+                          <MapPin className="w-4 h-4" />
+                          <span className="font-bold uppercase text-[11px] tracking-wider">
+                            {district}
+                          </span>
+                          {selectedDistrict === district && (
+                            <span className="ml-auto text-[#FFD595]">✓</span>
+                          )}
+                        </button>
+                      ))}
+
+                      {districts.length === 0 && (
+                        <div className="px-6 py-8 text-center">
+                          <p className="text-[#FFD595]/40 text-sm font-medium">
+                            No districts available
+                          </p>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>
 
         {/* 2. Overlapping Experience Navigation */}
         <div className="relative">
-          <div className="flex flex-wrap gap-4 relative z-10">
+          <div className="flex flex-wrap gap-4 relative">
             {navItems.map((item) => (
               <button
                 key={item.id}
